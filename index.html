@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BingMaps Functions</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;color:white;}</style>
+</head>
+<body>
+
+<!-- MAP[START] -->
+<h1>BingMaps Functions Sample</h1>
+<div id="myMap" style='width:100%;height:98%;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
+<script src="js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+let map; //mapObject
+const html = '<div style="background:red;">Hello,world</div>';
+const pin = "img/poi_custom.png";
+//Init
+function GetMap() {
+    map = mapStart("#myMap", 47.6149, -122.1941, "load", 16);            //Initialization processing
+    mapPushpin(map, 47.6149, -122.1941, "#ff0000");                      //pushpin1
+    mapInfobox(map, 47.6149, -122.1941, "1 step", "Start");              //infobox1
+    mapPushpinText(map, 47.6160, -122.1950, "title","subtitle","A");     //PushpinText
+    mapPushpinIcon(map, 47.6130, -122.1945, pin, 1.0, 0, 0);             //PushpinIcon
+    mapInfoboxHtml(map, 47.6130, -122.1910, html);                       //infoboxHTML
+}
+//after 3 seconds.
+setTimeout(function () {
+    mapChangeView(map,  47.6150, -122.1950, "load", 17);                 //Change View
+    mapPushpin(map, 47.6150, -122.1950, "#ffff00");                      //pushpin2
+    mapInfobox(map, 47.6150, -122.1950  , "2 step", "End");              //infobox2
+},3000);
+</script>
+
+
+</body>
+</html>
