@@ -30,60 +30,57 @@ To test your installation, just call the following page at your website:
 
 	https://mapapi.org/open.php?file=example_funcs_infobox
 
-For example:
-[html]
-  ...
-  <!-- Load BingMapsControl api [callback=GetMap] -->
-  <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
-  <!-- Load BingMapQuery -->
-  <script src="js/BmapQuery.js"></script>
-   ...
+## For example
+**[html]**
+
+    <!-- Load BingMapsControl api [callback=GetMap] -->
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
+    <!-- Load BingMapQuery -->
+    <script src="js/BmapQuery.js"></script>
    
-[script]   
-===================================================================================================
-//Basic Sample (Show Map)  
-  let map; //mapObject
-  function GetMap() {
-      map = mapStart("#myMap", 47.6149, -122.1941, "load", 16);  //Initialization processing
-  }
-===================================================================================================    
-//Pushpin
-  let map; //mapObject
-  function GetMap() {
-      map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-      mapPushpin(map, 47.6149, -122.1941, "#ff0000");           //pushpin1
-  }
-===================================================================================================
-//Infobox
-  let map; //mapObject
-  function GetMap() {
-      map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-      mapPushpin(map, 47.6149, -122.1941, "#ff0000");           //pushpin1
-      mapInfobox(map, 47.6149, -122.1941, "1 step", "Start");   //infobox1
-  }
-===================================================================================================
-//Pushpin&Text
-  let map; //mapObject
-  function GetMap() {
-      map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-      mapPushpinText(map, 47.6149, -122.1941, "title","subtitle","A"); //PushpinText
-  }
-===================================================================================================
-//Pushpin&Image
-  let map; //mapObject
-  const pin = "img/poi_custom.png";
-  function GetMap() {
-      map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-      mapPushpinIcon(map, 47.6149, -122.1941, pin, 1.0, 0, 0);  //PushpinIcon
-  }
-===================================================================================================
-//Infobox&HTML
-  let map; //mapObject
-  const html = '<div style="background:red;">Hello,world</div>';
-  function GetMap() {
-      map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-      mapInfoboxHtml(map, 47.6149, -122.1941, html);            //infoboxHTML
-  }
-===================================================================================================
+**[script]**   
+
+    //Basic Sample (Show Map)  
+    let map; //mapObject
+    function GetMap() {
+        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16);  //Initialization processing
+    }
 
 
+    //Pushpin
+    let map; //mapObject
+    function GetMap() {
+        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
+        mapPushpin(map, 47.6149, -122.1941, "#ff0000");           //pushpin1
+    }
+
+    //Infobox
+    let map; //mapObject
+    function GetMap() {
+        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
+        mapPushpin(map, 47.6149, -122.1941, "#ff0000");           //pushpin1
+        mapInfobox(map, 47.6149, -122.1941, "1 step", "Start");   //infobox1
+    }
+
+    //Pushpin&Text
+    let map; //mapObject
+    function GetMap() {
+        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
+        mapPushpinText(map, 47.6149, -122.1941, "title","subtitle","A"); //PushpinText
+    }
+
+    //Pushpin&Image
+    let map; //mapObject
+    const pin = "img/poi_custom.png";
+    function GetMap() {
+        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
+        mapPushpinIcon(map, 47.6149, -122.1941, pin, 1.0, 0, 0);  //PushpinIcon
+    }
+
+    //Infobox&HTML
+    let map; //mapObject
+    const html = '<div style="background:red;">Hello,world</div>';
+    function GetMap() {
+        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
+        mapInfoboxHtml(map, 47.6149, -122.1941, html);            //infoboxHTML
+    }
