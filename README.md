@@ -7,10 +7,6 @@ https://mapapi.org - See LICENSE.md for license information.
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
 component to be used as part of web applications and websites.
 
-## Documentation
-
-The full BmapQuery documentation is available online at the following address:
-https://mapapi.org
 
 ## Installation
 
@@ -30,7 +26,7 @@ To test your installation, just call the following page at your website:
 
 	https://mapapi.org/open.php?file=example_libs
 
-## For example
+## Documentation & For example
 **[html]**
 
     <!-- Load BingMapsControl api [callback=GetMap] -->
