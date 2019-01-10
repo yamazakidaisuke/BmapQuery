@@ -256,16 +256,16 @@ class Bmap {
     
     /**
      * Search:Get Geocode JSON
-     * @method mapGeocodeValue or mapGeocodeHtml
+     * @method getGeocode
      * @param query     (string)   [Search string]
      * @param callback  (function) [function{...}]
      * @returns { callback:function }
      */
     async getGeocode(query,callback){
-        const data = await this.geocodeQuery(query);
+        const data = await this._geocodeQuery(query);
         callback(data);
     }
-    geocodeQuery(query) {
+    _geocodeQuery(query) {
         const map = this.map;
         return new Promise(resolve => {
             let searchManager;
@@ -292,6 +292,41 @@ class Bmap {
         });
 
     }
+    
+    /**
+     * Search:Get Reverse Geocode JSON
+     * @method reverseGeocode
+     * @param query     (string)   [Search string]
+     * @param callback  (function) [function{...}]
+     * @returns { callback:function }
+     */
+    async reverseGeocode(query,callback){
+        const data = await this._reverseGeocode(query);
+        callback(data);
+    }
+    _reverseGeocode() {
+        const map = this.map;
+        return new Promise(resolve => {
+            let searchManager;
+            if (!searchManager) {
+                let searchRequest = {
+                    location: map.getCenter(),
+                    callback: function (r) {
+                        return resolve(r.name);
+                    },
+                    errorCallback: function (e) {
+                        return resolve("Unable to reverse geocode location.");
+                    }
+                };
+                //Create an instance of the search manager and call the reverseGeocode function again.
+                Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                    searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                    searchManager.reverseGeocode(searchRequest);
+                });
+            }
+        });
+    }
+    
 
 }
 

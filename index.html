@@ -14,7 +14,7 @@
 <!-- MAP[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Ai1EjjRtNmjFeZ_-crF4Ar1EeGWAa7oHR0APXB1n5K2SIlmjGd7MIyp1aA3fA6rT' async defer></script>
 <script src="js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -55,21 +55,32 @@ function GetMap(){
     const html = '<div style="background:red;">Hello,world</div>';
     map.infoboxHtml(47.6160, -122.1950, html);
     
-    //after 3 seconds.
+    //after 2 seconds.
     setTimeout(function(){
         //MapViewChange
         map.changeMap(47.6150, -122.1950, "load", 17);
     },2000);
 
-    //after 6 seconds.
+    //after 4 seconds.
     setTimeout(function () {
         //GeocodeJson
         map.getGeocode("Seattle", function(data){
             //checkCode: variable data.
+            alert("getGeocode");
             document.querySelector("#geocode").innerHTML=data;
         });
-    },6000);
+    },4000);
     
+    //after 6 seconds.
+    setTimeout(function () {
+        //ReverseGeocodeJson
+        map.reverseGeocode("Seattle", function(data){
+            //checkCode: variable data.
+            alert("ReverseGeocode");
+            document.querySelector("#geocode").innerHTML=data;
+        });
+        
+    },6000);
 }
  
     

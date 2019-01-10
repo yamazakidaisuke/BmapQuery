@@ -96,7 +96,18 @@ To test your installation, just call the following page at your website:
             map.getGeocode("Seattle", function(data){
                 document.querySelector("#geocode").innerHTML=data;
             });
+        },4000);
+    
+        // ReverseGeocodeJson(after 6 seconds.)
+        // * reverseGeocode("searchQuery",callback);
+        setTimeout(function () {
+            map.reverseGeocode("Seattle", function(data){
+                //checkCode: variable data.
+                alert("ReverseGeocode");
+                document.querySelector("#geocode").innerHTML=data;
+            });
         },6000);
+        
         
     }
 
