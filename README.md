@@ -28,7 +28,7 @@ place the files in whichever you want though.
 
 To test your installation, just call the following page at your website:
 
-	https://mapapi.org/open.php?file=example_funcs_infobox
+	https://mapapi.org/open.php?file=example_libs
 
 ## For example
 **[html]**
