@@ -1,7 +1,7 @@
-BmapQuery
+DBmapQuery
 ==========
 
-Copyright (c) 2018-2019, BingMapsGO! - daisuke yamazaki. All rights reserved.
+Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
 https://mapapi.org - See LICENSE.md for license information.
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -40,47 +40,63 @@ To test your installation, just call the following page at your website:
    
 **[script]**   
 
-    //Basic Sample (Show Map)  
-    let map; //mapObject
+    //*Sample
     function GetMap() {
-        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16);  //Initialization processing
+    
+        // Instance...
+        let map = new Bmap("#myMap");
+        
+       // MapStart
+       // * startMap(lat, lon, "MapType", Zoom[1~20]){
+        map.startMap(47.6149, -122.1941, "load", 16);//MapType[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    
+        // Map:Add event
+        // * eventMap("event", callback);
+        // * [event:click,dblclick,rightclick,mousedown,mouseout,mouseover,mouseup,mousewheel,maptypechanged,viewchangestart,viewchange,viewchangeend]
+        map.eventMap("click",function(){ 
+            alert("MapEvent!");
+        });
+
+        // Pushpin
+        // * pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
+        let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
+
+        // Pushpin:Text
+        // * pinText(lat, lon, "title", "subtitle", "text");
+        let pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
+
+        // Pushpin:Icon
+        // * pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
+        let pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
+
+        // pushpin:Event
+        // * eventPin(pushpin, "event", callback);
+        // * [event: click,mousedown,mouseout,mouseover,mouseup]
+        map.eventPin(pin1, "click", function(){
+            alert("PinEvent1");
+        });
+
+        // Infobox
+        // * infobox(lat, lon, "title", "description");
+        map.infobox(47.6149, -122.1941, "1 step", "Start");
+
+        // Infobox:html
+        // * infoboxHtml(lat, lon, html);
+        map.infoboxHtml(47.6160, -122.1950, '<div style="background:red;">Hello,world</div>');
+        
+        // MapChangeView(after 2 seconds.)
+        // * changeMap(lat, lon, "MapType", Zoom[1~20]);
+        setTimeout(function(){
+            map.changeMap(47.6150, -122.1950, "load", 17);
+        },2000);
+
+        // GeocodeJson(after 4 seconds.)
+        // * getGeocode("searchQuery",callback);
+        setTimeout(function () {
+            map.getGeocode("Seattle", function(data){
+                document.querySelector("#geocode").innerHTML=data;
+            });
+        },6000);
+        
     }
 
-
-    //Pushpin
-    let map; //mapObject
-    function GetMap() {
-        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-        mapPushpin(map, 47.6149, -122.1941, "#ff0000");           //pushpin1
-    }
-
-    //Infobox
-    let map; //mapObject
-    function GetMap() {
-        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-        mapPushpin(map, 47.6149, -122.1941, "#ff0000");           //pushpin1
-        mapInfobox(map, 47.6149, -122.1941, "1 step", "Start");   //infobox1
-    }
-
-    //Pushpin&Text
-    let map; //mapObject
-    function GetMap() {
-        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-        mapPushpinText(map, 47.6149, -122.1941, "title","subtitle","A"); //PushpinText
-    }
-
-    //Pushpin&Image
-    let map; //mapObject
-    const pin = "img/poi_custom.png";
-    function GetMap() {
-        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-        mapPushpinIcon(map, 47.6149, -122.1941, pin, 1.0, 0, 0);  //PushpinIcon
-    }
-
-    //Infobox&HTML
-    let map; //mapObject
-    const html = '<div style="background:red;">Hello,world</div>';
-    function GetMap() {
-        map = mapStart("#myMap", 47.6149, -122.1941, "load", 16); //Initialization processing
-        mapInfoboxHtml(map, 47.6149, -122.1941, html);            //infoboxHTML
-    }
