@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>BingMaps Library</title>
-<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
+<style>html,body{color:white;height:100%;}body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;}</style>
 </head>
 <body>
 
@@ -12,13 +12,6 @@
 <div id="myMap" style='width:100%;height:80%;'></div>
 <div id="geocode">geocode:data</div>
 <!-- MAP[END] -->
-
-<!--Directions[START]-->
-<div>From:<input type="text" id="from"> To:<input id="to"><input type="button" id="search" value="Search"> </div>
-<div id="direction"></div>
-<div id="panel"></div>
-<!-- Directions[END] -->
-
 
 
 <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Ai1EjjRtNmjFeZ_-crF4Ar1EeGWAa7oHR0APXB1n5K2SIlmjGd7MIyp1aA3fA6rT' async defer></script>
@@ -35,7 +28,7 @@ function GetMap(){
     
     //Map:Init
     map.startMap(47.6149, -122.1941, "load", 16);
-
+    
     //Map:Event
     map.eventMap("click",function(){
         alert("MapEvent!");
@@ -86,13 +79,8 @@ function GetMap(){
             alert("ReverseGeocode");
             document.querySelector("#geocode").innerHTML=data;
         });
+        
     },6000);
-
-    //Directions:Search.
-    document.getElementById("search").onclick = function () {
-        map.direction("#direction","#panel", document.getElementById("from").value, document.getElementById("to").value);
-    };
-    
 }
  
     

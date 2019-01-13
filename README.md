@@ -104,12 +104,6 @@ To test your installation, just call the following page at your website:
             });
         },6000);
         
-        //Directions:Search.
-        // * direction("#detailsViewArea","#timeViewArea","from","to");
-        document.getElementById("search").onclick = function () {
-            map.direction("#direction","#panel", document.getElementById("from").value, document.getElementById("to").value);
-        };
-        
         
     }
 
