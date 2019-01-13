@@ -7,7 +7,6 @@ class Bmap {
     constructor(target) {
         this.target = target; //#id
         this.map = null;      //mapObject
-        this.directionsManager = null;
     }
 
     /**
@@ -328,56 +327,10 @@ class Bmap {
         });
     }
     
-    /**
-    * direction:root search
-    * @method direction
-    * @param details (string)   [Destination details]
-    * @param panel   (string)   [Time and distance]
-    * @param from    (string)   [root from]
-    * @param to      (string)   [root to]
-    */
-     direction(details,panel,from,to){
-         const map = this.map;
-         let directionsManager;
-        //Load the directions module.
-         Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
-            //Create an instance of the directions manager.
-            directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
-            //Create waypoints to route between.
-            const seattleWaypoint = new Microsoft.Maps.Directions.Waypoint({ address: from });
-            directionsManager.addWaypoint(seattleWaypoint);
-            const workWaypoint = new Microsoft.Maps.Directions.Waypoint({ address: to });
-            directionsManager.addWaypoint(workWaypoint);
-            //Specify the element in which the itinerary will be rendered.
-            directionsManager.setRenderOptions({ itineraryContainer: details});
-            //Add event handlers to directions manager.
-            Microsoft.Maps.Events.addHandler(directionsManager, 'directionsError', function(e){
-                alert('Error: ' + e.message + '\r\nResponse Code: ' + e.responseCode)
-            });
-            //Time and distance
-            Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated',function(e){
-                //Get the current route index.
-                var routeIdx = directionsManager.getRequestOptions().routeIndex;
-                //Get the distance of the route, rounded to 2 decimal places.
-                var distance = Math.round(e.routeSummary[routeIdx].distance * 100)/100;
-                //Get the distance units used to calculate the route.
-                var units = directionsManager.getRequestOptions().distanceUnit;
-                var distanceUnits = '';
-                if (units == Microsoft.Maps.Directions.DistanceUnit.km) {
-                    distanceUnits = 'km'
-                } else {
-                    //Must be in miles
-                    distanceUnits = 'miles'
-                }
-                //Time is in seconds, convert to minutes and round off.
-                var time = Math.round(e.routeSummary[routeIdx].timeWithTraffic / 60);
-                document.querySelector(panel).innerHTML = 'Distance: ' + distance + ' ' + distanceUnits + '<br/>Time with Traffic: ' + time + ' minutes';
-            });
-            //Calculate directions.
-            directionsManager.calculateDirections();
-        });
-    }
+
 }
+
+
 
 
 
