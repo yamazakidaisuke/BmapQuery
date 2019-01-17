@@ -7,11 +7,12 @@
 </head>
 <body>
 
-<!-- MAP[START] -->
-<h1>BingMaps Library Sample</h1>
-<div id="myMap" style='width:100%;height:80%;'></div>
-<div id="geocode">geocode:data</div>
-<!-- MAP[END] -->
+<!--AutoSuggest[START]-->
+<h1>AutoSuggest（Enter city in text box）</h1>
+<div id="searchBoxContainer">
+    <input type="text" id="searchBox"><button id="clear">Clear</button>
+</div>
+<!--AutoSuggest[END]-->
 
 <!--Directions[START]-->
 <div>From:<input type="text" id="from"> To:<input id="to"><input type="button" id="search" value="Search"> </div>
@@ -19,9 +20,14 @@
 <div id="panel"></div>
 <!-- Directions[END] -->
 
+<!-- MAP[START] -->
+<div id="geocode">geocode:data</div>
+<div id="myMap" style='width:100%;height:80%;'></div>
+<!-- MAP[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[Your Map KEY]' async defer></script>
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Arpy7tq1krdMikodQT8fpJhY631dPSwVFkZhGo5sUW5yAEClXNrp-vk71Ee6dMAI' async defer></script>
 <script src="js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -29,48 +35,68 @@
 //****************************************************************************************
 //Init
 function GetMap(){
-    
+    //------------------------------------------------------------------------
     //Instance
-    let map = new Bmap("#myMap");
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
     
+    //------------------------------------------------------------------------
     //Map:Init
+    //------------------------------------------------------------------------
     map.startMap(47.6149, -122.1941, "load", 16);
 
+    //------------------------------------------------------------------------
     //Map:Event
+    //------------------------------------------------------------------------
     map.eventMap("click",function(){
         alert("MapEvent!");
     });
     
+    //------------------------------------------------------------------------
     //Pushpin
-    let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
-    
-    //Pushpin:Text
-    let pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
-    
-    //Pushpin:Icon
-    let pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
-    
+    //------------------------------------------------------------------------
+    const pin1 = map.pin(47.6149, -122.1941, "#ff0000");
+    //------------------------------------------------------------------------
     //pushpin:Event
+    //------------------------------------------------------------------------
     map.eventPin(pin1, "click", function(){
         alert("PinEvent1");
     });
     
+    //------------------------------------------------------------------------
+    //Pushpin:Text
+    //------------------------------------------------------------------------
+    const pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
+    
+    //------------------------------------------------------------------------
+    //Pushpin:Icon
+    //------------------------------------------------------------------------
+    const pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
+    
+    //------------------------------------------------------------------------
     //Infobox
+    //------------------------------------------------------------------------
     map.infobox(47.6149, -122.1941, "1 step", "Start");
     
+    //------------------------------------------------------------------------
     //Infobox:html
+    //------------------------------------------------------------------------
     const html = '<div style="background:red;">Hello,world</div>';
     map.infoboxHtml(47.6160, -122.1950, html);
     
+    //------------------------------------------------------------------------
+    //MapViewChange
     //after 2 seconds.
+    //------------------------------------------------------------------------
     setTimeout(function(){
-        //MapViewChange
         map.changeMap(47.6150, -122.1950, "load", 17);
     },2000);
 
+    //------------------------------------------------------------------------
+    //GeocodeJson
     //after 4 seconds.
+    //------------------------------------------------------------------------
     setTimeout(function () {
-        //GeocodeJson
         map.getGeocode("Seattle", function(data){
             //checkCode: variable data.
             alert("getGeocode");
@@ -78,21 +104,37 @@ function GetMap(){
         });
     },4000);
     
+    //------------------------------------------------------------------------
+    //ReverseGeocodeJson
     //after 6 seconds.
+    //------------------------------------------------------------------------
     setTimeout(function () {
-        //ReverseGeocodeJson
         map.reverseGeocode("Seattle", function(data){
             //checkCode: variable data.
             alert("ReverseGeocode");
             document.querySelector("#geocode").innerHTML=data;
         });
     },6000);
-
+    
+    //------------------------------------------------------------------------
     //Directions:Search.
+    //------------------------------------------------------------------------
     document.getElementById("search").onclick = function () {
         map.direction("#direction","#panel", document.getElementById("from").value, document.getElementById("to").value);
     };
     
+    //------------------------------------------------------------------------
+    // AutoSuggest
+    // ** !! Only viewing user's region can be displayed !!
+    //------------------------------------------------------------------------
+    // HTML:Add !!
+    //<h1>AutoSuggest（Enter city in text box）</h1>
+    //<div id='searchBoxContainer'>
+    //    <input type='text' id='searchBox'><button id="clear">Clear</button>
+    //</div>
+    //------------------------------------------------------------------------
+    map.selectedSuggestion("#searchBox","#searchBoxContainer");
+
 }
  
     

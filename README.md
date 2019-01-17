@@ -110,6 +110,16 @@ To test your installation, just call the following page at your website:
             map.direction("#direction","#panel", document.getElementById("from").value, document.getElementById("to").value);
         };
         
+        //AutoSuggest
+        // ** !! Only viewing user's region can be displayed !!
+        //------------------------------------------------------------------------
+        // HTML:Add !!
+        //<h1>AutoSuggest（Enter city in text box）</h1>
+        //<div id='searchBoxContainer'>
+        //    <input type='text' id='searchBox'><button id="clear">Clear</button>
+        //</div>
+        //------------------------------------------------------------------------
+        map.selectedSuggestion("#searchBox","#searchBoxContainer");
         
     }
 

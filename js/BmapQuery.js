@@ -377,6 +377,39 @@ class Bmap {
             directionsManager.calculateDirections();
         });
     }
+    
+    
+    /**
+    * AutoSuggest
+    * @method selectedSuggestion
+    * @param searchBox           (string)   [ SuggestArea #id ]
+    * @param searchBoxContainer  (string)   [ SuggestBox  #id ]
+    * !! Only viewing user's region can be displayed !!
+    */
+    //------------------------------------------------------------------------
+    // ** HTML:Add **
+    //<h1>AutoSuggest（Enter city in text box）</h1>
+    //<div id='searchBoxContainer'>
+    //    <input type='text' id='searchBox'><button id="clear">Clear</button>
+    //</div>
+    //------------------------------------------------------------------------
+    selectedSuggestion(searchBox,searchBoxContainer) {
+        //AutoSuggest
+        const map = this.map;
+        Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+            var manager = new Microsoft.Maps.AutosuggestManager({
+                map: map
+            });
+            manager.attachAutosuggest(searchBox,searchBoxContainer, function(result){
+                //Remove previously selected suggestions from the map.
+                map.entities.clear();
+                map.entities.push(new Microsoft.Maps.Pushpin(result.location));
+                map.setView({ bounds: result.bestView });
+            });
+        });
+    }
+
+
 }
 
 
