@@ -58,11 +58,11 @@ class Bmap {
 
     /**
      * map:Event
-     * @method eventMap
+     * @method onMap
      * @param event    (string)   ["click"...]
      * @param collback (function) [function(){...}]
      */
-    eventMap(event, callback){
+    onMap(event, callback){
         //Param Check
         if(typeof this.map!="object" || event=="" || typeof callback!="function"){
             return false;
@@ -115,13 +115,14 @@ class Bmap {
         this.map.entities.push(pin);
         return pin;
     }
+    
     /**
      * pushpin:Event
-     * @method eventPin
+     * @method onPin
      * @param pushpin    (object)   [pushpinObject]
      * @param collback   (function) [function(){...}]
      */
-    eventPin(pushpin, event, callback){
+    onPin(pushpin, event, callback){
         //Param Check
         if(typeof pushpin!="object" || event=="" || typeof callback!="function"){
             return false;
@@ -256,7 +257,7 @@ class Bmap {
     }
     
     /**
-     * Search:Get Geocode JSON
+     * Search:Get Geocode
      * @method getGeocode
      * @param query     (string)   [Search string]
      * @param callback  (function) [function{...}]
@@ -295,7 +296,7 @@ class Bmap {
     }
     
     /**
-     * Search:Get Reverse Geocode JSON
+     * Search:Get Reverse Geocode
      * @method reverseGeocode
      * @param query     (string)   [Search string]
      * @param callback  (function) [function{...}]
@@ -335,19 +336,29 @@ class Bmap {
     * @param panel   (string)   [Time and distance]
     * @param from    (string)   [root from]
     * @param to      (string)   [root to]
+    * @param waypoints(array)   ["Bellevue","Yarrow Point"...]
     */
      direction(details,panel,from,to){
          const map = this.map;
          let directionsManager;
+         const waypoints = arguments[4];
         //Load the directions module.
          Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
             //Create an instance of the directions manager.
             directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
-            //Create waypoints to route between.
-            const seattleWaypoint = new Microsoft.Maps.Directions.Waypoint({ address: from });
-            directionsManager.addWaypoint(seattleWaypoint);
-            const workWaypoint = new Microsoft.Maps.Directions.Waypoint({ address: to });
-            directionsManager.addWaypoint(workWaypoint);
+            //Start waypoints to route between.
+            const start = new Microsoft.Maps.Directions.Waypoint({address:from});
+            directionsManager.addWaypoint(start);
+            //Waypoints
+            if(typeof waypoints!="undefined"){
+                waypoints.forEach(function( waypoint ) {
+                    let way = new Microsoft.Maps.Directions.Waypoint({address:waypoint});
+                    directionsManager.addWaypoint(way);
+                });
+            }
+            //EndPoint
+            const end = new Microsoft.Maps.Directions.Waypoint({address:to});
+            directionsManager.addWaypoint(end);
             //Specify the element in which the itinerary will be rendered.
             directionsManager.setRenderOptions({ itineraryContainer: details});
             //Add event handlers to directions manager.
@@ -378,7 +389,6 @@ class Bmap {
         });
     }
     
-    
     /**
     * AutoSuggest
     * @method selectedSuggestion
@@ -388,10 +398,10 @@ class Bmap {
     */
     //------------------------------------------------------------------------
     // ** HTML:Add **
-    //<h1>AutoSuggest（Enter city in text box）</h1>
-    //<div id='searchBoxContainer'>
-    //    <input type='text' id='searchBox'><button id="clear">Clear</button>
-    //</div>
+    // <h1>AutoSuggest（Enter city in text box）</h1>
+    // <div id='searchBoxContainer'>
+    //     <input type='text' id='searchBox'><button id="clear">Clear</button>
+    // </div>
     //------------------------------------------------------------------------
     selectedSuggestion(searchBox,searchBoxContainer) {
         //AutoSuggest
