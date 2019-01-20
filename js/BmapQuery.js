@@ -331,6 +331,7 @@ class Bmap {
     
     /**
     * direction:root search
+    * !! You ay need to set the location: ...&setLang=en&setMkt=en-US !!
     * @method direction
     * @param details (string)   [Destination details]
     * @param panel   (string)   [Time and distance]

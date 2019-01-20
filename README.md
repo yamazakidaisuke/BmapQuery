@@ -130,6 +130,7 @@ To test your installation, just call the following page at your website:
         
         //----------------------------------------------------
         // Directions:Search.
+        // !! You ay need to set the location: ...&setLang=en&setMkt=en-US !!
         // direction("#detailsViewArea","#timeViewArea","from","to");
         //----------------------------------------------------
         document.getElementById("search").onclick = function () {

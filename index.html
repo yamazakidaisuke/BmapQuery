@@ -26,7 +26,7 @@
 <!-- Directions[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Arpy7tq1krdMikodQT8fpJhY631dPSwVFkZhGo5sUW5yAEClXNrp-vk71Ee6dMAI&setLang=en&setMkt=en-US' async defer></script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Arpy7tq1krdMikodQT8fpJhY631dPSwVFkZhGo5sUW5yAEClXNrp-vk71Ee6dMAI' async defer></script>
 <script src="js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -117,6 +117,7 @@ function GetMap(){
     
     //------------------------------------------------------------------------
     //Directions:Search.
+    // !! You ay need to set the location: ...&setLang=en&setMkt=en-US !!
     //------------------------------------------------------------------------
     document.getElementById("search").onclick = function () {
         const from  = document.getElementById("from").value; //StartPoint
