@@ -22,11 +22,10 @@
 <!--Directions[START]-->
 <div>From:<input type="text" id="from"> To:<input id="to"><input type="button" id="search" value="Search"> </div>
 <div id="direction"></div>
-<div id="panel"></div>
 <!-- Directions[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Arpy7tq1krdMikodQT8fpJhY631dPSwVFkZhGo5sUW5yAEClXNrp-vk71Ee6dMAI' async defer></script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Arpy7tq1krdMikodQT8fpJhY631dPSwVFkZhGo5sUW5yAEClXNrp-vk71Ee6dMAI&setLang=en&setMkt=en-US' async defer></script>
 <script src="js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -117,13 +116,15 @@ function GetMap(){
     
     //------------------------------------------------------------------------
     //Directions:Search.
-    // !! You ay need to set the location: ...&setLang=en&setMkt=en-US !!
+    // !! For confirmation, set the parameters for each country !!
+    // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
     //------------------------------------------------------------------------
     document.getElementById("search").onclick = function () {
-        const from  = document.getElementById("from").value; //StartPoint
-        const to    = document.getElementById("to").value;   //EndPoint
-        const array = ["Bellevue","Yarrow Point"];           //Waypoints...
-        map.direction("#direction", "#panel", from , to, array); //Direction Methed
+        const from  = document.getElementById("from").value;  //StartPoint
+        const to    = document.getElementById("to").value;    //EndPoint
+        const array = ["Bellevue", "Yarrow Point"];           //Waypoints...
+        map.direction("#direction", from , to, array);        //Direction Methed
     };
     
     //------------------------------------------------------------------------

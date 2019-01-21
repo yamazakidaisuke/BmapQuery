@@ -331,18 +331,21 @@ class Bmap {
     
     /**
     * direction:root search
-    * !! You ay need to set the location: ...&setLang=en&setMkt=en-US !!
+    * ------------------------------------------------------------------
+    * !! For confirmation, set the parameters for each country !!
+    * + [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    * + [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    * ------------------------------------------------------------------
     * @method direction
-    * @param details (string)   [Destination details]
-    * @param panel   (string)   [Time and distance]
-    * @param from    (string)   [root from]
-    * @param to      (string)   [root to]
-    * @param waypoints(array)   ["Bellevue","Yarrow Point"...]
+    * @param details    (string)   [Destination details]
+    * @param from       (string)   [root from]
+    * @param to         (string)   [root to]
+    * @param waypoints  (array)    * ["Bellevue","Yarrow Point"...]
     */
-     direction(details,panel,from,to){
+     direction(details,from,to){
          const map = this.map;
          let directionsManager;
-         const waypoints = arguments[4];
+         const waypoints = arguments[3];
         //Load the directions module.
          Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
             //Create an instance of the directions manager.
@@ -382,8 +385,8 @@ class Bmap {
                     distanceUnits = 'miles'
                 }
                 //Time is in seconds, convert to minutes and round off.
-                var time = Math.round(e.routeSummary[routeIdx].timeWithTraffic / 60);
-                document.querySelector(panel).innerHTML = 'Distance: ' + distance + ' ' + distanceUnits + '<br/>Time with Traffic: ' + time + ' minutes';
+                //var time = Math.round(e.routeSummary[routeIdx].timeWithTraffic / 60);
+                //document.querySelector(panel).innerHTML = 'Distance: ' + distance + ' ' + distanceUnits + '<br/>Time with Traffic: ' + time + ' minutes';
             });
             //Calculate directions.
             directionsManager.calculateDirections();
@@ -395,15 +398,15 @@ class Bmap {
     * @method selectedSuggestion
     * @param searchBox           (string)   [ SuggestArea #id ]
     * @param searchBoxContainer  (string)   [ SuggestBox  #id ]
+    * ------------------------------------------------------------------------
     * !! Only viewing user's region can be displayed !!
+    * !! HTML:Add !!
+    * <h1>AutoSuggest（Enter city in text box）</h1>
+    * <div id='searchBoxContainer'>
+    *     <input type='text' id='searchBox'><button id="clear">Clear</button>
+    *  </div>
+    * ------------------------------------------------------------------------
     */
-    //------------------------------------------------------------------------
-    // ** HTML:Add **
-    // <h1>AutoSuggest（Enter city in text box）</h1>
-    // <div id='searchBoxContainer'>
-    //     <input type='text' id='searchBox'><button id="clear">Clear</button>
-    // </div>
-    //------------------------------------------------------------------------
     selectedSuggestion(searchBox,searchBoxContainer) {
         //AutoSuggest
         const map = this.map;

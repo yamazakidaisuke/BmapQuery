@@ -129,12 +129,16 @@ To test your installation, just call the following page at your website:
         },6000);
         
         //----------------------------------------------------
-        // Directions:Search.
-        // !! You ay need to set the location: ...&setLang=en&setMkt=en-US !!
-        // direction("#detailsViewArea","#timeViewArea","from","to");
-        //----------------------------------------------------
+        //Directions:Search.
+        // !! For confirmation, set the parameters for each country !!
+        // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+        // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+        //------------------------------------------------------------------------
         document.getElementById("search").onclick = function () {
-            map.direction("#direction","#panel", document.getElementById("from").value, document.getElementById("to").value);
+            const from  = document.getElementById("from").value;  //StartPoint
+            const to    = document.getElementById("to").value;    //EndPoint
+            const array = ["Bellevue", "Yarrow Point"];           //Waypoints...
+            map.direction("#direction", from , to, array);        //Direction Methed
         };
         
         //-----------------------------------------------------
