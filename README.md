@@ -18,7 +18,7 @@ Installing BmapQuery is an easy task. Just follow these simple steps:
 
 
 **Note:** BmapQuery is by default installed in the `js` folder. You can
-place the files in whichever you want though.
+place the files in whichever you want though. Operation check with index.html.
 
 ## Checking Your Installation
 
@@ -27,7 +27,7 @@ To test your installation, just call the following page at your website:
 	https://mapapi.org/open.php?file=example_libs
 
 ## Documentation & For example
-**[html]**
+**[html: index.html]**
 
     <!-- 1.Load BingMapsControl api [callback=GetMap] -->
     <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
@@ -35,7 +35,7 @@ To test your installation, just call the following page at your website:
     <!-- 2.Load BingMapQuery -->
     <script src="js/BmapQuery.js"></script>
    
-**[script]**   
+**[script: js/BmapQuery.js]**   
 
     //*Sample
     function GetMap() {
