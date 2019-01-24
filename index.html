@@ -85,38 +85,6 @@ function GetMap(){
     map.infoboxHtml(47.6160, -122.1950, html);
     
     //------------------------------------------------------------------------
-    //MapViewChange
-    //after 2 seconds.
-    //------------------------------------------------------------------------
-    setTimeout(function(){
-        map.changeMap(47.6150, -122.1950, "load", 17);
-    },2000);
-
-    //------------------------------------------------------------------------
-    //GeocodeJson
-    //after 4 seconds.
-    //------------------------------------------------------------------------
-    setTimeout(function () {
-        map.getGeocode("Seattle", function(data){
-            //checkCode: variable data.
-            alert("getGeocode");
-            document.querySelector("#geocode").innerHTML=data;
-        });
-    },4000);
-    
-    //------------------------------------------------------------------------
-    //ReverseGeocodeJson
-    //after 6 seconds.
-    //------------------------------------------------------------------------
-    setTimeout(function () {
-        map.reverseGeocode("Seattle", function(data){
-            //checkCode: variable data.
-            alert("ReverseGeocode");
-            document.querySelector("#geocode").innerHTML=data;
-        });
-    },6000);
-    
-    //------------------------------------------------------------------------
     //Directions:Search.
     // !! For confirmation, set the parameters for each country !!
     // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
@@ -140,12 +108,55 @@ function GetMap(){
     //</div>
     //------------------------------------------------------------------------
     map.selectedSuggestion("#searchBox","#searchBoxContainer");
+        
+    //------------------------------------------------------------------------
+    //MapViewChange
+    //after 2 seconds.
+    //------------------------------------------------------------------------
+    setTimeout(function(){
+        map.changeMap(47.6150, -122.1950, "load", 17);
+    },2000);
 
-}
- 
+    //------------------------------------------------------------------------
+    //Geocode (2 patarn)
+    //after 4 seconds.
+    //------------------------------------------------------------------------
+    setTimeout(function () {
+        //A. Address
+        map.getGeocode("Seattle", function(data){
+            alert("A. getGeocode");
+            document.querySelector("#geocode").innerHTML=data;
+        });
+        //B. Click Event
+        map.onGeocode("click", function(data){
+            alert(data.location);
+        });
+        //
+    },4000);
+
+    //------------------------------------------------------------------------
+    //ReverseGeocode (2 patterns)
+    //after 6,8 seconds.
+    //------------------------------------------------------------------------
+    //A.Set location data for BingMaps
+    setTimeout(function () {
+        const location = map.setLocation(47.6130, -122.1945); 
+        map.reverseGeocode(location, function(data){
+            alert("A. Reverse Geocode");
+            document.querySelector("#geocode").innerHTML=data;
+        });
+    },6000);
     
+    //B.Get MapCenter location
+    setTimeout(function () {
+        const location = map.getCenter();
+        map.reverseGeocode(location, function(data){
+            alert("B. Reverse Geocode");
+            document.querySelector("#geocode").innerHTML=data;
+        });
+    },8000);
+    
+}
 </script>
-
-
 </body>
 </html>

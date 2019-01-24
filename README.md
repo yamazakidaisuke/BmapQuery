@@ -107,26 +107,43 @@ To test your installation, just call the following page at your website:
         },2000);
         
         //----------------------------------------------------
-        // Geocode(after 4 seconds.)
+        // Geocode(2 patarn & after 4 seconds.)
         // getGeocode("searchQuery",callback);
         //----------------------------------------------------
         setTimeout(function () {
+            //A. Address
             map.getGeocode("Seattle", function(data){
+                alert("A. getGeocode");
                 document.querySelector("#geocode").innerHTML=data;
+            });
+            //B. Click Event
+            map.onGeocode("click", function(data){
+                alert(data.location);
             });
         },4000);
     
-        //----------------------------------------------------
-        // Reverse Geocode(after 6 seconds.)
-        // reverseGeocode("searchQuery",callback);
-        //----------------------------------------------------
+        //------------------------------------------------------------------------
+        //Get Reverse Geocode
+        //2 patterns
+        //after 6,8 seconds.
+        //------------------------------------------------------------------------
+        //A.Set location data for BingMaps
         setTimeout(function () {
-            map.reverseGeocode("Seattle", function(data){
-                //checkCode: variable data.
-                alert("ReverseGeocode");
+            const location = map.setLocation(47.6130, -122.1945); 
+            map.reverseGeocode(location, function(data){
+                alert("A. Reverse Geocode");
                 document.querySelector("#geocode").innerHTML=data;
             });
         },6000);
+        
+        //B.Get MapCenter location
+        setTimeout(function () {
+            const mapCenter = map.getCenter(); 
+            map.reverseGeocode(mapCenter, function(data){
+                alert("B. Reverse Geocode");
+                document.querySelector("#geocode").innerHTML=data;
+            });
+        },8000);
         
         //----------------------------------------------------
         //Directions:Search.

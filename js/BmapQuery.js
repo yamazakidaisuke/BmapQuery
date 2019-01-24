@@ -31,7 +31,27 @@ class Bmap {
             zoom: size  //Zoom:1=zoomOut, 20=zoomUp[ 1~20 ]
         });
     }
-
+    
+    /**
+     * Set location data for BingMaps
+     * @method setLocation
+     * @param lat    (float)   [47.6149]
+     * @param lon    (float)   [-122.1941]
+     * @returns      (Object)  location Object
+     */
+    setLocation(lat,lon){
+        return new Microsoft.Maps.Location(lat,lon);
+    }
+    
+    /**
+     * Get Map center
+     * @method getCenter
+     * @returns  (Object) location Object
+     */
+    getCenter(){
+        return this.map.getCenter();
+    }
+    
     /**
      * MapViewMove
      * @method changeMap
@@ -124,7 +144,7 @@ class Bmap {
      */
     onPin(pushpin, event, callback){
         //Param Check
-        if(typeof pushpin!="object" || event=="" || typeof callback!="function"){
+        if(typeof pushpin!=="object" || event==="" || typeof callback!=="function"){
             return false;
         }
         if(event=="click")     Microsoft.Maps.Events.addHandler(pushpin, 'click',     callback);
@@ -298,21 +318,21 @@ class Bmap {
     /**
      * Search:Get Reverse Geocode
      * @method reverseGeocode
-     * @param query     (string)   [Search string]
+     * @param location  (object)   [location(lat,lon)]
      * @param callback  (function) [function{...}]
      * @returns { callback:function }
      */
-    async reverseGeocode(query,callback){
-        const data = await this._reverseGeocode(query);
+    async reverseGeocode(location,callback){
+        const data = await this._reverseGeocode(location);
         callback(data);
     }
-    _reverseGeocode() {
+    _reverseGeocode(location) {
         const map = this.map;
         return new Promise(resolve => {
             let searchManager;
             if (!searchManager) {
                 let searchRequest = {
-                    location: map.getCenter(),
+                    location: location,
                     callback: function (r) {
                         return resolve(r.name);
                     },
@@ -327,6 +347,19 @@ class Bmap {
                 });
             }
         });
+    }
+    
+    
+    /**
+    * Get Geocode from event
+    * @method onGeocode
+    * @param event    (string)   ["click"...]
+    * @param collback (function) [function(){...}]
+    */
+    onGeocode(event, callback){
+        if(event!=="" && typeof event==="string" || typeof callback!=="function") {
+            return Microsoft.Maps.Events.addHandler(this.map, event, callback);
+        }
     }
     
     /**
