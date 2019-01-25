@@ -1,4 +1,4 @@
-BmapQuery
+BmapQuery version 0.1
 ==========
 
 Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
