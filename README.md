@@ -25,10 +25,11 @@ place the files in whichever you want though. Operation check with index.html.
 To test your installation, just call the following page at your website:
 
 	https://mapapi.org/open.php?file=example_libs
-
-## Documentation & For example
-** ./example/...
+## Examples [ ./example/... ]
 ** Sample files for each function are prepared in the example folder.
+
+
+## Documentation
 
 **[html: index.html]**
 
