@@ -8,6 +8,7 @@ class Bmap {
         this.target = target; //#id
         this.map = null;      //mapObject
         this.directionsManager = null;
+        this.loc = null; //Geocode:location
     }
 
     /**
@@ -50,6 +51,24 @@ class Bmap {
      */
     getCenter(){
         return this.map.getCenter();
+    }
+    
+    /**
+     * Get Mapcenter Latitude
+     * @method getLat
+     * @returns  (floot) latitude
+     */
+    getLat(){
+        return this.map.getCenter().latitude;
+    }
+    
+     /**
+     * Get Mapcenter longitude
+     * @method getLon
+     * @returns  (floot) longitude
+     */
+    getLon(){
+        return this.map.getCenter().longitude;
     }
     
     /**
@@ -190,7 +209,7 @@ class Bmap {
      * @param anchor2   (int)      ["Adjusting the position： heightPx"]
      * @returns {boolean=false OR void }
      */
-    pinIcon (lat, lon, icon, scale, anchor1, anchor2){
+    pinIcon(lat, lon, icon, scale, anchor1, anchor2){
         //Param Check
         if(this.map=="" || lat=="" || lon=="" || icon=="" ||  scale=="" ){
             return false;
@@ -302,7 +321,7 @@ class Bmap {
                                 const pin = new Microsoft.Maps.Pushpin(r.results[0].location);
                                 map.entities.push(pin);
                                 map.setView({ bounds: r.results[0].bestView});
-                                return resolve(JSON.stringify(r.results[0].location));
+                                return resolve(r.results[0].location);
                             }
                         },
                         errorCallback: function (e) {
@@ -349,7 +368,6 @@ class Bmap {
         });
     }
     
-    
     /**
     * Get Geocode from event
     * @method onGeocode
@@ -358,7 +376,7 @@ class Bmap {
     */
     onGeocode(event, callback){
         if(event!=="" && typeof event==="string" || typeof callback!=="function") {
-            return Microsoft.Maps.Events.addHandler(this.map, event, callback);
+            Microsoft.Maps.Events.addHandler(this.map, event, callback);
         }
     }
     

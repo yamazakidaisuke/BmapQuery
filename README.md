@@ -1,4 +1,4 @@
-BmapQuery version 0.1
+BmapQuery  v0.2
 ==========
 
 Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
@@ -27,6 +27,9 @@ To test your installation, just call the following page at your website:
 	https://mapapi.org/open.php?file=example_libs
 
 ## Documentation & For example
+** ./example/...
+** Sample files for each function are prepared in the example folder.
+
 **[html: index.html]**
 
     <!-- 1.Load BingMapsControl api [callback=GetMap] -->
@@ -107,7 +110,7 @@ To test your installation, just call the following page at your website:
         },2000);
         
         //----------------------------------------------------
-        // Geocode(2 patarn & after 4 seconds.)
+        // Geocode(2 patterns & after 4 seconds.)
         // getGeocode("searchQuery",callback);
         //----------------------------------------------------
         setTimeout(function () {

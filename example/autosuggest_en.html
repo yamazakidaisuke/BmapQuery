@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geocode</title>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}#geocode{font-size: 120%;}</style>
+</head>
+<body>
+
+<!--AutoSuggest[START]-->
+<h1>AutoSuggest（Enter city in text box）</h1>
+<div id="searchBoxContainer">
+    <input type="text" id="searchBox"><button id="clear">Clear</button>
+</div>
+<!--AutoSuggest[END]-->
+
+<!-- MAP[START] -->
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]&setLang=en&setMkt=en-US' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+    
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    map.startMap(47.6149, -122.1941, "load", 10);
+
+    //-----------------------------------------------------
+    //3. AutoSuggest
+    // !! Only viewing user's region can be displayed !!
+    // !! For confirmation, set the parameters for each country !!
+    // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    //-----------------------------------------------------
+    // HTML:Add !!
+    // <h1>AutoSuggest（Enter city in text box）</h1>
+    // <div id='searchBoxContainer'>
+    //     <input type='text' id='searchBox'><button id="clear">Clear</button>
+    // </div>
+    //-----------------------------------------------------
+    map.selectedSuggestion("#searchBox","#searchBoxContainer");
+        
+    
+}
+    
+</script>
+</body>
+</html>
