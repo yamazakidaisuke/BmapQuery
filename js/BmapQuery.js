@@ -32,7 +32,7 @@ class Bmap {
             zoom: size  //Zoom:1=zoomOut, 20=zoomUp[ 1~20 ]
         });
     }
-    
+
     /**
      * Set location data for BingMaps
      * @method setLocation
@@ -43,7 +43,7 @@ class Bmap {
     setLocation(lat,lon){
         return new Microsoft.Maps.Location(lat,lon);
     }
-    
+
     /**
      * Get Map center
      * @method getCenter
@@ -52,7 +52,7 @@ class Bmap {
     getCenter(){
         return this.map.getCenter();
     }
-    
+
     /**
      * Get Mapcenter Latitude
      * @method getLat
@@ -61,7 +61,7 @@ class Bmap {
     getLat(){
         return this.map.getCenter().latitude;
     }
-    
+
      /**
      * Get Mapcenter longitude
      * @method getLon
@@ -70,7 +70,7 @@ class Bmap {
     getLon(){
         return this.map.getCenter().longitude;
     }
-    
+
     /**
      * MapViewMove
      * @method changeMap
@@ -154,7 +154,7 @@ class Bmap {
         this.map.entities.push(pin);
         return pin;
     }
-    
+
     /**
      * pushpin:Event
      * @method onPin
@@ -171,6 +171,20 @@ class Bmap {
         if(event=="mouseout")  Microsoft.Maps.Events.addHandler(pushpin, 'mouseout',  callback);
         if(event=="mouseover") Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', callback);
         if(event=="mouseup")   Microsoft.Maps.Events.addHandler(pushpin, 'mouseup',   callback);
+    }
+
+    /**
+     * pushpin:Delete
+     * @method deletePin
+     */
+    deletePin(){
+        const map = this.map;
+        for (let i=map.entities.getLength()-1; i>=0; i--) {
+            const pushpin = map.entities.get(i);
+            if (pushpin instanceof Microsoft.Maps.Pushpin) {
+                map.entities.removeAt(i);
+            }
+        }
     }
 
     /**
@@ -252,7 +266,7 @@ class Bmap {
         };
         img.src = imgUrl;
     }
-    
+
     /**
      * Infobox:Add
      * @method infobox
@@ -274,7 +288,7 @@ class Bmap {
         });
         infobox.setMap(this.map); //Add infobox to Map
     }
-    
+
     /**
      * Infobox:HTML
      * @method infoboxHtml
@@ -294,7 +308,7 @@ class Bmap {
         });
         infobox.setMap(this.map); //Add infobox to Map
     }
-    
+
     /**
      * Search:Get Geocode
      * @method getGeocode
@@ -333,7 +347,7 @@ class Bmap {
         });
 
     }
-    
+
     /**
      * Search:Get Reverse Geocode
      * @method reverseGeocode
@@ -367,7 +381,7 @@ class Bmap {
             }
         });
     }
-    
+
     /**
     * Get Geocode from event
     * @method onGeocode
@@ -379,7 +393,7 @@ class Bmap {
             Microsoft.Maps.Events.addHandler(this.map, event, callback);
         }
     }
-    
+
     /**
     * direction:root search
     * ------------------------------------------------------------------
@@ -443,7 +457,7 @@ class Bmap {
             directionsManager.calculateDirections();
         });
     }
-    
+
     /**
     * AutoSuggest
     * @method selectedSuggestion

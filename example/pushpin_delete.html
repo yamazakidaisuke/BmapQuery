@@ -38,6 +38,18 @@ function GetMap(){
     //----------------------------------------------------
     let pin = map.pin(47.6149, -122.1941, "#ff0000");
 
+    //----------------------------------------------------
+    //4  Delete Pushpin
+    //   deletePin();
+    //----------------------------------------------------
+    //after 2 seconds.
+    setTimeout(function(){
+        alert("delete pushpin!");
+        map.deletePin();
+    },2000);
+
+
+
 }
 </script>
 </body>
