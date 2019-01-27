@@ -7,6 +7,8 @@ class Bmap {
     constructor(target) {
         this.target = target; //#id
         this.map = null;      //mapObject
+        this.directionsManager = null;
+        this.loc = null; //Geocode:location
     }
 
     /**
@@ -29,6 +31,44 @@ class Bmap {
             mapTypeId: eval("Microsoft.Maps.MapTypeId."+typeid), //Type: [load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
             zoom: size  //Zoom:1=zoomOut, 20=zoomUp[ 1~20 ]
         });
+    }
+
+    /**
+     * Set location data for BingMaps
+     * @method setLocation
+     * @param lat    (float)   [47.6149]
+     * @param lon    (float)   [-122.1941]
+     * @returns      (Object)  location Object
+     */
+    setLocation(lat,lon){
+        return new Microsoft.Maps.Location(lat,lon);
+    }
+
+    /**
+     * Get Map center
+     * @method getCenter
+     * @returns  (Object) location Object
+     */
+    getCenter(){
+        return this.map.getCenter();
+    }
+
+    /**
+     * Get Mapcenter Latitude
+     * @method getLat
+     * @returns  (floot) latitude
+     */
+    getLat(){
+        return this.map.getCenter().latitude;
+    }
+
+     /**
+     * Get Mapcenter longitude
+     * @method getLon
+     * @returns  (floot) longitude
+     */
+    getLon(){
+        return this.map.getCenter().longitude;
     }
 
     /**
@@ -57,11 +97,11 @@ class Bmap {
 
     /**
      * map:Event
-     * @method eventMap
+     * @method onMap
      * @param event    (string)   ["click"...]
      * @param collback (function) [function(){...}]
      */
-    eventMap(event, callback){
+    onMap(event, callback){
         //Param Check
         if(typeof this.map!="object" || event=="" || typeof callback!="function"){
             return false;
@@ -114,15 +154,16 @@ class Bmap {
         this.map.entities.push(pin);
         return pin;
     }
+
     /**
      * pushpin:Event
-     * @method eventPin
+     * @method onPin
      * @param pushpin    (object)   [pushpinObject]
      * @param collback   (function) [function(){...}]
      */
-    eventPin(pushpin, event, callback){
+    onPin(pushpin, event, callback){
         //Param Check
-        if(typeof pushpin!="object" || event=="" || typeof callback!="function"){
+        if(typeof pushpin!=="object" || event==="" || typeof callback!=="function"){
             return false;
         }
         if(event=="click")     Microsoft.Maps.Events.addHandler(pushpin, 'click',     callback);
@@ -130,6 +171,20 @@ class Bmap {
         if(event=="mouseout")  Microsoft.Maps.Events.addHandler(pushpin, 'mouseout',  callback);
         if(event=="mouseover") Microsoft.Maps.Events.addHandler(pushpin, 'mouseover', callback);
         if(event=="mouseup")   Microsoft.Maps.Events.addHandler(pushpin, 'mouseup',   callback);
+    }
+
+    /**
+     * pushpin:Delete
+     * @method deletePin
+     */
+    deletePin(){
+        const map = this.map;
+        for (let i=map.entities.getLength()-1; i>=0; i--) {
+            const pushpin = map.entities.get(i);
+            if (pushpin instanceof Microsoft.Maps.Pushpin) {
+                map.entities.removeAt(i);
+            }
+        }
     }
 
     /**
@@ -168,7 +223,7 @@ class Bmap {
      * @param anchor2   (int)      ["Adjusting the position： heightPx"]
      * @returns {boolean=false OR void }
      */
-    pinIcon (lat, lon, icon, scale, anchor1, anchor2){
+    pinIcon(lat, lon, icon, scale, anchor1, anchor2){
         //Param Check
         if(this.map=="" || lat=="" || lon=="" || icon=="" ||  scale=="" ){
             return false;
@@ -211,7 +266,7 @@ class Bmap {
         };
         img.src = imgUrl;
     }
-    
+
     /**
      * Infobox:Add
      * @method infobox
@@ -233,7 +288,7 @@ class Bmap {
         });
         infobox.setMap(this.map); //Add infobox to Map
     }
-    
+
     /**
      * Infobox:HTML
      * @method infoboxHtml
@@ -253,19 +308,19 @@ class Bmap {
         });
         infobox.setMap(this.map); //Add infobox to Map
     }
-    
+
     /**
-     * Search:Get Geocode JSON
-     * @method mapGeocodeValue or mapGeocodeHtml
+     * Search:Get Geocode
+     * @method getGeocode
      * @param query     (string)   [Search string]
      * @param callback  (function) [function{...}]
      * @returns { callback:function }
      */
     async getGeocode(query,callback){
-        const data = await this.geocodeQuery(query);
+        const data = await this._geocodeQuery(query);
         callback(data);
     }
-    geocodeQuery(query) {
+    _geocodeQuery(query) {
         const map = this.map;
         return new Promise(resolve => {
             let searchManager;
@@ -280,7 +335,7 @@ class Bmap {
                                 const pin = new Microsoft.Maps.Pushpin(r.results[0].location);
                                 map.entities.push(pin);
                                 map.setView({ bounds: r.results[0].bestView});
-                                return resolve(JSON.stringify(r.results[0].location));
+                                return resolve(r.results[0].location);
                             }
                         },
                         errorCallback: function (e) {
@@ -293,9 +348,148 @@ class Bmap {
 
     }
 
+    /**
+     * Search:Get Reverse Geocode
+     * @method reverseGeocode
+     * @param location  (object)   [location(lat,lon)]
+     * @param callback  (function) [function{...}]
+     * @returns { callback:function }
+     */
+    async reverseGeocode(location,callback){
+        const data = await this._reverseGeocode(location);
+        callback(data);
+    }
+    _reverseGeocode(location) {
+        const map = this.map;
+        return new Promise(resolve => {
+            let searchManager;
+            if (!searchManager) {
+                let searchRequest = {
+                    location: location,
+                    callback: function (r) {
+                        return resolve(r.name);
+                    },
+                    errorCallback: function (e) {
+                        return resolve("Unable to reverse geocode location.");
+                    }
+                };
+                //Create an instance of the search manager and call the reverseGeocode function again.
+                Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                    searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                    searchManager.reverseGeocode(searchRequest);
+                });
+            }
+        });
+    }
+
+    /**
+    * Get Geocode from event
+    * @method onGeocode
+    * @param event    (string)   ["click"...]
+    * @param collback (function) [function(){...}]
+    */
+    onGeocode(event, callback){
+        if(event!=="" && typeof event==="string" || typeof callback!=="function") {
+            Microsoft.Maps.Events.addHandler(this.map, event, callback);
+        }
+    }
+
+    /**
+    * direction:root search
+    * ------------------------------------------------------------------
+    * !! For confirmation, set the parameters for each country !!
+    * + [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    * + [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    * ------------------------------------------------------------------
+    * @method direction
+    * @param details    (string)   [Destination details]
+    * @param from       (string)   [root from]
+    * @param to         (string)   [root to]
+    * @param waypoints  (array)    * ["Bellevue","Yarrow Point"...]
+    */
+     direction(details,from,to){
+         const map = this.map;
+         let directionsManager;
+         const waypoints = arguments[3];
+        //Load the directions module.
+         Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+            //Create an instance of the directions manager.
+            directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+            //Start waypoints to route between.
+            const start = new Microsoft.Maps.Directions.Waypoint({address:from});
+            directionsManager.addWaypoint(start);
+            //Waypoints
+            if(typeof waypoints!="undefined"){
+                waypoints.forEach(function( waypoint ) {
+                    let way = new Microsoft.Maps.Directions.Waypoint({address:waypoint});
+                    directionsManager.addWaypoint(way);
+                });
+            }
+            //EndPoint
+            const end = new Microsoft.Maps.Directions.Waypoint({address:to});
+            directionsManager.addWaypoint(end);
+            //Specify the element in which the itinerary will be rendered.
+            directionsManager.setRenderOptions({ itineraryContainer: details});
+            //Add event handlers to directions manager.
+            Microsoft.Maps.Events.addHandler(directionsManager, 'directionsError', function(e){
+                alert('Error: ' + e.message + '\r\nResponse Code: ' + e.responseCode)
+            });
+            //Time and distance
+            Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated',function(e){
+                //Get the current route index.
+                var routeIdx = directionsManager.getRequestOptions().routeIndex;
+                //Get the distance of the route, rounded to 2 decimal places.
+                var distance = Math.round(e.routeSummary[routeIdx].distance * 100)/100;
+                //Get the distance units used to calculate the route.
+                var units = directionsManager.getRequestOptions().distanceUnit;
+                var distanceUnits = '';
+                if (units == Microsoft.Maps.Directions.DistanceUnit.km) {
+                    distanceUnits = 'km'
+                } else {
+                    //Must be in miles
+                    distanceUnits = 'miles'
+                }
+                //Time is in seconds, convert to minutes and round off.
+                //var time = Math.round(e.routeSummary[routeIdx].timeWithTraffic / 60);
+                //document.querySelector(panel).innerHTML = 'Distance: ' + distance + ' ' + distanceUnits + '<br/>Time with Traffic: ' + time + ' minutes';
+            });
+            //Calculate directions.
+            directionsManager.calculateDirections();
+        });
+    }
+
+    /**
+    * AutoSuggest
+    * @method selectedSuggestion
+    * @param searchBox           (string)   [ SuggestArea #id ]
+    * @param searchBoxContainer  (string)   [ SuggestBox  #id ]
+    * ------------------------------------------------------------------------
+    * !! Only viewing user's region can be displayed !!
+    * !! HTML:Add !!
+    * <h1>AutoSuggest（Enter city in text box）</h1>
+    * <div id='searchBoxContainer'>
+    *     <input type='text' id='searchBox'><button id="clear">Clear</button>
+    *  </div>
+    * ------------------------------------------------------------------------
+    */
+    selectedSuggestion(searchBox,searchBoxContainer) {
+        //AutoSuggest
+        const map = this.map;
+        Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+            var manager = new Microsoft.Maps.AutosuggestManager({
+                map: map
+            });
+            manager.attachAutosuggest(searchBox,searchBoxContainer, function(result){
+                //Remove previously selected suggestions from the map.
+                map.entities.clear();
+                map.entities.push(new Microsoft.Maps.Pushpin(result.location));
+                map.setView({ bounds: result.bestView });
+            });
+        });
+    }
+
+
 }
-
-
 
 
 

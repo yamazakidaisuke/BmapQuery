@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Directions</title>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}#geocode{font-size: 120%;}div{float:left;}</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+<!--Directions[START]-->
+<div>
+    From:<input type="text" id="from" value="御茶ノ水"> 
+    To:<input id="to" value="表参道">
+    <input type="button" id="search" value="ルート検索">
+</div>
+<div id="direction"></div>
+<!-- Directions[END] -->
+
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+    
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    map.startMap(35.665100, 139.712000, "load", 15);
+
+    //------------------------------------------------------------------------
+    //3. Directions
+    // map.direction("#rootView", "from" , "to", waypoint[array]); 
+    // !! 日本地図で表示してる場合のみルート検索可能（各国毎）以下パラメータ指定で制御も可能 !!
+    // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    //------------------------------------------------------------------------
+    document.getElementById("search").onclick = function () {
+        //Get From,To
+        const from  = document.getElementById("from").value;  //StartPoint
+        const to    = document.getElementById("to").value;    //EndPoint
+        
+        //経由地あり
+        const array = ["新宿", "恵比寿"];                 //Waypoints...
+        map.direction("#direction", from , to, array);  //Direction Methed
+        
+        //経由地なし
+        //map.direction("#direction", from , to, []);
+        
+    };
+    
+    
+}
+    
+</script>
+</body>
+</html>

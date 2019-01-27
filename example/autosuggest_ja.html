@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AutoSuggest</title>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}#geocode{font-size: 120%;}</style>
+</head>
+<body>
+
+<!--AutoSuggest[START]-->
+<div>AutoSuggest（都市、市区町村、Enter）</div>
+<div id="searchBoxContainer">
+    <input type="text" id="searchBox">
+</div>
+<!--AutoSuggest[END]-->
+
+<!-- MAP[START] -->
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+    
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    map.startMap(35.665100, 139.712000, "load", 10);
+
+    //-----------------------------------------------------
+    //3. AutoSuggest
+    // !! 日本地図で表示してる場合のみルート検索可能（各国毎）以下パラメータ指定で制御も可能 !!
+    // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    //-----------------------------------------------------
+    // 用意するHTML:
+    // <h1>AutoSuggest（Enter city in text box）</h1>
+    // <div id='searchBoxContainer'>
+    //     <input type='text' id='searchBox'><button id="clear">Clear</button>
+    // </div>
+    //-----------------------------------------------------
+    map.selectedSuggestion("#searchBox","#searchBoxContainer");
+        
+    
+}
+    
+</script>
+</body>
+</html>

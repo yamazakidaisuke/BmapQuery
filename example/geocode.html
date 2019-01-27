@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geocode</title>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}#geocode{font-size: 120%;}</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<h1>Geocode</h1>
+<div id="geocode">geocode:data</div>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+    
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    map.startMap(47.6149, -122.1941, "load", 10);
+
+    //----------------------------------------------------
+    //3. Geocode(2 patterns)
+    // getGeocode("searchQuery",callback);
+    //----------------------------------------------------
+    
+    //A. Address "Seattle"
+    map.getGeocode("Seattle", function(data){
+        console.log(data);          //Get Geocode ObjectData
+        const lat = data.latitude;  //Get latitude
+        const lon = data.longitude; //Get longitude
+        document.querySelector("#geocode").innerHTML=lat+','+lon;
+    });
+    
+    //B.Get geocode of click location
+    map.onGeocode("click", function(data){
+        console.log(data);                   //Get Geocode ObjectData
+        const lat = data.location.latitude;  //Get latitude
+        const lon = data.location.longitude; //Get longitude
+        document.querySelector("#geocode").innerHTML=lat+','+lon;
+    });
+    
+}
+    
+</script>
+</body>
+</html>

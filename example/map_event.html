@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Map:Event</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;</style>
+</head>
+<body>
+    
+    
+<!-- MAP[START] -->
+<h1>Map:Event</h1>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+    
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //------------------------------------------------------------------------
+    map.startMap(47.6149, -122.1941, "load", 10); //The place is Bellevue.
+
+    //------------------------------------------------------------------------
+    //3. Event added to Map.
+    //   event:[click,dblclick,rightclick,mousedown,mouseout,mouseover,mouseup,mousewheel,maptypechanged,viewchangestart,viewchange,viewchangeend]
+    //------------------------------------------------------------------------
+    map.onMap("click",function(){
+        alert("Click Event !");
+    });
+    
+}
+</script>
+
+</body>
+</html>

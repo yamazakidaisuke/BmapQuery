@@ -3,18 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>BingMaps Library</title>
-<style>html,body{color:white;height:100%;}body{padding:0;margin:0;background:#333;}h1{padding:0;margin:0;font-size:50%;}</style>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}#direction{width: 30%;float: left;display: block;}</style>
 </head>
 <body>
 
+<!--AutoSuggest[START]-->
+<h1>AutoSuggest（Enter city in text box）</h1>
+<div id="searchBoxContainer">
+    <input type="text" id="searchBox"><button id="clear">Clear</button>
+</div>
+<!--AutoSuggest[END]-->
+
+<!--Directions[START]-->
+<div>From:<input type="text" id="from"> To:<input id="to"><input type="button" id="search" value="Search"> </div>
+<div id="direction"></div>
+<!-- Directions[END] -->
+
 <!-- MAP[START] -->
-<h1>BingMaps Library Sample</h1>
-<div id="myMap" style='width:100%;height:80%;'></div>
 <div id="geocode">geocode:data</div>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <!-- MAP[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
+
+<!--
+ BingMaps: MapKey ( https://www.bingmapsportal.com/ )
+ Japanese: MapKey Manual: https://mapapi.org/doc.pdf
+-->
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]&setLang=en&setMkt=en-US' async defer></script>
 <script src="js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -22,59 +38,128 @@
 //****************************************************************************************
 //Init
 function GetMap(){
-    
+    //------------------------------------------------------------------------
     //Instance
-    let map = new Bmap("#myMap");
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
     
+    //------------------------------------------------------------------------
     //Map:Init
+    //------------------------------------------------------------------------
     map.startMap(47.6149, -122.1941, "load", 16);
-    
+
+    //------------------------------------------------------------------------
     //Map:Event
-    map.eventMap("click",function(){
+    //------------------------------------------------------------------------
+    map.onMap("click",function(){
         alert("MapEvent!");
     });
     
+    //------------------------------------------------------------------------
     //Pushpin
-    let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
-    
-    //Pushpin:Text
-    let pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
-    
-    //Pushpin:Icon
-    let pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
-    
+    //------------------------------------------------------------------------
+    const pin1 = map.pin(47.6149, -122.1941, "#ff0000");
+    //------------------------------------------------------------------------
     //pushpin:Event
-    map.eventPin(pin1, "click", function(){
+    //------------------------------------------------------------------------
+    map.onPin(pin1, "click", function(){
         alert("PinEvent1");
     });
     
+    //------------------------------------------------------------------------
+    //Pushpin:Text
+    //------------------------------------------------------------------------
+    const pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
+    
+    //------------------------------------------------------------------------
+    //Pushpin:Icon
+    //------------------------------------------------------------------------
+    const pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
+    
+    //------------------------------------------------------------------------
     //Infobox
+    //------------------------------------------------------------------------
     map.infobox(47.6149, -122.1941, "1 step", "Start");
     
+    //------------------------------------------------------------------------
     //Infobox:html
+    //------------------------------------------------------------------------
     const html = '<div style="background:red;">Hello,world</div>';
     map.infoboxHtml(47.6160, -122.1950, html);
     
-    //after 3 seconds.
+    //------------------------------------------------------------------------
+    //Directions:Search.
+    // !! For confirmation, set the parameters for each country !!
+    // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
+    // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
+    //------------------------------------------------------------------------
+    document.getElementById("search").onclick = function () {
+        const from  = document.getElementById("from").value;  //StartPoint
+        const to    = document.getElementById("to").value;    //EndPoint
+        const array = ["Bellevue", "Yarrow Point"];           //Waypoints...
+        map.direction("#direction", from , to, array);        //Direction Methed
+    };
+    
+    //------------------------------------------------------------------------
+    // AutoSuggest
+    // ** !! Only viewing user's region can be displayed !!
+    //------------------------------------------------------------------------
+    // HTML:Add !!
+    //<h1>AutoSuggest（Enter city in text box）</h1>
+    //<div id='searchBoxContainer'>
+    //    <input type='text' id='searchBox'><button id="clear">Clear</button>
+    //</div>
+    //------------------------------------------------------------------------
+    map.selectedSuggestion("#searchBox","#searchBoxContainer");
+        
+    //------------------------------------------------------------------------
+    //MapViewChange
+    //after 2 seconds.
+    //------------------------------------------------------------------------
     setTimeout(function(){
-        //MapViewChange
         map.changeMap(47.6150, -122.1950, "load", 17);
     },2000);
 
-    //after 6 seconds.
+    //------------------------------------------------------------------------
+    //Geocode (2 patarn)
+    //after 4 seconds.
+    //------------------------------------------------------------------------
     setTimeout(function () {
-        //GeocodeJson
+        //A. Address
         map.getGeocode("Seattle", function(data){
-            //checkCode: variable data.
+            alert("A. getGeocode");
+            document.querySelector("#geocode").innerHTML=data;
+        });
+        //B. Click Event
+        map.onGeocode("click", function(data){
+            alert(data.location);
+        });
+        //
+    },4000);
+
+    //------------------------------------------------------------------------
+    //ReverseGeocode (2 patterns)
+    //after 6,8 seconds.
+    //------------------------------------------------------------------------
+    //A.Set location data for BingMaps
+    setTimeout(function () {
+        const location = map.setLocation(47.6130, -122.1945); 
+        map.reverseGeocode(location, function(data){
+            alert("A. Reverse Geocode");
             document.querySelector("#geocode").innerHTML=data;
         });
     },6000);
     
-}
- 
+    //B.Get MapCenter location
+    setTimeout(function () {
+        const location = map.getCenter();
+        map.reverseGeocode(location, function(data){
+            alert("B. Reverse Geocode");
+            document.querySelector("#geocode").innerHTML=data;
+        });
+    },8000);
     
+}
 </script>
-
-
 </body>
 </html>
