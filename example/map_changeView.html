@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Map:Change view</title>
-<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;</style>
+<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
 </head>
 <body>
 
@@ -26,14 +26,14 @@ function GetMap(){
     //1. Instance
     //------------------------------------------------------------------------
     const map = new Bmap("#myMap");
-    
+
     //------------------------------------------------------------------------
     //2. Display Map
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
     //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
     //--------------------------------------------------
     map.startMap(47.6149, -122.1941, "load", 10);
-    
+
     //----------------------------------------------------
     //3. MapChangeView
     //   changeMap(lat, lon, "MapType", Zoom[1~20]);
@@ -47,9 +47,9 @@ function GetMap(){
     setTimeout(function(){
         map.changeMap(47.6153, -122.1951, "canvasDark", 15);
     },6000);
-    
+
 }
-    
+
 </script>
 </body>
 </html>

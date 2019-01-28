@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Add Infobox-iframe</title>
-        <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;</style>
-    </head>
-    <body>
+<head>
+<meta charset="UTF-8">
+<title>Add Infobox-iframe</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
+</head>
+<body>
 
 
-        <!-- MAP[START] -->
-        <h1>Add Infob-iframe</h1>
-        <div id="myMap" style='width:60%;height:70%;float:left;'></div>
-        <!-- MAP[END] -->
+<!-- MAP[START] -->
+<h1>Add Infob-iframe</h1>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
 
 
-        <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
-        <script src="../js/BmapQuery.js"></script>
-        <script>
-            //****************************************************************************************
-            // BingMaps&BmapQuery
-            //****************************************************************************************
-            //Init
-            function GetMap(){
-                //------------------------------------------------------------------------
-                //1. Instance
-                //------------------------------------------------------------------------
-                const map = new Bmap("#myMap");
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+    //****************************************************************************************
+    // BingMaps&BmapQuery
+    //****************************************************************************************
+    //Init
+    function GetMap(){
+        //------------------------------------------------------------------------
+        //1. Instance
+        //------------------------------------------------------------------------
+        const map = new Bmap("#myMap");
 
-                //------------------------------------------------------------------------
-                //2. Display Map
-                //------------------------------------------------------------------------
-                map.startMap(47.6149, -122.1941, "load", 10); //The place is Bellevue.
+        //------------------------------------------------------------------------
+        //2. Display Map
+        //------------------------------------------------------------------------
+        map.startMap(47.6149, -122.1941, "load", 10); //The place is Bellevue.
 
-                //----------------------------------------------------
-                //3. Add Pushpin
-                // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
-                //----------------------------------------------------
-                let pin = map.pin(47.6149, -122.1941, "#ff0000");
+        //----------------------------------------------------
+        //3. Add Pushpin
+        // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
+        //----------------------------------------------------
+        let pin = map.pin(47.6149, -122.1941, "#ff0000");
 
-                //----------------------------------------------------
-                //4. Add Infobox-Iframe
-                // infoboxIframe(lat, lon, html);
-                //----------------------------------------------------
-                const loc = map.getCenter();
-                const title = "Movie";
-                const description = '<iframe src="https://channel9.msdn.com/Events/Build/2016/B867/player#time=0h15m26s:paused" width="400" height="225" allowFullScreen frameBorder="0"></iframe>';
-                map.infoboxIframe(loc, 300, 420, title, description);
-            }
-        </script>
+        //----------------------------------------------------
+        //4. Add Infobox-Iframe
+        // infoboxIframe(lat, lon, html);
+        //----------------------------------------------------
+        const loc = map.getCenter();
+        const title = "Movie";
+        const description = '<iframe src="https://channel9.msdn.com/Events/Build/2016/B867/player#time=0h15m26s:paused" width="400" height="225" allowFullScreen frameBorder="0"></iframe>';
+        map.infoboxIframe(loc, 300, 420, title, description);
+    }
+</script>
 
-    </body>
+</body>
 </html>
