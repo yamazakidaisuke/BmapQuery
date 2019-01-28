@@ -1,8 +1,5 @@
-BmapQuery  v0.2
+BmapQuery  v0.3
 ==========
-
-Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
-https://mapapi.org - See LICENSE.md for license information.
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
 component to be used as part of web applications and websites.
@@ -13,20 +10,50 @@ component to be used as part of web applications and websites.
 Installing BmapQuery is an easy task. Just follow these simple steps:
 
  1. **Download** the latest version from the Github website:
-    https://github.com/yamazakidaisuke/BmapQuery. 
+    https://github.com/yamazakidaisuke/BmapQuery.
     You should have already completed this step, but be sure you have the very latest version.
 
-
-**Note:** BmapQuery is by default installed in the `js` folder. You can
+2. BmapQuery is by default installed in the `js` folder. You can
 place the files in whichever you want though. Operation check with index.html.
 
-## Checking Your Installation
 
-To test your installation, just call the following page at your website:
+## Getting Started
 
-	https://mapapi.org/open.php?file=example_libs
-## Examples [ ./example/ ]
-**Sample files for each function are prepared in the example folder.**
+1. <script src="...?Callback=GetMap&..." is specified in the URL."GetMap" runs first.
+
+2. Please get BingMapsKey from "BingMaps Dev Center" site.
+   [Get BingMapsKey >> BingMaps Dev Center](https://www.bingmapsportal.com/)
+
+3. Replace [ *** YOUR MY KEY *** ] in the example code with BingMapsKey.
+
+
+## Examples
+**Sample files for each function are prepared in the "example" folder.**
+
+
+## Directory Structure
+
+It's opinionated about how you organize your repositories.
+
+
+    ├── index.html               (Link to example)
+    ├── js/
+    │   └── BmapQuery.js         (BingMaps Library)
+    ├── img/
+    │   └── poi_custom.png
+    ├─── example/                (All example files)
+    │   ├── map_start.html
+    │   ├── map_event.html
+    │   ├── map_changeView.html
+    │   ├── pushpin.html
+    │   ├── ...
+    │   ...
+    │
+    ├── README.md
+    └── LICENSE
+
+
+
 
 
 ## Documentation
@@ -35,11 +62,11 @@ To test your installation, just call the following page at your website:
 
     <!-- 1.Load BingMapsControl api [callback=GetMap] -->
     <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
-    
+
     <!-- 2.Load BingMapQuery -->
     <script src="js/BmapQuery.js"></script>
-   
-**[script: js/BmapQuery.js]**   
+
+**[script: js/BmapQuery.js]**
 
     //*Sample
     function GetMap() {
@@ -47,19 +74,19 @@ To test your installation, just call the following page at your website:
         // Instance...
         //----------------------------------------------------
         let map = new Bmap("#myMap");
-        
+
         //----------------------------------------------------
         // Display Map
         // startMap(lat, lon, "MapType", Zoom[1~20]);
         //----------------------------------------------------
         map.startMap(47.6149, -122.1941, "load", 16);//MapType[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
-    
+
         //----------------------------------------------------
         // Map:Events
         // onMap("event", callback);
         // [event:click,dblclick,rightclick,mousedown,mouseout,mouseover,mouseup,mousewheel,maptypechanged,viewchangestart,viewchange,viewchangeend]
         //----------------------------------------------------
-        map.onMap("click",function(){ 
+        map.onMap("click",function(){
             alert("MapEvent!");
         });
 
@@ -101,7 +128,7 @@ To test your installation, just call the following page at your website:
         // infoboxHtml(lat, lon, html);
         //----------------------------------------------------
         map.infoboxHtml(47.6160, -122.1950, '<div style="background:red;">Hello,world</div>');
-        
+
         //----------------------------------------------------
         // MapChangeView(after 2 seconds.)
         // changeMap(lat, lon, "MapType", Zoom[1~20]);
@@ -109,7 +136,7 @@ To test your installation, just call the following page at your website:
         setTimeout(function(){
             map.changeMap(47.6150, -122.1950, "load", 17);
         },2000);
-        
+
         //----------------------------------------------------
         // Geocode(2 patterns & after 4 seconds.)
         // getGeocode("searchQuery",callback);
@@ -125,7 +152,7 @@ To test your installation, just call the following page at your website:
                 alert(data.location);
             });
         },4000);
-    
+
         //------------------------------------------------------------------------
         //Get Reverse Geocode
         //2 patterns
@@ -133,22 +160,22 @@ To test your installation, just call the following page at your website:
         //------------------------------------------------------------------------
         //A.Set location data for BingMaps
         setTimeout(function () {
-            const location = map.setLocation(47.6130, -122.1945); 
+            const location = map.setLocation(47.6130, -122.1945);
             map.reverseGeocode(location, function(data){
                 alert("A. Reverse Geocode");
                 document.querySelector("#geocode").innerHTML=data;
             });
         },6000);
-        
+
         //B.Get MapCenter location
         setTimeout(function () {
-            const mapCenter = map.getCenter(); 
+            const mapCenter = map.getCenter();
             map.reverseGeocode(mapCenter, function(data){
                 alert("B. Reverse Geocode");
                 document.querySelector("#geocode").innerHTML=data;
             });
         },8000);
-        
+
         //----------------------------------------------------
         //Directions:Search.
         // !! For confirmation, set the parameters for each country !!
@@ -158,10 +185,11 @@ To test your installation, just call the following page at your website:
         document.getElementById("search").onclick = function () {
             const from  = document.getElementById("from").value;  //StartPoint
             const to    = document.getElementById("to").value;    //EndPoint
+            const mode  = document.getElementById("mode").value;  //RouteMode[walking,driving]
             const array = ["Bellevue", "Yarrow Point"];           //Waypoints...
-            map.direction("#direction", from , to, array);        //Direction Methed
+            map.direction("#direction", mode, from , to, array);  //Direction Methed
         };
-        
+
         //-----------------------------------------------------
         // AutoSuggest
         // !! Only viewing user's region can be displayed !!
@@ -173,8 +201,43 @@ To test your installation, just call the following page at your website:
         // </div>
         //-----------------------------------------------------
         map.selectedSuggestion("#searchBox","#searchBoxContainer");
-        
-        
-        
+
+        //----------------------------------------------------
+        // Traffic
+        // map.traffic();
+        //----------------------------------------------------
+        map.traffic();
+
+        //----------------------------------------------------
+        // get Boundary
+        // map.getBoundary("type");
+        //----------------------------------------------------
+        // [ "type" ]
+        // *CountryRegion：Country or region.
+        // *AdminDivision1：First administrative level within the country/region level, such as a state or a province.
+        // *AdminDivision2：Second administrative level within the country/region level, such as a county.
+        // *PopulatedPlace：A concentrated area of human settlement, such as a city, town or village.
+        // *Neighborhood：A section of a populated place that is typically well-known, but often with indistinct boundaries.
+        // *Postcode1：The smallest post code category, such as a zip code.
+        // *Postcode2：The next largest post code category after Postcode1 that is created by aggregating Postcode1 areas.
+        // *Postcode3：The next largest post code category after Postcode2 that is created by aggregating Postcode2 areas.
+        // *Postcode4：The next largest post code category after Postcode3 that is created by aggregating Postcode3 areas.
+        // Note: Not all entity types are available in all areas.
+        //---------------------------------------------------
+        map.getBoundary("PopulatedPlace");
+
+        //----------------------------------------------------
+        // Get multiple boundaries
+        //  map.getMultiBoundary(["Postcode"...]);
+        //----------------------------------------------------
+        const zipCodes = ['98004', '98005', '98007', '98008', '98039'];
+        map.getMultiBoundary(zipCodes);
+
     }
+
+## Author
+
+Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
+https://mapapi.org - See LICENSE.md for license information.
+
 

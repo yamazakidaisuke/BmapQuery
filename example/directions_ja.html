@@ -13,8 +13,12 @@
 <!-- MAP[END] -->
 <!--Directions[START]-->
 <div>
-    From:<input type="text" id="from" value="御茶ノ水"> 
+    From:<input type="text" id="from" value="御茶ノ水">
     To:<input id="to" value="表参道">
+    <select id="mode">
+        <option value="walking">walking</option>
+        <option value="driving">driving</option>
+    </select>
     <input type="button" id="search" value="ルート検索">
 </div>
 <div id="direction"></div>
@@ -34,7 +38,7 @@ function GetMap(){
     //1. Instance
     //------------------------------------------------------------------------
     const map = new Bmap("#myMap");
-    
+
     //------------------------------------------------------------------------
     //2. Display Map
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
@@ -44,7 +48,7 @@ function GetMap(){
 
     //------------------------------------------------------------------------
     //3. Directions
-    // map.direction("#rootView", "from" , "to", waypoint[array]); 
+    // map.direction("#rootView", "from" , "to", waypoint[array]);
     // !! 日本地図で表示してる場合のみルート検索可能（各国毎）以下パラメータ指定で制御も可能 !!
     // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
     // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
@@ -53,19 +57,19 @@ function GetMap(){
         //Get From,To
         const from  = document.getElementById("from").value;  //StartPoint
         const to    = document.getElementById("to").value;    //EndPoint
-        
+        const mode  = document.getElementById("mode").value;  //RouteMode[walking,driving]
         //経由地あり
-        const array = ["新宿", "恵比寿"];                 //Waypoints...
-        map.direction("#direction", from , to, array);  //Direction Methed
-        
+        const array = ["新宿", "恵比寿"];                       //Waypoints...
+        map.direction("#direction", mode, from, to, array);  //Direction Methed
+
         //経由地なし
         //map.direction("#direction", from , to, []);
-        
+
     };
-    
-    
+
+
 }
-    
+
 </script>
 </body>
 </html>

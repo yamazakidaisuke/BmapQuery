@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>SpatialDataService</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<h1>SpatialDataService</h1>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //------------------------------------------------------------------------
+    map.startMap(35.650904, 139.712487, "load", 14); //The place is Bellevue.
+
+    //----------------------------------------------------
+    //3.SpatialDataService:get Boundary
+    //  getBoundary(type);
+    //  type:[CountryRegion,AdminDivision1,PopulatedPlace,Postcode1]
+    //  Non-Japanese:Neighborhood,AdminDivision2,Postcode2,,Postcode3,,Postcode4]
+    //----------------------------------------------------
+    //[* type: Japanese *]
+    // •CountryRegion：国または地域。
+    // •AdminDivision1：都道府県など、国/地域レベル内の最初の管理レベル。
+    // •PopulatedPlace：都市、町、村など、人が集まる場所です。
+    // •Postcode1：郵便番号など、最小の郵便番号カテゴリ。
+    //----------------------------------------------------
+    //[* type: Non-Japanese *]
+    // •Neighborhood：一般的によく知られているが、不明瞭な境界があることが多い人口密集地のセクション。
+    // •AdminDivision2：郡など、国/地域レベル内の2番目の管理レベル。
+    // •Postcode2：郵便番号1の次に大きい郵便番号カテゴリ。郵便番号1の領域を集約して作成されます。
+    // •Postcode3：郵便番号2の次に大きい郵便番号カテゴリ。郵便番号2の領域を集約して作成されます。
+    // •Postcode4：郵便番号3の次に大きい郵便番号カテゴリ。郵便番号3の領域を集約して作成されます。
+    // 注：すべての分野ですべてのエンティティタイプが使用できるわけではありません。
+    //---------------------------------------------------
+    map.getBoundary("Postcode1");
+
+}
+</script>
+</body>
+</html>

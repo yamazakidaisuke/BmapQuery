@@ -14,14 +14,18 @@
 <!-- MAP[END] -->
 <!--Directions[START]-->
 <div>
-    From:<input type="text" id="from" value="Siattle"> 
+    From:<input type="text" id="from" value="Siattle">
     To:<input id="to" value="Redmond">
+    <select id="mode">
+        <option value="walking">walking</option>
+        <option value="driving">driving</option>
+    </select>
     <input type="button" id="search" value="Search">
 </div>
 <div id="direction"></div>
 <!-- Directions[END] -->
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]&setLang=en&setMkt=en-US' async defer></script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
 <script src="../js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -33,7 +37,7 @@ function GetMap(){
     //1. Instance
     //------------------------------------------------------------------------
     const map = new Bmap("#myMap");
-    
+
     //------------------------------------------------------------------------
     //2. Display Map
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
@@ -43,7 +47,7 @@ function GetMap(){
 
     //------------------------------------------------------------------------
     //3. Directions
-    // map.direction("#rootView", "from" , "to", waypoint[array]); 
+    // map.direction("#rootView", "from" , "to", waypoint[array]);
     // !! For confirmation, set the parameters for each country !!
     // +  [ English => https://www.bing.com/...&setLang=en&setMkt=en-US ]
     // +  [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
@@ -52,19 +56,18 @@ function GetMap(){
         //Get From,To
         const from  = document.getElementById("from").value;  //StartPoint
         const to    = document.getElementById("to").value;    //EndPoint
-        
-        //With Waypoint
+        const mode  = document.getElementById("mode").value;  //RouteMode[walking,driving]
         const array = ["Bellevue", "Yarrow Point"];           //Waypoints...
-        map.direction("#direction", from , to, array);        //Direction Methed
-        
+        map.direction("#direction", mode, from, to, array);   //Direction Methed
+
         //No Waypoint.
         //map.direction("#direction", from , to, []);
-        
+
     };
-    
-    
+
+
 }
-    
+
 </script>
 </body>
 </html>
