@@ -310,6 +310,22 @@ class Bmap {
     }
 
     /**
+     * Infobox:Iframe
+     * @method infoboxIframe
+     * @param center      (object)   [ map.setLocation(47.6130, -122.1945); map.getCenter(); ]
+     * @param width       (int)      [ 300 ]
+     * @param height      (int)      [ 400 ]
+     * @param title       (string)   [ "Movie..." ]
+     * @param description (string)   ['<iframe src="https://channel9.msdn.com/..."></iframe>]
+     */
+    infoboxIframe(center,width,height,title,description){
+        const infobox = new Microsoft.Maps.Infobox(center,{
+            maxHeight: width, maxWidth: height, title: title, description: description
+        });
+        infobox.setMap(this.map);
+    }
+
+    /**
      * Search:Get Geocode
      * @method getGeocode
      * @param query     (string)   [Search string]
@@ -402,19 +418,26 @@ class Bmap {
     * + [ Japan   => https://www.bing.com/...&setLang=ja&setMkt=ja-JP ]
     * ------------------------------------------------------------------
     * @method direction
-    * @param details    (string)   [Destination details]
+    * @param details    (string)   [Destination details ]
+    * @param mode       (string)   ["driving","walking"]
     * @param from       (string)   [root from]
     * @param to         (string)   [root to]
     * @param waypoints  (array)    * ["Bellevue","Yarrow Point"...]
     */
-     direction(details,from,to){
+     direction(details,mode,from,to){
          const map = this.map;
          let directionsManager;
-         const waypoints = arguments[3];
+         const waypoints = arguments[4];
         //Load the directions module.
          Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
             //Create an instance of the directions manager.
             directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+             //RouteMode
+             if(mode == "walking"){
+                 directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.walking });
+             }else{
+                 directionsManager.setRequestOptions({ routeMode: Microsoft.Maps.Directions.RouteMode.driving });
+             }
             //Start waypoints to route between.
             const start = new Microsoft.Maps.Directions.Waypoint({address:from});
             directionsManager.addWaypoint(start);
@@ -488,7 +511,65 @@ class Bmap {
         });
     }
 
+    /**
+    * Traffic
+    * @method traffic
+    */
+    traffic(){
+        const map = this.map;
+        Microsoft.Maps.loadModule('Microsoft.Maps.Traffic', function () {
+            const manager = new Microsoft.Maps.Traffic.TrafficManager(map);
+            manager.show();
+        });
+    }
 
+    /**
+    * SpatialDataService:getBoundary
+    * @method getBoundary
+    * @param  type  (string)  ['Neighborhood','CountryRegion','AdminDivision1','AdminDivision2']
+    */
+    getBoundary(type){
+        const map = this.map;
+        const geoDataRequestOptions = {
+            entityType: type
+        };
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+            //Use the GeoData API manager to get the boundary
+            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(map.getCenter(), geoDataRequestOptions, map, function (data) {
+                if (data.results && data.results.length > 0) {
+                    map.entities.push(data.results[0].Polygons);
+                }
+            }, null, function errCallback(networkStatus, statusMessage) {
+                console.log(networkStatus);
+                console.log(statusMessage);
+            });
+        });
+    }
+    /**
+    * SpatialDataService:Get multiple boundaries
+    * @method getMultiBoundary
+    * @param  type  (string)  ['Postcode'...]
+    */
+    getMultiBoundary(zipCodes){
+        const map = this.map;
+        //Create an array of locations to get the boundaries of
+        const geoDataRequestOptions = {
+            entityType: 'Postcode1',
+            getAllPolygons: true
+        };
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+            //Use the GeoData API manager to get the boundary
+            Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(zipCodes, geoDataRequestOptions, map, function (data) {
+                if (data.results && data.results.length > 0) {
+                    map.entities.push(data.results[0].Polygons);
+                }
+            }, null, function errCallback(callbackState, networkStatus, statusMessage) {
+                console.log(callbackState);
+                console.log(networkStatus);
+                console.log(statusMessage);
+            });
+        });
+    }
 }
 
 

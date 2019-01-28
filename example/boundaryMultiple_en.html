@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Add Pushpin</title>
+<title>Get multiple boundary</title>
 <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;</style>
 </head>
 <body>
 
 
 <!-- MAP[START] -->
-<h1>Add Pushpin</h1>
+<h1>Get multiple boundaries</h1>
 <div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <!-- MAP[END] -->
 
@@ -33,22 +33,11 @@ function GetMap(){
     map.startMap(47.6149, -122.1941, "load", 10); //The place is Bellevue.
 
     //----------------------------------------------------
-    //3. Add Pushpin
-    // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
+    //3.Get multiple boundaries
+    //  map.getMultiBoundary(["Postcode"...]);
     //----------------------------------------------------
-    let pin = map.pin(47.6149, -122.1941, "#ff0000");
-
-    //----------------------------------------------------
-    //4  Delete Pushpin
-    //   deletePin();
-    //----------------------------------------------------
-    //after 2 seconds.
-    setTimeout(function(){
-        alert("delete pushpin!");
-        map.deletePin(); // ** delete pushpin **
-    },2000);
-
-
+    const zipCodes = ['98004', '98005', '98007', '98008', '98039'];
+    map.getMultiBoundary(zipCodes);
 
 }
 </script>
