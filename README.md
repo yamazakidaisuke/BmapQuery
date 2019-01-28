@@ -65,9 +65,10 @@ It's opinionated about how you organize your repositories.
 
 To test your installation, just call the following page at your website:
 
-    [[BingMapsGO!:BmapQuery.js](https://mapapi.org/?bmap_query=1#on_easyfuncs)]
+    BmapQuery.js<https://mapapi.org/?bmap_query=1#on_easyfuncs>
 
-    ![](https://user-images.githubusercontent.com/1481062/51815689-1d4ef300-2306-11e9-9c03-a6e0654025a6.JPG)
+    ![default](https://user-images.githubusercontent.com/1481062/51815689-1d4ef300-2306-11e9-9c03-a6e0654025a6.JPG)
+
 
 
 ## Documentation
