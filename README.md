@@ -26,6 +26,14 @@ place the files in whichever you want though. Operation check with index.html.
 
 3. Replace [ *** YOUR MY KEY *** ] in the example code with BingMapsKey.
 
+**[html: index.html]**
+
+    <!-- 1.Load BingMapsControl api [callback=GetMap] -->
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
+
+    <!-- 2.Load BingMapQuery -->
+    <script src="js/BmapQuery.js"></script>
+
 
 ## Examples
 **Sample files for each function are prepared in the "example" folder.**
@@ -54,19 +62,17 @@ It's opinionated about how you organize your repositories.
 
 
 
+## Checking Your Installation
+
+To test your installation, just call the following page at your website:
+
+    [BingMapsGO!: BmapQuery.js](https://mapapi.org/open.php?file=example_libs)
+
 
 
 ## Documentation
 
-**[html: index.html]**
-
-    <!-- 1.Load BingMapsControl api [callback=GetMap] -->
-    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
-
-    <!-- 2.Load BingMapQuery -->
-    <script src="js/BmapQuery.js"></script>
-
-**[script: js/BmapQuery.js]**
+**[script]**
 
     //*Sample
     function GetMap() {
