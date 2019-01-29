@@ -1,8 +1,8 @@
 "use strict";
 
 //********************************************************************
-// BingMaps Liblary(v8)
-// BmapQuery: ( https://mapapi.org/?bmap_query=1#on_easyfunc )
+// BingMaps v8
+// BmapQuery: ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
     constructor(target) {

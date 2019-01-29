@@ -11,6 +11,7 @@ Installing BmapQuery is an easy task. Just follow these simple steps:
 
  1. **Download** the latest version from the Github website:
     https://github.com/yamazakidaisuke/BmapQuery.
+    ( BmapQuery Site: https://mapapi.org/indexb.php )
     You should have already completed this step, but be sure you have the very latest version.
 
 2. BmapQuery is by default installed in the `js` folder. You can
@@ -31,8 +32,22 @@ place the files in whichever you want though. Operation check with index.html.
     <!-- 1.Load BingMapsControl api [callback=GetMap] -->
     <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
 
-    <!-- 2.Load BingMapQuery -->
+    <!-- 2.Load BmapQuery -->
     <script src="js/BmapQuery.js"></script>
+
+    <!-- 3.BmapQuery Start -->
+    <script>
+    //init
+    function GetMap(){
+        //Start
+        const map = new Bmap("#myMap);
+        //Map
+        map.startMap(47.6149, -122.1941, "load", 10);
+        //Pin
+        let pin = map.pin(47.6149, -122.1941, "#ff0000");
+        //infobox
+        map.infobox(47.6149, -122.1941, "Title", "Description");
+    }
 
 
 ## Examples
@@ -65,7 +80,7 @@ It's opinionated about how you organize your repositories.
 
 To test your installation, just call the following page at your website:
 
-[[BmapQuery.js] (https://mapapi.org/?bmap_query=1#on_easyfuncs)]
+[[BmapQuery.js] (https://mapapi.org/indexb.php)]
 
 ![default](https://user-images.githubusercontent.com/1481062/51815689-1d4ef300-2306-11e9-9c03-a6e0654025a6.JPG)
 
