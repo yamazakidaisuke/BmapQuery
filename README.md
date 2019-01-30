@@ -40,13 +40,13 @@ place the files in whichever you want though. Operation check with index.html.
     //init
     function GetMap(){
         //Start
-        const map = new Bmap("#myMap);
+        const map = new Bmap("#myMap); //Preparation
         //Map
-        map.startMap(47.6149, -122.1941, "load", 10);
+        map.startMap(47.6149, -122.1941, "load", 10); //Run on one line
         //Pin
-        let pin = map.pin(47.6149, -122.1941, "#ff0000");
+        let pin = map.pin(47.6149, -122.1941, "#ff0000"); //Run on one line
         //infobox
-        map.infobox(47.6149, -122.1941, "Title", "Description");
+        map.infobox(47.6149, -122.1941, "Title", "Description"); //Run on one line
     }
 
 
