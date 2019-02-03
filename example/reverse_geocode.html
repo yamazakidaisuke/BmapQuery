@@ -15,7 +15,7 @@
 <!-- MAP[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
 <script src="../js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -27,7 +27,7 @@ function GetMap(){
     //1. Instance
     //------------------------------------------------------------------------
     const map = new Bmap("#myMap");
-    
+
     //------------------------------------------------------------------------
     //2. Display Map
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
@@ -39,7 +39,7 @@ function GetMap(){
     //3. Get ReverseGeocode(2 patterns)
     //   reverseGeocode(location,callback);
     //----------------------------------------------------
-    
+
     //A. Set location data for BingMaps
     const location   = map.setLocation(47.6130, -122.1945);
     //const location = map.getCenter(); //MapCenter
@@ -47,7 +47,7 @@ function GetMap(){
         console.log(data);
         document.querySelector("#geocode").innerHTML=data;
     });
-    
+
     //B. Get ReverseGeocode of click location
     map.onGeocode("click", function(clickPoint){
         map.reverseGeocode(clickPoint.location, function(data){
@@ -55,9 +55,9 @@ function GetMap(){
             document.querySelector("#geocode").innerHTML=data;
         });
     });
-    
+
 }
-    
+
 </script>
 </body>
 </html>

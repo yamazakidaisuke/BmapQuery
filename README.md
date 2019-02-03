@@ -217,7 +217,7 @@ To test your installation, just call the following page at your website:
         // !! Only viewing user's region can be displayed !!
         //-----------------------------------------------------
         // HTML:Add !!
-        // <h1>AutoSuggest（Enter city in text box）</h1>
+        // <h1>AutoSuggest(Enter city in text box)</h1>
         // <div id='searchBoxContainer'>
         //     <input type='text' id='searchBox'><button id="clear">Clear</button>
         // </div>
