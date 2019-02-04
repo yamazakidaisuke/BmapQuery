@@ -63,7 +63,7 @@ It's opinionated about how you organize your repositories.
     ├── js/
     │   └── BmapQuery.js         (ES5: BingMaps Library)
     ├── src/
-    │   └── BmapQuery_base.js    (ES6: Before BABEL execution.)
+    │   └── BmapQuery.js         (ES6: Before BABEL execution.)
     ├── img/
     │   └── poi_custom.png
     ├─── example/                (All example files)
@@ -256,6 +256,32 @@ To test your installation, just call the following page at your website:
         //----------------------------------------------------
         const zipCodes = ['98004', '98005', '98007', '98008', '98039'];
         map.getMultiBoundary(zipCodes);
+
+        //----------------------------------------------------
+        // Get Search Boundary
+        // @method getSearchBoundary
+        // @param  search  (string)  'New York City'
+        // @param  type    (string)
+        //----------------------------------------------------
+        // [ "type" ]
+        // *CountryRegion:Country or region.
+        // *AdminDivision1:First administrative level within the country/region level, such as a state or a province.
+        // *AdminDivision2:Second administrative level within the country/region level, such as a county.
+        // *PopulatedPlace:A concentrated area of human settlement, such as a city, town or village.
+        // *Neighborhood:A section of a populated place that is typically well-known, but often with indistinct boundaries.
+        // *Postcode1:The smallest post code category, such as a zip code.
+        // *Postcode2:The next largest post code category after Postcode1 that is created by aggregating Postcode1 areas.
+        // *Postcode3:The next largest post code category after Postcode2 that is created by aggregating Postcode2 areas.
+        // *Postcode4:The next largest post code category after Postcode3 that is created by aggregating Postcode3 areas.
+        // Note: Not all entity types are available in all areas.
+        //---------------------------------------------------
+        document.getElementById("search").onclick=function(){
+            //text value.
+            const searchBox = document.getElementById("searchBox").value;
+            //BingMaps Serch
+            map.getSearchBoundary(searchBox, 'PopulatedPlace');
+        }
+
 
     }
 

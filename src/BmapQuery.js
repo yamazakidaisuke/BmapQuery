@@ -576,6 +576,7 @@ class Bmap {
             });
         });
     }
+
     /**
     * SpatialDataService:Get multiple boundaries
     * @method getMultiBoundary
@@ -600,6 +601,56 @@ class Bmap {
             });
         });
     }
+
+    /**
+    * Get Search Boundary
+    * @method getSearchBoundary
+    * @param  search  (string)  'New York City'
+    * @param  type    (string)
+    *---------------------------------------------------
+    * [ "type" ]
+    * *CountryRegion: Country or region.
+    * *AdminDivision1: First administrative level within the country/region level, such as a state or a province.
+    * *AdminDivision2: Second administrative level within the country/region level, such as a county.
+    * *PopulatedPlace: A concentrated area of human settlement, such as a city, town or village.
+    * *Neighborhood: A section of a populated place that is typically well-known, but often with indistinct boundaries.
+    * *Postcode1: The smallest post code category, such as a zip code.
+    * *Postcode2: The next largest post code category after Postcode1 that is created by aggregating Postcode1 areas.
+    * *Postcode3: The next largest post code category after Postcode2 that is created by aggregating Postcode2 areas.
+    * *Postcode4: The next largest post code category after Postcode3 that is created by aggregating Postcode3 areas.
+    * Note: Not all entity types are available in all areas.
+    *---------------------------------------------------
+    */
+    getSearchBoundary(search,type){
+        const map = this.map;
+        //Load the Bing Spatial Data Services module
+        Microsoft.Maps.loadModule(['Microsoft.Maps.SpatialDataService', 'Microsoft.Maps.Search'], function () {
+            const searchManager = new Microsoft.Maps.Search.SearchManager(map);
+            const geocodeRequest = {
+                where: search,
+                callback: function (geocodeResult) {
+                    if (geocodeResult && geocodeResult.results && geocodeResult.results.length > 0) {
+                        map.setView({ bounds: geocodeResult.results[0].bestView });
+                        const geoDataRequestOptions = {
+                            entityType: type,
+                            getAllPolygons: true
+                        };
+                        //Use the GeoData API manager to get the boundary of New York City
+                        Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(geocodeResult.results[0].location, geoDataRequestOptions, map, function (data) {
+                            if (data.results && data.results.length > 0) {
+                                map.entities.push(data.results[0].Polygons);
+                            }
+                        }, null, function errCallback(networkStatus, statusMessage) {
+                            console.log(networkStatus);
+                            console.log(statusMessage);
+                        });
+                    }
+                },
+            };
+            searchManager.geocode(geocodeRequest);
+        });
+    }
+
 
 
 
