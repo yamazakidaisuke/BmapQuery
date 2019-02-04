@@ -61,9 +61,9 @@ It's opinionated about how you organize your repositories.
 
     ├── index.html               (Link to example)
     ├── js/
-    │   └── BmapQuery.js         (BingMaps Library: ES5)
+    │   └── BmapQuery.js         (ES5: BingMaps Library)
     ├── src/
-    │   └── BmapQuery_base.js    (BingMaps Library: ES6)
+    │   └── BmapQuery_base.js    (ES6: Before BABEL execution.)
     ├── img/
     │   └── poi_custom.png
     ├─── example/                (All example files)

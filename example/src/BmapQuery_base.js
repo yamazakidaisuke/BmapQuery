@@ -243,7 +243,7 @@ class Bmap {
      * @param pinObj   (float)    [pushpin]
      * @returns {boolean=false OR void }
      */
-    layerAdd(pinObj){
+    layerAdd(lat,lon){
         const map = this.map;
         const location =  new Microsoft.Maps.Location(lat,lon);
         const pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
