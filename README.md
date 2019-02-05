@@ -1,4 +1,4 @@
-BmapQuery.js  v0.3
+BmapQuery.js  v0.5
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -16,6 +16,34 @@ Installing BmapQuery is an easy task. Just follow these simple steps:
 
 2. BmapQuery is by default installed in the `js` folder. You can
 place the files in whichever you want though. Operation check with index.html.
+
+
+## Examples
+**Sample files for each function are prepared in the "example" folder.**
+
+
+## Directory Structure
+
+It's opinionated about how you organize your repositories.
+
+
+    ├── index.html               (Link to example)
+    ├── js/
+    │   └── BmapQuery.js         (ES5: BingMaps Library)
+    ├── src/
+    │   └── BmapQuery.js         (ES6: Before BABEL execution.)
+    ├── img/
+    │   └── poi_custom.png
+    ├─── example/                (All example files)
+    │   ├── map_start.html
+    │   ├── map_event.html
+    │   ├── map_changeView.html
+    │   ├── pushpin.html
+    │   ├── ...
+    │   ...
+    │
+    ├── README.md
+    └── LICENSE
 
 
 ## Getting Started
@@ -49,33 +77,6 @@ place the files in whichever you want though. Operation check with index.html.
         map.infobox(47.6149, -122.1941, "Title", "Description"); //Run on one line
     }
 
-
-## Examples
-**Sample files for each function are prepared in the "example" folder.**
-
-
-## Directory Structure
-
-It's opinionated about how you organize your repositories.
-
-
-    ├── index.html               (Link to example)
-    ├── js/
-    │   └── BmapQuery.js         (ES5: BingMaps Library)
-    ├── src/
-    │   └── BmapQuery.js         (ES6: Before BABEL execution.)
-    ├── img/
-    │   └── poi_custom.png
-    ├─── example/                (All example files)
-    │   ├── map_start.html
-    │   ├── map_event.html
-    │   ├── map_changeView.html
-    │   ├── pushpin.html
-    │   ├── ...
-    │   ...
-    │
-    ├── README.md
-    └── LICENSE
 
 
 ## Checking Your Installation
