@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.6 ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
     constructor(target) {
@@ -10,6 +10,7 @@ class Bmap {
         this.map = null;      //mapObject
         this.directionsManager = null;
         this.loc = null; //Geocode:location
+        this.layer = new Microsoft.Maps.Layer();
     }
 
     /**
@@ -238,21 +239,56 @@ class Bmap {
     }
 
     /**
-     * Layer:Add
-     * @method layerAdd
-     * @param pinObj   (float)    [pushpin]
-     * @returns {boolean=false OR void }
+     * pushpin add Layer
+     * @method pinLayer
+     * @param lat    (float)    [47.6149]
+     * @param lon    (float)    [-122.1941]
+     * @param color  (string)   ["#ff0000"]
+     * @param[arguments] drag   (boolean)  [true or false]
+     * @param[arguments] clicked (boolean) [true or false]
+     * @param[arguments] hover  (boolean)  [true or false]
+     * @param[arguments] visib  (boolean)  [true or false]
+     * @returns pin (object)
      */
-    layerAdd(lat,lon){
-        const map = this.map;
+    pinLayer(lat,lon,color){
+        const map   = this.map;
+        //Param Check
+        let drag,clicked,hover,visib;
+        if(this.map=="" || lat=="" || lon=="" || color==""){
+            return false;
+        }
+        //arguments[4...7]
+        if(typeof arguments[4]=="undefined" || arguments[4]==false){drag=false;   }else{drag=true;};
+        if(typeof arguments[5]=="undefined" || arguments[5]==false){clicked=false;}else{clicked=true;};
+        if(typeof arguments[6]=="undefined" || arguments[6]==false){hover=false;  }else{hover=true;};
+        if(typeof arguments[7]=="undefined" || arguments[7]==true) {visib = true; }else{visib=false;};
         const location =  new Microsoft.Maps.Location(lat,lon);
-        const pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
-        const layer = new Microsoft.Maps.Layer();
-        layer.add(pushpin);
-        map.layers.insert(layer);
+        const pin = new Microsoft.Maps.Pushpin(location, {
+            color: color,                //Color
+            draggable:drag,              //MouseDraggable
+            enableClickedStyle:clicked,  //Click
+            enableHoverStyle:hover,      //MouseOver
+            visible:visib                //show/hide
+        });
+        //add Layer
+        this.layer.add(pin);
+        map.layers.insert(this.layer);
         return pin;
     }
 
+    /**
+     * pushpin Clear Layer
+     * @method pinLayerClear
+     * @return void
+    */
+    pinLayerClear(){
+        if(typeof arguments[0]=="undefined"){
+            this.layer.clear();
+        }else{
+            this.layer.remove(arguments[0]);
+        }
+
+    }
 
     /**
      * Pushpin:pushpinIcon Scale change size.

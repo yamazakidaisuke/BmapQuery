@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.6 ( https://mapapi.org/indexb.php )
 //********************************************************************
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -19,6 +19,7 @@ var Bmap = function () {
         this.map = null; //mapObject
         this.directionsManager = null;
         this.loc = null; //Geocode:location
+        this.layer = new Microsoft.Maps.Layer();
     }
 
     /**
@@ -303,22 +304,79 @@ var Bmap = function () {
         }
 
         /**
-         * Layer:Add
-         * @method layerAdd
-         * @param pinObj   (float)    [pushpin]
-         * @returns {boolean=false OR void }
+         * pushpin add Layer
+         * @method pinLayer
+         * @param lat    (float)    [47.6149]
+         * @param lon    (float)    [-122.1941]
+         * @param color  (string)   ["#ff0000"]
+         * @param[arguments] drag   (boolean)  [true or false]
+         * @param[arguments] clicked (boolean) [true or false]
+         * @param[arguments] hover  (boolean)  [true or false]
+         * @param[arguments] visib  (boolean)  [true or false]
+         * @returns pin (object)
          */
 
     }, {
-        key: "layerAdd",
-        value: function layerAdd(lat, lon) {
+        key: "pinLayer",
+        value: function pinLayer(lat, lon, color) {
             var map = this.map;
+            //Param Check
+            var drag = void 0,
+                clicked = void 0,
+                hover = void 0,
+                visib = void 0;
+            if (this.map == "" || lat == "" || lon == "" || color == "") {
+                return false;
+            }
+            //arguments[4...7]
+            if (typeof arguments[4] == "undefined" || arguments[4] == false) {
+                drag = false;
+            } else {
+                drag = true;
+            };
+            if (typeof arguments[5] == "undefined" || arguments[5] == false) {
+                clicked = false;
+            } else {
+                clicked = true;
+            };
+            if (typeof arguments[6] == "undefined" || arguments[6] == false) {
+                hover = false;
+            } else {
+                hover = true;
+            };
+            if (typeof arguments[7] == "undefined" || arguments[7] == true) {
+                visib = true;
+            } else {
+                visib = false;
+            };
             var location = new Microsoft.Maps.Location(lat, lon);
-            var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
-            var layer = new Microsoft.Maps.Layer();
-            layer.add(pushpin);
-            map.layers.insert(layer);
+            var pin = new Microsoft.Maps.Pushpin(location, {
+                color: color, //Color
+                draggable: drag, //MouseDraggable
+                enableClickedStyle: clicked, //Click
+                enableHoverStyle: hover, //MouseOver
+                visible: visib //show/hide
+            });
+            //add Layer
+            this.layer.add(pin);
+            map.layers.insert(this.layer);
             return pin;
+        }
+
+        /**
+         * pushpin Clear Layer
+         * @method pinLayerClear
+         * @return void
+        */
+
+    }, {
+        key: "pinLayerClear",
+        value: function pinLayerClear() {
+            if (typeof arguments[0] == "undefined") {
+                this.layer.clear();
+            } else {
+                this.layer.remove(arguments[0]);
+            }
         }
 
         /**
@@ -450,8 +508,8 @@ var Bmap = function () {
                             where: query,
                             callback: function callback(r) {
                                 if (r && r.results && r.results.length > 0) {
-                                    var _pin = new Microsoft.Maps.Pushpin(r.results[0].location);
-                                    map.entities.push(_pin);
+                                    var pin = new Microsoft.Maps.Pushpin(r.results[0].location);
+                                    map.entities.push(pin);
                                     map.setView({ bounds: r.results[0].bestView });
                                     return resolve(r.results[0].location);
                                 }
