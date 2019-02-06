@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.6 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.7 ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
     constructor(target) {
@@ -141,10 +141,10 @@ class Bmap {
             return false;
         }
         //arguments[4...7]
-        if(typeof arguments[4]=="undefined" || arguments[4]==false){drag=false;   }else{drag=true;};
-        if(typeof arguments[5]=="undefined" || arguments[5]==false){clicked=false;}else{clicked=true;};
-        if(typeof arguments[6]=="undefined" || arguments[6]==false){hover=false;  }else{hover=true;};
-        if(typeof arguments[7]=="undefined" || arguments[7]==true) {visib = true; }else{visib=false;};
+        if(typeof arguments[3]=="undefined" || arguments[3]==false){drag=false;   }else{drag=true;};
+        if(typeof arguments[4]=="undefined" || arguments[4]==false){clicked=false;}else{clicked=true;};
+        if(typeof arguments[5]=="undefined" || arguments[5]==false){hover=false;  }else{hover=true;};
+        if(typeof arguments[6]=="undefined" || arguments[6]==true) {visib = true; }else{visib=false;};
         const location =  new Microsoft.Maps.Location(lat,lon);
         const pin = new Microsoft.Maps.Pushpin(location, {
             color: color,                //Color
@@ -258,10 +258,10 @@ class Bmap {
             return false;
         }
         //arguments[4...7]
-        if(typeof arguments[4]=="undefined" || arguments[4]==false){drag=false;   }else{drag=true;};
-        if(typeof arguments[5]=="undefined" || arguments[5]==false){clicked=false;}else{clicked=true;};
-        if(typeof arguments[6]=="undefined" || arguments[6]==false){hover=false;  }else{hover=true;};
-        if(typeof arguments[7]=="undefined" || arguments[7]==true) {visib = true; }else{visib=false;};
+        if(typeof arguments[3]=="undefined" || arguments[3]==false){drag=false;   }else{drag=true;};
+        if(typeof arguments[4]=="undefined" || arguments[4]==false){clicked=false;}else{clicked=true;};
+        if(typeof arguments[5]=="undefined" || arguments[5]==false){hover=false;  }else{hover=true;};
+        if(typeof arguments[6]=="undefined" || arguments[6]==true) {visib = true; }else{visib=false;};
         const location =  new Microsoft.Maps.Location(lat,lon);
         const pin = new Microsoft.Maps.Pushpin(location, {
             color: color,                //Color
@@ -288,6 +288,35 @@ class Bmap {
             this.layer.remove(arguments[0]);
         }
 
+    }
+
+    /**
+     * polyline
+     * @method polyline
+     * @param locations    (array)    [47.6149]
+     * @param lineColor    (string)   [-122.1941]
+     * @param lineBold     (string)   ["#ff0000"]
+     * @param arguments[3] (array)    [lineWidth, spaceWidth]
+     */
+    polyline(locations,lineColor,lineBold){
+        let widths;
+        //3.1 Get value arguments[3]
+        if(typeof arguments[3]=="object"){
+            //Auguments
+            widths=arguments[3];
+        }else{
+            //Default
+            widths=[];
+        }
+        //3.2 option.
+        const options = {
+            strokeColor: lineColor,
+            strokeThickness: lineBold,
+            strokeDashArray: widths
+        }
+        //3.3 polyline create
+        const polyline = new Microsoft.Maps.Polyline( locations, options );
+        this.map.entities.push(polyline);
     }
 
     /**

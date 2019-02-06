@@ -1,4 +1,4 @@
-BmapQuery.js  v0.6
+BmapQuery.js  v0.7
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -98,12 +98,12 @@ To test your installation, just call the following page at your website:
     // Instance...
     //----------------------------------------------------
     let map = new Bmap("#myMap");
-
     //----------------------------------------------------
     // Display Map
     // startMap(lat, lon, "MapType", Zoom[1~20]);
     //----------------------------------------------------
     map.startMap(47.6149, -122.1941, "load", 16);//MapType[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+
 
     //----------------------------------------------------
     // Map:Events
@@ -114,11 +114,13 @@ To test your installation, just call the following page at your website:
         alert("MapEvent!");
     });
 
+
     //----------------------------------------------------
     // Pushpin
     // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
     //----------------------------------------------------
     let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
+
 
     //----------------------------------------------------
     // Pushpin:Text
@@ -126,11 +128,13 @@ To test your installation, just call the following page at your website:
     //----------------------------------------------------
     let pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
 
+
     //----------------------------------------------------
     // Pushpin:Icon
     // pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
     //----------------------------------------------------
     let pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
+
 
     //----------------------------------------------------
     // pushpin:Events
@@ -140,6 +144,7 @@ To test your installation, just call the following page at your website:
     map.onPin(pin1, "click", function(){
         alert("PinEvent1");
     });
+
 
     //----------------------------------------------------
     // Layer: Add Pushpin
@@ -157,17 +162,38 @@ To test your installation, just call the following page at your website:
     //----------------------------------------------------
      map.pinLayerClear();
 
+
     //----------------------------------------------------
     // Infobox
     // infobox(lat, lon, "title", "description");
     //----------------------------------------------------
     map.infobox(47.6149, -122.1941, "1 step", "Start");
 
+
     //----------------------------------------------------
     // Infobox:html
     // infoboxHtml(lat, lon, html);
     //----------------------------------------------------
     map.infoboxHtml(47.6160, -122.1950, '<div style="background:red;">Hello,world</div>');
+
+
+    //----------------------------------------------------
+    // polyline
+    // polyline(locations, "color", lineBold, [lineWidth,lineSpace] );
+    //----------------------------------------------------
+    // location points.(array)
+    const locations = [
+        new Microsoft.Maps.Location(lat + 0.01, lon - 0.03),
+        new Microsoft.Maps.Location(lat + 0.02, lon + 0.03),
+        new Microsoft.Maps.Location(lat + 0.03, lon - 0.03),
+        new Microsoft.Maps.Location(lat + 0.04, lon + 0.03),
+        new Microsoft.Maps.Location(lat + 0.05, lon - 0.03)
+    ];
+    // A. polyline create
+    map.polyline(locations,"#ff0000",3);
+    // B. polyline create
+    map.polyline(locations,"#ff0000",3,[2,2]);
+
 
     //----------------------------------------------------
     // MapChangeView(after 2 seconds.)
@@ -176,6 +202,7 @@ To test your installation, just call the following page at your website:
     setTimeout(function(){
         map.changeMap(47.6150, -122.1950, "load", 17);
     },2000);
+
 
     //----------------------------------------------------
     // Geocode(2 patterns & after 4 seconds.)
@@ -192,6 +219,7 @@ To test your installation, just call the following page at your website:
             alert(data.location);
         });
     },4000);
+
 
     //------------------------------------------------------------------------
     //Get Reverse Geocode
@@ -216,6 +244,7 @@ To test your installation, just call the following page at your website:
         });
     },8000);
 
+
     //----------------------------------------------------
     //Directions:Search.
     // !! For confirmation, set the parameters for each country !!
@@ -230,6 +259,7 @@ To test your installation, just call the following page at your website:
         map.direction("#direction", mode, from , to, array);  //Direction Methed
     };
 
+
     //-----------------------------------------------------
     // AutoSuggest
     // !! Only viewing user's region can be displayed !!
@@ -242,11 +272,13 @@ To test your installation, just call the following page at your website:
     //-----------------------------------------------------
     map.selectedSuggestion("#searchBox","#searchBoxContainer");
 
+
     //----------------------------------------------------
     // Traffic
     // map.traffic();
     //----------------------------------------------------
     map.traffic();
+
 
     //----------------------------------------------------
     // get Boundary
@@ -266,12 +298,14 @@ To test your installation, just call the following page at your website:
     //---------------------------------------------------
     map.getBoundary("PopulatedPlace");
 
+
     //----------------------------------------------------
     // Get multiple boundaries
     //  map.getMultiBoundary(["Postcode"...]);
     //----------------------------------------------------
     const zipCodes = ['98004', '98005', '98007', '98008', '98039'];
     map.getMultiBoundary(zipCodes);
+
 
     //----------------------------------------------------
     // Get Search Boundary

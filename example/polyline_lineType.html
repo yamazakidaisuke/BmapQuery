@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Polyline lineType</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<h1>Add Polyline lineType</h1>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //------------------------------------------------------------------------
+    const lat = 47.6149;
+    const lon = -122.1941;
+    map.startMap(lat, lon, "load", 12); //The place is Bellevue.
+
+    //----------------------------------------------------
+    //3. Add polyline
+    // polyline(locations, "color", lineBold, [lineWidth,lineSpace] );
+    //----------------------------------------------------
+    // location points.(array)
+    const locations = [
+        new Microsoft.Maps.Location(lat + 0.01, lon - 0.03),
+        new Microsoft.Maps.Location(lat + 0.02, lon + 0.03),
+        new Microsoft.Maps.Location(lat + 0.03, lon - 0.03),
+        new Microsoft.Maps.Location(lat + 0.04, lon + 0.03),
+        new Microsoft.Maps.Location(lat + 0.05, lon - 0.03)
+    ];
+    // polyline create
+    map.polyline(locations,"#ff0000",3,[2,2]);
+
+
+}
+</script>
+</body>
+</html>

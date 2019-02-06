@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.6 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.7 ( https://mapapi.org/indexb.php )
 //********************************************************************
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -178,22 +178,22 @@ var Bmap = function () {
                 return false;
             }
             //arguments[4...7]
-            if (typeof arguments[4] == "undefined" || arguments[4] == false) {
+            if (typeof arguments[3] == "undefined" || arguments[3] == false) {
                 drag = false;
             } else {
                 drag = true;
             };
-            if (typeof arguments[5] == "undefined" || arguments[5] == false) {
+            if (typeof arguments[4] == "undefined" || arguments[4] == false) {
                 clicked = false;
             } else {
                 clicked = true;
             };
-            if (typeof arguments[6] == "undefined" || arguments[6] == false) {
+            if (typeof arguments[5] == "undefined" || arguments[5] == false) {
                 hover = false;
             } else {
                 hover = true;
             };
-            if (typeof arguments[7] == "undefined" || arguments[7] == true) {
+            if (typeof arguments[6] == "undefined" || arguments[6] == true) {
                 visib = true;
             } else {
                 visib = false;
@@ -329,22 +329,22 @@ var Bmap = function () {
                 return false;
             }
             //arguments[4...7]
-            if (typeof arguments[4] == "undefined" || arguments[4] == false) {
+            if (typeof arguments[3] == "undefined" || arguments[3] == false) {
                 drag = false;
             } else {
                 drag = true;
             };
-            if (typeof arguments[5] == "undefined" || arguments[5] == false) {
+            if (typeof arguments[4] == "undefined" || arguments[4] == false) {
                 clicked = false;
             } else {
                 clicked = true;
             };
-            if (typeof arguments[6] == "undefined" || arguments[6] == false) {
+            if (typeof arguments[5] == "undefined" || arguments[5] == false) {
                 hover = false;
             } else {
                 hover = true;
             };
-            if (typeof arguments[7] == "undefined" || arguments[7] == true) {
+            if (typeof arguments[6] == "undefined" || arguments[6] == true) {
                 visib = true;
             } else {
                 visib = false;
@@ -377,6 +377,37 @@ var Bmap = function () {
             } else {
                 this.layer.remove(arguments[0]);
             }
+        }
+
+        /**
+         * polyline
+         * @method polyline
+         * @param locations    (array)    [47.6149]
+         * @param lineColor    (string)   [-122.1941]
+         * @param lineBold     (string)   ["#ff0000"]
+         * @param arguments[3] (array)    [lineWidth, spaceWidth]
+         */
+
+    }, {
+        key: "polyline",
+        value: function polyline(locations, lineColor, lineBold) {
+            var widths = void 0;
+            //3.1 Get value arguments[3]
+            if (_typeof(arguments[3]) == "object") {
+                //Auguments
+                widths = arguments[3];
+            } else {
+                //Default
+                widths = [];
+            }
+            //3.2 option.
+            var options = {
+                strokeColor: lineColor,
+                strokeThickness: lineBold,
+                strokeDashArray: widths
+                //3.3 polyline create
+            };var polyline = new Microsoft.Maps.Polyline(locations, options);
+            this.map.entities.push(polyline);
         }
 
         /**
