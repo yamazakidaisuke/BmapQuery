@@ -5,12 +5,14 @@
 // BmapQuery: v0.7 ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
+    //Init
     constructor(target) {
         this.target = target; //#id
         this.map = null;      //mapObject
         this.directionsManager = null;
-        this.loc = null; //Geocode:location
+        this.loc; //Geocode:location
         this.layer = new Microsoft.Maps.Layer();
+        this.watchId;
     }
 
     /**
@@ -717,6 +719,42 @@ class Bmap {
     }
 
 
+    /**
+    * startTracking
+    * @method startTracking
+    * @param  chkflg (bool) [ true=console.log, false=not console.log ]
+    * @return void
+    */
+    startTracking(chkFlg) {
+        const map = this.map;
+        //Add a pushpin to show the user's location.
+        const userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {visible: false });
+        map.entities.push(userPin);
+        //Watch the users location.
+        this.watchId = navigator.geolocation.watchPosition(function(position) {
+                //location now
+                const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                if(chkFlg===true) {
+                   console.log(position.coords);
+                }
+                //Update the user pushpin.
+                userPin.setLocation(loc);
+                userPin.setOptions({ visible: true });
+                //Center the map on the user's location.
+                map.setView({ center: loc });
+        });
+    }
+    /**
+    * stopTracking
+    * @method stopTracking
+    * @return void
+    */
+    stopTracking() {
+        // Cancel the geolocation updates.
+        navigator.geolocation.clearWatch(this.watchId);
+        //Remove the user pushpin.
+        this.map.entities.clear();
+    }
 
 
 }

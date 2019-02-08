@@ -1,4 +1,4 @@
-BmapQuery.js  v0.7
+BmapQuery.js  v0.8
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -330,6 +330,20 @@ To test your installation, just call the following page at your website:
         const searchBox = document.getElementById("searchBox").value;
         //BingMaps Serch
         map.getSearchBoundary(searchBox, 'PopulatedPlace');
+    }
+
+    //------------------------------------------------------------------------
+    // Tracking Event
+    // 1. <button id="start_tracking"....
+    // 2. <button id="stop_tracking"....
+    //------------------------------------------------------------------------
+    //Start
+    document.getElementById("start_tracking").onclick=function(){
+        map.startTracking(true); //console.log => true or false
+    }
+    //Stop
+    document.getElementById("stop_tracking").onclick=function(){
+        map.stopTracking();
     }
 
 
