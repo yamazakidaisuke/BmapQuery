@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.7 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.1 ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
     //Init
@@ -744,6 +744,7 @@ class Bmap {
                 map.setView({ center: loc });
         });
     }
+
     /**
     * stopTracking
     * @method stopTracking
@@ -755,6 +756,43 @@ class Bmap {
         //Remove the user pushpin.
         this.map.entities.clear();
     }
+
+    /**
+     * Circle: Meter
+     * @method circle
+     * @param  meter (int) Meters
+     * @param pin_color (string) pin color
+     * @param fill_color (string) Area Fill color.
+     * @param strokeWidth (int) 0...
+     * @return void
+     */
+    circle(meter, pin_color, fill_color, strokeWidth) {
+        const map = this.map;
+        //Load the spatial math module
+        Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", function () {
+            //Request the user's location
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                //Create an accuracy circle
+                const path = Microsoft.Maps.SpatialMath.getRegularPolygon(loc, meter, 36, Microsoft.Maps.SpatialMath.Meters);
+                const poly = new Microsoft.Maps.Polygon(path,{
+                    fillColor: fill_color,
+                    strokeThickness: strokeWidth
+                });
+                map.entities.push(poly);
+                //Add a pushpin at the user's location.
+                const pin = new Microsoft.Maps.Pushpin(loc,{
+                    color: pin_color
+                });
+                map.entities.push(pin);
+                //Center the map on the user's location.
+                map.setView({
+                    center: loc
+                });
+            });
+        });
+    }
+
 
 
 }

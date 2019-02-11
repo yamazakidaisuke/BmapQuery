@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8
+BmapQuery.js  v0.8.1
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -161,6 +161,15 @@ To test your installation, just call the following page at your website:
     // layer Allclear
     //----------------------------------------------------
      map.pinLayerClear();
+
+
+    //------------------------------------------------------------------------
+    // Circle&Pushpin Add
+    // circle(int Meter, string Color ,string Color, int strokeWidth );
+    //------------------------------------------------------------------------
+    map.circle(1000, "#0000ff", "rgba(0,0,150,0.5)", 1); //1000m = 1km, 2000 = 2Km
+    map.circle(2000, "#0000ff", "rgba(0,0,150,0.4)", 2); //1000m = 1km, 2000 = 2Km
+    map.circle(3000, "#0000ff", "rgba(0,0,150,0.3)", 0); //1000m = 1km, 2000 = 2Km
 
 
     //----------------------------------------------------
@@ -345,7 +354,6 @@ To test your installation, just call the following page at your website:
     document.getElementById("stop_tracking").onclick=function(){
         map.stopTracking();
     }
-
 
 
 ## Author
