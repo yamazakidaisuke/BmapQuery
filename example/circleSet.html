@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Circle range display of current location</title>
+<title>Map:Circle geolocation Set</title>
 <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
 </head>
 <body>
 
 
 <!-- MAP[START] -->
-<h1>Circle range display of current location</h1>
+<h1>Map:Circle geolocation Set</h1>
 <div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <!-- MAP[END] -->
 
@@ -32,27 +32,21 @@ function GetMap(){
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
     //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
     //--------------------------------------------------
-    map.startMap(47.6149, -122.1941, "load", 13);
+    map.startMap(47.6000, -122.1599, "load", 12);
 
     //------------------------------------------------------------------------
-    //3.Circle Add
-    //  circleSet( Meter, style={pinColor,fillColor,strokeWidth} );
+    //3.circle location Set
+    //  circleSet( lat, lon, Meter, style={pinColor,fillColor,strokeWidth} );
     //------------------------------------------------------------------------
-    //Blue
-    const style1 = {
+    const style = {
         pinColor:"#0000ff",
-        fillColor:"rgba(0,0,100,0.6)",
-        strokeWidth:1
+        fillColor:"rgba(0,0,100,0.4)",
+        strokeWidth:10
     };
-    map.circle(1000, style1); //1000m = 1km, 2000 = 2Km
-    map.circle(2000, style1); //1000m = 1km, 2000 = 2Km
-    //Red
-    const style2 = {
-        pinColor:"#ff0000",
-        fillColor:"rgba(100,0,0,0.2)",
-        strokeWidth:0
-    };
-    map.circle(3000, style2); //1000m = 1km, 2000 = 2Km
+    map.circleSet(47.6200, -122.1100, 2000, style); //1000=1km, 2000=2Km
+    map.circleSet(47.6000, -122.1599, 3000, style); //1000=1km, 2000=2Km
+    map.circleSet(47.6149, -122.1941, 1000, style); //1000=1km, 2000=2Km
+
 
 }
 </script>

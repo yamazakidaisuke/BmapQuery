@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8.1
+BmapQuery.js  v0.8.2
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -67,14 +67,19 @@ It's opinionated about how you organize your repositories.
     <script>
     //init
     function GetMap(){
+        
         //Start
         const map = new Bmap("#myMap); //Preparation
+        
         //Map
         map.startMap(47.6149, -122.1941, "load", 10); //Run on one line
+        
         //Pin
         let pin = map.pin(47.6149, -122.1941, "#ff0000"); //Run on one line
+        
         //infobox
         map.infobox(47.6149, -122.1941, "Title", "Description"); //Run on one line
+    
     }
 
 
@@ -164,14 +169,37 @@ To test your installation, just call the following page at your website:
 
 
     //------------------------------------------------------------------------
-    // Circle&Pushpin Add
-    // circle(int Meter, string Color ,string Color, int strokeWidth );
+    // Circle&Location Add
+    // circle( Meter, style={pinColor,fillColor,strokeWidth} );
     //------------------------------------------------------------------------
-    map.circle(1000, "#0000ff", "rgba(0,0,150,0.5)", 1); //1000m = 1km, 2000 = 2Km
-    map.circle(2000, "#0000ff", "rgba(0,0,150,0.4)", 2); //1000m = 1km, 2000 = 2Km
-    map.circle(3000, "#0000ff", "rgba(0,0,150,0.3)", 0); //1000m = 1km, 2000 = 2Km
+    //Circle Style
+    const style = {
+        pinColor:"#0000ff",
+        fillColor:"rgba(0,0,100,0.6)",
+        strokeWidth:1
+    };
+    //Circle Create
+    map.circle(1000, style); //1000m=1km, 2000=2Km
+    map.circle(2000, style); //1000m=1km, 2000=2Km
+    map.circle(3000, style); //1000m=1km, 2000=2Km
 
 
+    //------------------------------------------------------------------------
+    // Circle&SetLocation Add
+    // circleSet( lat, lon, Meter, style={pinColor,fillColor,strokeWidth} );
+    //------------------------------------------------------------------------
+    //Circle Style
+    const style = {
+        pinColor:"#0000ff",
+        fillColor:"rgba(0,0,100,0.4)",
+        strokeWidth:10
+    };
+    //Circle Create
+    map.circleSet(47.6200, -122.1100, 2000, style); //1000=1km, 2000=2Km
+    map.circleSet(47.6000, -122.1599, 3000, style); //1000=1km, 2000=2Km
+    map.circleSet(47.6149, -122.1941, 1000, style); //1000=1km, 2000=2Km
+    
+    
     //----------------------------------------------------
     // Infobox
     // infobox(lat, lon, "title", "description");
@@ -198,9 +226,9 @@ To test your installation, just call the following page at your website:
         new Microsoft.Maps.Location(lat + 0.04, lon + 0.03),
         new Microsoft.Maps.Location(lat + 0.05, lon - 0.03)
     ];
-    // A. polyline create
+    // A Type: polyline create
     map.polyline(locations,"#ff0000",3);
-    // B. polyline create
+    // B Type: polyline create
     map.polyline(locations,"#ff0000",3,[2,2]);
 
 
@@ -235,7 +263,7 @@ To test your installation, just call the following page at your website:
     //2 patterns
     //after 6,8 seconds.
     //------------------------------------------------------------------------
-    //A.Set location data for BingMaps
+    //A Type: Set location data for BingMaps
     setTimeout(function () {
         const location = map.setLocation(47.6130, -122.1945);
         map.reverseGeocode(location, function(data){
@@ -244,7 +272,7 @@ To test your installation, just call the following page at your website:
         });
     },6000);
 
-    //B.Get MapCenter location
+    //B Type: Get MapCenter location
     setTimeout(function () {
         const mapCenter = map.getCenter();
         map.reverseGeocode(mapCenter, function(data){

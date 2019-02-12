@@ -1,7 +1,6 @@
-"use strict";
-//********************************************************************
+"use strict"; //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.1 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.2 ( https://mapapi.org/indexb.php )
 //********************************************************************
 
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
@@ -960,15 +959,13 @@ var Bmap =
              * Circle: Meter
              * @method circle
              * @param  meter (int) Meters
-             * @param pin_color (string) pin color
-             * @param fill_color (string) Area Fill color.
-             * @param strokeWidth (int) 0...
+             * @param style (Object) [pinColor(string), fillColor(string), strokeWidth(int)]
              * @return void
              */
 
         }, {
             key: "circle",
-            value: function circle(meter, pin_color, fill_color, strokeWidth) {
+            value: function circle(meter, style) {
                 var map = this.map; //Load the spatial math module
 
                 Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", function () {
@@ -978,13 +975,13 @@ var Bmap =
 
                         var path = Microsoft.Maps.SpatialMath.getRegularPolygon(loc, meter, 36, Microsoft.Maps.SpatialMath.Meters);
                         var poly = new Microsoft.Maps.Polygon(path, {
-                            fillColor: fill_color,
-                            strokeThickness: strokeWidth
+                            fillColor: typeof style.fillColor === "undefined" ? "rgba(255,0,0,0.3)" : style.fillColor,
+                            strokeThickness: typeof style.strokeWidth === "undefined" ? 0 : style.strokeWidth
                         });
                         map.entities.push(poly); //Add a pushpin at the user's location.
 
                         var pin = new Microsoft.Maps.Pushpin(loc, {
-                            color: pin_color
+                            color: typeof style.pinColor === "undefined" ? "#ff0000" : style.pinColor
                         });
                         map.entities.push(pin); //Center the map on the user's location.
 
@@ -992,6 +989,39 @@ var Bmap =
                             center: loc
                         });
                     });
+                });
+            }
+            /**
+             * Circle location set
+             * @method circleSet
+             * @param lat (float) latitude
+             * @param lon (float) longitude
+             * @param  meter (int) Meters
+             * @param style (Object) [pinColor(string), fillColor(string), strokeWidth(int)]
+             * @return void
+             */
+
+        }, {
+            key: "circleSet",
+            value: function circleSet(lat, lon, meter, style) {
+                console.log(style.pinColor);
+                var map = this.map; //Load the spatial math module
+
+                Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", function () {
+                    //Request the user's location
+                    var loc = new Microsoft.Maps.Location(lat, lon); //Create an accuracy circle
+
+                    var path = Microsoft.Maps.SpatialMath.getRegularPolygon(loc, meter, 36, Microsoft.Maps.SpatialMath.Meters);
+                    var poly = new Microsoft.Maps.Polygon(path, {
+                        fillColor: typeof style.fillColor === "undefined" ? "rgba(255,0,0,0.3)" : style.fillColor,
+                        strokeThickness: typeof style.strokeWidth === "undefined" ? 0 : style.strokeWidth
+                    });
+                    map.entities.push(poly); //Add a pushpin at the user's location.
+
+                    var pin = new Microsoft.Maps.Pushpin(loc, {
+                        color: typeof style.pinColor === "undefined" ? "#ff0000" : style.pinColor
+                    });
+                    map.entities.push(pin);
                 });
             }
         }]);
