@@ -1,6 +1,7 @@
-"use strict"; //********************************************************************
+"use strict";
+//********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.2 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.3 ( https://mapapi.org/indexb.php )
 //********************************************************************
 
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
@@ -960,34 +961,43 @@ var Bmap =
              * @method circle
              * @param  meter (int) Meters
              * @param style (Object) [pinColor(string), fillColor(string), strokeWidth(int)]
+             * @arguments event (string) arguments[2]
+             * @arguments callback (function) arguments[3]
              * @return void
              */
 
         }, {
             key: "circle",
             value: function circle(meter, style) {
-                var map = this.map; //Load the spatial math module
+                var map = this.map;
+                var event = arguments[2];
+                var callback = arguments[3]; //Load the spatial math module
 
                 Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", function () {
                     //Request the user's location
                     navigator.geolocation.getCurrentPosition(function (position) {
-                        var loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude); //Create an accuracy circle
+                        var loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude); //Center the map on the user's location.
+
+                        map.setView({
+                            center: loc
+                        }); //Create an accuracy circle
 
                         var path = Microsoft.Maps.SpatialMath.getRegularPolygon(loc, meter, 36, Microsoft.Maps.SpatialMath.Meters);
                         var poly = new Microsoft.Maps.Polygon(path, {
                             fillColor: typeof style.fillColor === "undefined" ? "rgba(255,0,0,0.3)" : style.fillColor,
                             strokeThickness: typeof style.strokeWidth === "undefined" ? 0 : style.strokeWidth
                         });
-                        map.entities.push(poly); //Add a pushpin at the user's location.
+                        map.entities.push(poly); //Event:add [click,mousedown,mouseout,mouseover,mouseup]
+
+                        if ((event === "click" || event === "mousedown" || event === "mouseout" || event === "mouseover" || event === "mouseup") && typeof callback === "function") {
+                            Microsoft.Maps.Events.addHandler(poly, event, callback);
+                        } //Add a pushpin at the user's location.
+
 
                         var pin = new Microsoft.Maps.Pushpin(loc, {
                             color: typeof style.pinColor === "undefined" ? "#ff0000" : style.pinColor
                         });
-                        map.entities.push(pin); //Center the map on the user's location.
-
-                        map.setView({
-                            center: loc
-                        });
+                        map.entities.push(pin);
                     });
                 });
             }
@@ -998,14 +1008,17 @@ var Bmap =
              * @param lon (float) longitude
              * @param  meter (int) Meters
              * @param style (Object) [pinColor(string), fillColor(string), strokeWidth(int)]
+             * @arguments event (string) arguments[2]
+             * @arguments callback (function) arguments[3]
              * @return void
              */
 
         }, {
             key: "circleSet",
             value: function circleSet(lat, lon, meter, style) {
-                console.log(style.pinColor);
-                var map = this.map; //Load the spatial math module
+                var map = this.map;
+                var event = arguments[4];
+                var callback = arguments[5]; //Load the spatial math module
 
                 Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", function () {
                     //Request the user's location
@@ -1016,7 +1029,12 @@ var Bmap =
                         fillColor: typeof style.fillColor === "undefined" ? "rgba(255,0,0,0.3)" : style.fillColor,
                         strokeThickness: typeof style.strokeWidth === "undefined" ? 0 : style.strokeWidth
                     });
-                    map.entities.push(poly); //Add a pushpin at the user's location.
+                    map.entities.push(poly); //Event:add [click,mousedown,mouseout,mouseover,mouseup]
+
+                    if ((event === "click" || event === "mousedown" || event === "mouseout" || event === "mouseover" || event === "mouseup") && typeof callback === "function") {
+                        Microsoft.Maps.Events.addHandler(poly, event, callback);
+                    } //Add a pushpin at the user's location.
+
 
                     var pin = new Microsoft.Maps.Pushpin(loc, {
                         color: typeof style.pinColor === "undefined" ? "#ff0000" : style.pinColor

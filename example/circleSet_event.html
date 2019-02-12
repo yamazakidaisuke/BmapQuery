@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Circle range display of current location</title>
+<title>Map:Circle geolocation Set:Event</title>
 <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
 </head>
 <body>
 
 
 <!-- MAP[START] -->
-<h1>Circle range display of current location</h1>
+<h1>Map:Circle geolocation Set:Event</h1>
 <div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <!-- MAP[END] -->
 
@@ -32,20 +32,33 @@ function GetMap(){
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
     //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
     //--------------------------------------------------
-    map.startMap(47.6149, -122.1941, "load", 13);
+    map.startMap(47.6000, -122.1599, "load", 12);
 
     //------------------------------------------------------------------------
-    //3.Circle Add
-    //  circleSet( Meter, style={pinColor,fillColor,strokeWidth} );
+    //3.circle location Set: Event
+    //  circleSet( lat, lon, Meter, style={pinColor,fillColor,strokeWidth} );
     //------------------------------------------------------------------------
-    //Blue
+    //Style
     const style = {
         pinColor:"#0000ff",
-        fillColor:"rgba(0,0,100,0.6)",
+        fillColor:"rgba(0,0,100,0.4)",
         strokeWidth:1
     };
-    map.circle(1000, style); //1000m = 1km, 2000 = 2Km
-    map.circle(3000, style); //1000m = 1km, 2000 = 2Km
+
+    //CircleSet:Event
+    map.circleSet(47.6200, -122.1100, 1500, style, "click", function(){
+        map.infobox(47.6200, -122.1100, "Title1", "Description1");
+    }); //1500=1.5Km
+
+    //CircleSet:Event
+    map.circleSet(47.5500, -122.1299, 2000, style, "click", function(){
+        map.infobox(47.5500, -122.1299, "Title2", "Description2");
+    }); //2000=2Km
+
+    //CircleSet:Event
+    map.circleSet(47.6149, -122.1941, 3000, style, "click", function(){
+        map.infobox(47.6149, -122.1941, "Title3", "Description3");
+    }); //3000=3Km
 
 }
 </script>

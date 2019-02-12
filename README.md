@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8.2
+BmapQuery.js  v0.8.3
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -172,15 +172,32 @@ To test your installation, just call the following page at your website:
     // circle( Meter, style={pinColor,fillColor,strokeWidth} );
     //------------------------------------------------------------------------
     //Circle Style
-    const style = {
-        pinColor:"#0000ff",
-        fillColor:"rgba(0,0,100,0.6)",
-        strokeWidth:1
-    };
-    //Circle Create
-    map.circle(1000, style); //1000m=1km, 2000=2Km
-    map.circle(2000, style); //1000m=1km, 2000=2Km
-    map.circle(3000, style); //1000m=1km, 2000=2Km
+     const style = {
+         pinColor:"#0000ff",
+         fillColor:"rgba(0,0,100,0.6)",
+         strokeWidth:1
+     };
+     //Circle Create
+     map.circle(1000, style); //1000m = 1km, 2000 = 2Km
+     map.circle(3000, style); //1000m = 1km, 2000 = 2Km
+
+
+    //------------------------------------------------------------------------
+    // [Event] Circle&Location Add
+    // circle( Meter, style={pinColor,fillColor,strokeWidth},"event", callback );
+    //------------------------------------------------------------------------
+    //Circle Style
+     const style = {
+         pinColor:"#0000ff",
+         fillColor:"rgba(0,0,100,0.6)",
+         strokeWidth:1
+     };
+     //Circle Create //3000=3Km
+     map.circle(3000, style, "click", function(){
+         const lat = map.getCenter().latitude;  //Get MapCenter Latitude
+         const lon = map.getCenter().longitude; //Get MapCenter Longitude
+         map.infobox(lat, lon, "Title", "Description");
+     });
 
 
     //------------------------------------------------------------------------
@@ -199,6 +216,33 @@ To test your installation, just call the following page at your website:
     map.circleSet(47.6149, -122.1941, 1000, style); //1000=1km, 2000=2Km
     
     
+    //------------------------------------------------------------------------
+    // [Event] Circle&SetLocation Add
+    // circleSet( lat, lon, Meter, style={pinColor,fillColor,strokeWidth},"event", callback );
+    //------------------------------------------------------------------------
+    //Circle Style
+    const style = {
+        pinColor:"#0000ff",
+        fillColor:"rgba(0,0,100,0.4)",
+        strokeWidth:10
+    };
+    
+    //CircleSet:Event1 //1500=1.5Km
+    map.circleSet(47.6200, -122.1100, 1500, style, "click", function(){
+        map.infobox(47.6200, -122.1100, "Title1", "Description1");
+    });
+    
+    //CircleSet:Event2 //2000=2Km
+    map.circleSet(47.5500, -122.1299, 2000, style, "click", function(){
+        map.infobox(47.5500, -122.1299, "Title2", "Description2");
+    });
+
+    //CircleSet:Event3 //3000=3Km
+    map.circleSet(47.6149, -122.1941, 3000, style, "click", function(){
+        map.infobox(47.6149, -122.1941, "Title3", "Description3");
+    });
+
+
     //----------------------------------------------------
     // Infobox
     // infobox(lat, lon, "title", "description");
