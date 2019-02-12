@@ -90,8 +90,7 @@ To test your installation, just call the following page at your website:
 
 [[BmapQuery.js] (https://mapapi.org/indexb.php)]
 
-![default](https://user-images.githubusercontent.com/1481062/51815689-1d4ef300-2306-11e9-9c03-a6e0654025a6.JPG)
-
+![default](https://user-images.githubusercontent.com/1481062/52621258-2b963500-2eea-11e9-8c55-43c97d2da0ac.png)
 
 
 ## Documentation
