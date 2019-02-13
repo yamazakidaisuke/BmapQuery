@@ -95,18 +95,22 @@ To test your installation, just call the following page at your website:
 
 ## Documentation
 
-**[script]**
+#### Map Start!!
 
     //*Sample
     //----------------------------------------------------
     // Instance...
     //----------------------------------------------------
     let map = new Bmap("#myMap");
+    
     //----------------------------------------------------
-    // Display Map
+    // Show Map
     // startMap(lat, lon, "MapType", Zoom[1~20]);
     //----------------------------------------------------
     map.startMap(47.6149, -122.1941, "load", 16);//MapType[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+
+
+#### Map Event
 
 
     //----------------------------------------------------
@@ -119,11 +123,17 @@ To test your installation, just call the following page at your website:
     });
 
 
+#### Pushpin
+
+
     //----------------------------------------------------
     // Pushpin
     // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
     //----------------------------------------------------
     let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
+
+
+#### PushpinText
 
 
     //----------------------------------------------------
@@ -133,11 +143,17 @@ To test your installation, just call the following page at your website:
     let pin2 = map.pinText(47.6160, -122.1950, "title","subtitle","A");
 
 
+#### PushpinIcon
+
+
     //----------------------------------------------------
     // Pushpin:Icon
     // pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
     //----------------------------------------------------
     let pin3 = map.pinIcon(47.6130, -122.1945, "img/poi_custom.png", 1.0, 0, 0);
+
+
+#### PushpinEvent
 
 
     //----------------------------------------------------
@@ -150,6 +166,9 @@ To test your installation, just call the following page at your website:
     });
 
 
+#### Layer->Pushpin
+
+
     //----------------------------------------------------
     // Layer: Add Pushpin
     // pinLayer(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
@@ -157,14 +176,27 @@ To test your installation, just call the following page at your website:
     const pin1 = map.pinLayer(47.6149, -122.1941, "#ff0000");
     const pin2 = map.pinLayer(47.6155, -122.1945, "#0000ff");
     const pin3 = map.pinLayer(47.6160, -122.1940, "#00ff00");
+
+
+#### Layer->One Pushpin Delete
+
+
     //----------------------------------------------------
     // layer One delete
     //----------------------------------------------------
      map.pinLayerClear(pin2);
+     
+     
+#### Layer->Allclear
+
+     
     //----------------------------------------------------
     // layer Allclear
     //----------------------------------------------------
      map.pinLayerClear();
+
+     
+#### Circle->Location Add
 
 
     //------------------------------------------------------------------------
@@ -180,6 +212,9 @@ To test your installation, just call the following page at your website:
      //Circle Create
      map.circle(1000, style); //1000m = 1km, 2000 = 2Km
      map.circle(3000, style); //1000m = 1km, 2000 = 2Km
+
+     
+#### Circle->Location Event
 
 
     //------------------------------------------------------------------------
@@ -199,6 +234,9 @@ To test your installation, just call the following page at your website:
          map.infobox(lat, lon, "Title", "Description");
      });
 
+     
+#### Circle->Set Location
+
 
     //------------------------------------------------------------------------
     // Circle&SetLocation Add
@@ -215,7 +253,10 @@ To test your installation, just call the following page at your website:
     map.circleSet(47.6000, -122.1599, 3000, style); //1000=1km, 2000=2Km
     map.circleSet(47.6149, -122.1941, 1000, style); //1000=1km, 2000=2Km
     
-    
+       
+#### Circle->Set Location Event
+
+
     //------------------------------------------------------------------------
     // [Event] Circle&SetLocation Add
     // circleSet( lat, lon, Meter, style={pinColor,fillColor,strokeWidth},"event", callback );
@@ -242,6 +283,9 @@ To test your installation, just call the following page at your website:
         map.infobox(47.6149, -122.1941, "Title3", "Description3");
     });
 
+       
+#### infobox
+
 
     //----------------------------------------------------
     // Infobox
@@ -249,6 +293,8 @@ To test your installation, just call the following page at your website:
     //----------------------------------------------------
     map.infobox(47.6149, -122.1941, "1 step", "Start");
 
+       
+#### infoboxHtml
 
     //----------------------------------------------------
     // Infobox:html
@@ -256,6 +302,8 @@ To test your installation, just call the following page at your website:
     //----------------------------------------------------
     map.infoboxHtml(47.6160, -122.1950, '<div style="background:red;">Hello,world</div>');
 
+
+#### polyline
 
     //----------------------------------------------------
     // polyline
@@ -275,6 +323,8 @@ To test your installation, just call the following page at your website:
     map.polyline(locations,"#ff0000",3,[2,2]);
 
 
+#### ChangeView
+
     //----------------------------------------------------
     // MapChangeView(after 2 seconds.)
     // changeMap(lat, lon, "MapType", Zoom[1~20]);
@@ -283,6 +333,7 @@ To test your installation, just call the following page at your website:
         map.changeMap(47.6150, -122.1950, "load", 17);
     },2000);
 
+#### Geocode
 
     //----------------------------------------------------
     // Geocode(2 patterns & after 4 seconds.)
@@ -299,6 +350,9 @@ To test your installation, just call the following page at your website:
             alert(data.location);
         });
     },4000);
+
+
+#### Reverse Geocode
 
 
     //------------------------------------------------------------------------
@@ -325,6 +379,9 @@ To test your installation, just call the following page at your website:
     },8000);
 
 
+#### Directions Search
+
+
     //----------------------------------------------------
     //Directions:Search.
     // !! For confirmation, set the parameters for each country !!
@@ -340,6 +397,8 @@ To test your installation, just call the following page at your website:
     };
 
 
+#### AutoSuggest
+
     //-----------------------------------------------------
     // AutoSuggest
     // !! Only viewing user's region can be displayed !!
@@ -352,6 +411,7 @@ To test your installation, just call the following page at your website:
     //-----------------------------------------------------
     map.selectedSuggestion("#searchBox","#searchBoxContainer");
 
+#### Traffic
 
     //----------------------------------------------------
     // Traffic
@@ -359,6 +419,7 @@ To test your installation, just call the following page at your website:
     //----------------------------------------------------
     map.traffic();
 
+#### get Boundary
 
     //----------------------------------------------------
     // get Boundary
@@ -378,6 +439,7 @@ To test your installation, just call the following page at your website:
     //---------------------------------------------------
     map.getBoundary("PopulatedPlace");
 
+#### Get multiple boundaries
 
     //----------------------------------------------------
     // Get multiple boundaries
@@ -386,6 +448,7 @@ To test your installation, just call the following page at your website:
     const zipCodes = ['98004', '98005', '98007', '98008', '98039'];
     map.getMultiBoundary(zipCodes);
 
+#### Get Search boundaries
 
     //----------------------------------------------------
     // Get Search Boundary
@@ -412,6 +475,9 @@ To test your installation, just call the following page at your website:
         map.getSearchBoundary(searchBox, 'PopulatedPlace');
     }
 
+
+#### Tracking Event[Start&Stop]
+
     //------------------------------------------------------------------------
     // Tracking Event
     // 1. <button id="start_tracking"....
@@ -425,6 +491,8 @@ To test your installation, just call the following page at your website:
     document.getElementById("stop_tracking").onclick=function(){
         map.stopTracking();
     }
+
+
 
 
 ## Author
