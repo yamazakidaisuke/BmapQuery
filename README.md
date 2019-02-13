@@ -5,6 +5,16 @@ BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
 component to be used as part of web applications and websites.
 
 
+## Checking Your Installation
+
+To test your installation, just call the following page at your website:
+
+[[BmapQuery.js] (https://mapapi.org/indexb.php)]
+
+![default](https://user-images.githubusercontent.com/1481062/52621258-2b963500-2eea-11e9-8c55-43c97d2da0ac.png)
+
+
+
 ## Installation
 
 Installing BmapQuery is an easy task. Just follow these simple steps:
@@ -17,9 +27,6 @@ Installing BmapQuery is an easy task. Just follow these simple steps:
 2. BmapQuery is by default installed in the `js` folder. You can
 place the files in whichever you want though. Operation check with index.html.
 
-
-## Examples
-**Sample files for each function are prepared in the "example" folder.**
 
 
 ## Directory Structure
@@ -84,16 +91,12 @@ It's opinionated about how you organize your repositories.
 
 
 
-## Checking Your Installation
-
-To test your installation, just call the following page at your website:
-
-[[BmapQuery.js] (https://mapapi.org/indexb.php)]
-
-![default](https://user-images.githubusercontent.com/1481062/52621258-2b963500-2eea-11e9-8c55-43c97d2da0ac.png)
 
 
 ## Documentation
+
+#### Examples
+**Sample files for each function are prepared in the "example" folder.**
 
 #### Map Start!!
 
