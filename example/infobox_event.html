@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Infobox-Event</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<h1>Add Infob-Event</h1>
+<div id="myMap" style='width:60%;height:70%;float:left;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //------------------------------------------------------------------------
+    map.startMap(47.6149, -122.1941, "load", 10); //The place is Bellevue.
+
+    //----------------------------------------------------
+    //3. Add Infobox-Actions(Event)
+    // map.onInfobox(lat, lon, "title","description", "text or html");
+    //----------------------------------------------------
+    //Configuration
+    const title = "Title";
+    const discript = '<div style="width:200px;color:red;">discription</div>';
+    const actions =
+        [
+            //1.action
+            {
+                label: 'Click1',
+                eventHandler: function () { //function
+                    alert('Click1');
+                }
+            },
+            //2.action
+            {
+                label: 'Click2',
+                eventHandler: function () { //function
+                    alert('Click2');
+                }
+            }
+        ];
+    //Create Event to Infobox
+    map.onInfobox(47.6160,-122.1950, title, discript, actions);
+}
+</script>
+
+</body>
+</html>

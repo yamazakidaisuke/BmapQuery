@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8.3
+BmapQuery.js  v0.8.5
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -306,6 +306,37 @@ It's opinionated about how you organize your repositories.
     map.infoboxHtml(47.6160, -122.1950, '<div style="background:red;">Hello,world</div>');
 
 
+#### onInfobox
+
+    //----------------------------------------------------
+    // Infobox:Actions
+    // map.onInfobox(lat, lon, "title","description", "text or html");
+    //----------------------------------------------------
+     //Configuration
+     const title = "Title";
+     const discript = '<div style="width:200px;color:red;">discription</div>';
+     const actions =
+         [
+             //1.action
+             {
+                 label: 'Click1',
+                 eventHandler: function () { //function
+                     alert('Click1');
+                 }
+             },
+             //2.action
+             {
+                 label: 'Click2',
+                 eventHandler: function () { //function
+                     alert('Click2');
+                 }
+             }
+         ];
+     //Create Event to Infobox
+     map.onInfobox(47.6160,-122.1950, title, discript, actions);
+     
+     
+     
 #### polyline
 
     //----------------------------------------------------
@@ -325,6 +356,21 @@ It's opinionated about how you organize your repositories.
     // B Type: polyline create
     map.polyline(locations,"#ff0000",3,[2,2]);
 
+    //----------------------------------------------------
+    // Get Map  infomation
+    // map.map.*****();
+    //----------------------------------------------------
+    let str =  `<p>Map Height: ${map.map.getHeight()} </p>
+                <p>Map center: ${map.map.getCenter()}</p>
+                <p>Map Width:  ${map.map.getWidth()}</p>
+                <p>Map bounds: ${map.map.getBounds()}</p>
+                <p>Map PageX:  ${map.map.getPageX()}</p>
+                <p>Map PageY:  ${map.map.getPageY()}</p>
+                <p>Map zoom:   ${map.map.getZoom()}</p>
+                <p>Map type:   ${map.map.getMapTypeId()}</p>`;
+    //id="controll"にstr変数（Map情報）を表示
+    document.getElementById("controll").innerHTML = str;
+    
 
 #### ChangeView
 

@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.3 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.5 ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
     //Init
@@ -409,6 +409,30 @@ class Bmap {
         });
         infobox.setMap(this.map);
     }
+
+
+    /**
+     * Infobox:Actions
+     * @method onInfobox
+     * @param lat      (float)    [47.6149]
+     * @param lon      (float)    [-122.1941]
+     * @param t        (string)   ["title":text or html]
+     * @param d        (string)   ["description":text or html]
+     * @param actions  (object)   [actions object]
+     */
+    onInfobox(lat,lon,t,d,actions) {
+        const loc = this.setLocation(lat,lon);
+        const infobox = new Microsoft.Maps.Infobox(loc, {
+            maxHeight:this.map.getHeight()-50,
+            maxWidth:this.map.getWidth()-50,
+            title: t,
+            description: d,
+            actions: actions
+        });
+        infobox.setMap(this.map); //Add infobox to Map
+    }
+
+
 
     /**
      * Search:Get Geocode

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Get Map infomation</title>
+<style>html,body{height:100%;}body{padding:0;margin:0;background:#333;}#controll{position:relative;float:left;padding-left:10px;width:47%;height:430px;color:#fff;font-size:90%;}#controll>div{margin:20px 0;}h1{padding:0;margin:0;font-size:50%;color:white;}</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<h1>Get Maps Infomation</h1>
+
+<div id="myMap" style='position:relative;float:left;width:50%;height:98%;'></div>
+<div id="controll"></div>
+<!-- MAP[END] -->
+
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+//****************************************************************************************
+// BingMaps&BmapQuery
+//****************************************************************************************
+//Init
+function GetMap(){
+    //------------------------------------------------------------------------
+    //1. Instance
+    //------------------------------------------------------------------------
+    const map = new Bmap("#myMap");
+
+    //------------------------------------------------------------------------
+    //2. Display Map
+    //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+    //--------------------------------------------------
+    map.startMap(47.6149, -122.1941, "load", 10);
+
+    //------------------------------------------------------------------------
+    //3. Get Map Infomation
+    //------------------------------------------------------------------------
+    let str =  `<p>Map Height: ${map.map.getHeight()} </p>
+                <p>Map center: ${map.map.getCenter()}</p>
+                <p>Map Width:  ${map.map.getWidth()}</p>
+                <p>Map bounds: ${map.map.getBounds()}</p>
+                <p>Map PageX:  ${map.map.getPageX()}</p>
+                <p>Map PageY:  ${map.map.getPageY()}</p>
+                <p>Map zoom:   ${map.map.getZoom()}</p>
+                <p>Map type:   ${map.map.getMapTypeId()}</p>`;
+    //id="controll"にstr変数（Map情報）を表示
+    document.getElementById("controll").innerHTML = str;
+
+}
+
+</script>
+</body>
+</html>
