@@ -136,6 +136,25 @@ It's opinionated about how you organize your repositories.
     let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
 
 
+#### Get Map infomation
+
+
+    //----------------------------------------------------
+    // Get Map infomation
+    // map.map.*****();
+    //----------------------------------------------------
+    let str =  `<p>Map Height: ${map.map.getHeight()} </p>
+                <p>Map center: ${map.map.getCenter()}</p>
+                <p>Map Width:  ${map.map.getWidth()}</p>
+                <p>Map bounds: ${map.map.getBounds()}</p>
+                <p>Map PageX:  ${map.map.getPageX()}</p>
+                <p>Map PageY:  ${map.map.getPageY()}</p>
+                <p>Map zoom:   ${map.map.getZoom()}</p>
+                <p>Map type:   ${map.map.getMapTypeId()}</p>`;
+    //id="controll"にstr変数（Map情報）を表示
+    document.getElementById("controll").innerHTML = str;
+    
+    
 #### PushpinText
 
 
@@ -356,21 +375,6 @@ It's opinionated about how you organize your repositories.
     // B Type: polyline create
     map.polyline(locations,"#ff0000",3,[2,2]);
 
-    //----------------------------------------------------
-    // Get Map  infomation
-    // map.map.*****();
-    //----------------------------------------------------
-    let str =  `<p>Map Height: ${map.map.getHeight()} </p>
-                <p>Map center: ${map.map.getCenter()}</p>
-                <p>Map Width:  ${map.map.getWidth()}</p>
-                <p>Map bounds: ${map.map.getBounds()}</p>
-                <p>Map PageX:  ${map.map.getPageX()}</p>
-                <p>Map PageY:  ${map.map.getPageY()}</p>
-                <p>Map zoom:   ${map.map.getZoom()}</p>
-                <p>Map type:   ${map.map.getMapTypeId()}</p>`;
-    //id="controll"にstr変数（Map情報）を表示
-    document.getElementById("controll").innerHTML = str;
-    
 
 #### ChangeView
 
