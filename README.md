@@ -323,6 +323,17 @@ It's opinionated about how you organize your repositories.
     // infoboxHtml(lat, lon, html);
     //----------------------------------------------------
     map.infoboxHtml(47.6160, -122.1950, '<div style="background:red;">Hello,world</div>');
+    
+    
+#### infoboxIframe
+
+    //----------------------------------------------------
+    // Infobox:Iframe
+    // infoboxIframe(lat,lon,width,height,title,iframe)
+    //----------------------------------------------------
+    const title = "Movie";
+    const iframe = '<iframe src="https://channel9.msdn.com/Events/Build/2016/B867/player#time=0h15m26s:paused" width="400" height="225" allowFullScreen frameBorder="0"></iframe>';
+    map.infoboxIframe(47.6149, -122.1941, 300, 420, title, iframe);
 
 
 #### onInfobox

@@ -40,12 +40,11 @@
 
         //----------------------------------------------------
         //4. Add Infobox-Iframe
-        // infoboxIframe(lat, lon, html);
+        // infoboxIframe(lat, lon, width, height,  title, iframe);
         //----------------------------------------------------
-        const loc = map.getCenter();
         const title = "Movie";
-        const description = '<iframe src="https://channel9.msdn.com/Events/Build/2016/B867/player#time=0h15m26s:paused" width="400" height="225" allowFullScreen frameBorder="0"></iframe>';
-        map.infoboxIframe(loc, 300, 420, title, description);
+        const iframe = '<iframe src="https://channel9.msdn.com/Events/Build/2016/B867/player#time=0h15m26s:paused" width="400" height="225" allowFullScreen frameBorder="0"></iframe>';
+        map.infoboxIframe(47.6149, -122.1941, 300, 420, title, iframe);
     }
 </script>
 

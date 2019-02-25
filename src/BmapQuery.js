@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.5 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.6 ( https://mapapi.org/indexb.php )
 //********************************************************************
 class Bmap {
     //Init
@@ -397,15 +397,16 @@ class Bmap {
     /**
      * Infobox:Iframe
      * @method infoboxIframe
-     * @param center      (object)   [ map.setLocation(47.6130, -122.1945); map.getCenter(); ]
-     * @param width       (int)      [ 300 ]
-     * @param height      (int)      [ 400 ]
-     * @param title       (string)   [ "Movie..." ]
-     * @param description (string)   ['<iframe src="https://channel9.msdn.com/..."></iframe>]
+     * @param lat    (float)    [47.6149]
+     * @param lon    (float)    [-122.1941]
+     * @param width   (int)      [ 300 ]
+     * @param height  (int)      [ 400 ]
+     * @param title   (string)   [ "Movie..." ]
+     * @param iframe  (string)   ['<iframe src="https://channel9.msdn.com/..."></iframe>]
      */
-    infoboxIframe(center,width,height,title,description){
-        const infobox = new Microsoft.Maps.Infobox(center,{
-            maxHeight: width, maxWidth: height, title: title, description: description
+    infoboxIframe(lat,lon,width,height,title,iframe){
+        const infobox = new Microsoft.Maps.Infobox(this.setLocation(lat, lon),{
+            maxHeight: width, maxWidth: height, title: title, description: iframe
         });
         infobox.setMap(this.map);
     }
