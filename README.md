@@ -539,6 +539,7 @@ It's opinionated about how you organize your repositories.
         map.getSearchBoundary(searchBox, 'PopulatedPlace');
     }
     
+#### SetLocation multiple boundaries
     
     //----------------------------------------------------
     //  SetLocation multiple boundaries
