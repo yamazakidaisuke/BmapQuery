@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8.6
+BmapQuery.js  v0.8.7
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -538,6 +538,20 @@ It's opinionated about how you organize your repositories.
         //BingMaps Serch
         map.getSearchBoundary(searchBox, 'PopulatedPlace');
     }
+    
+    
+    //----------------------------------------------------
+    //  SetLocation multiple boundaries
+    //  map.setLocationBoundary(location[array], Zoom[array], 'CountryRegion');
+    //----------------------------------------------------
+    const location = ['Russia', 'France', 'Italy'];
+    const zoom     = [
+        [1,5], //'Russia'
+        [1,5], //'France'
+        [1,5]  //'Italy'
+    ];
+    map.setLocationBoundary(location, zoom , 'CountryRegion');
+
 
 
 #### Tracking Event[Start&Stop]

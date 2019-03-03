@@ -1,56 +1,18 @@
-"use strict";
-//********************************************************************
+"use strict"; //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.6 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.7 ( https://mapapi.org/indexb.php )
+// Auther:Daisuke.Yamazaki
 //********************************************************************
 
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
 
-function _instanceof2(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _instanceof(left, right) {
-    if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) {
-        return right[Symbol.hasInstance](left);
-    } else {
-        return _instanceof2(left, right);
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _typeof(obj) {
-    if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-        _typeof = function _typeof(obj) {
-            return _typeof2(obj);
-        };
-    } else {
-        _typeof = function _typeof(obj) {
-            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
-        };
-    }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return _typeof(obj);
-}
-
-function _classCallCheck(instance, Constructor) {
-    if (!_instanceof(instance, Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
-
-function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-}
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var Bmap =
     /*#__PURE__*/
@@ -1103,6 +1065,96 @@ var Bmap =
                     });
                     map.entities.push(pin);
                 });
+            }
+            /**
+             * SetLocation Multiple Boundary
+             * @method setLocationBoundary
+             * @param  search  (array)   [ 'Russia', 'France', 'Italy']
+             * @param  zoom    (array)   [ [min,max],[min,max],[min,max] ]
+             * @param  type    (string)
+             *---------------------------------------------------
+             * [ "type" ]
+             * *CountryRegion: Country or region.
+             * *AdminDivision1: First administrative level within the country/region level, such as a state or a province.
+             * *AdminDivision2: Second administrative level within the country/region level, such as a county.
+             * *PopulatedPlace: A concentrated area of human settlement, such as a city, town or village.
+             * *Neighborhood: A section of a populated place that is typically well-known, but often with indistinct boundaries.
+             * *Postcode1: The smallest post code category, such as a zip code.
+             * *Postcode2: The next largest post code category after Postcode1 that is created by aggregating Postcode1 areas.
+             * *Postcode3: The next largest post code category after Postcode2 that is created by aggregating Postcode2 areas.
+             * *Postcode4: The next largest post code category after Postcode3 that is created by aggregating Postcode3 areas.
+             * Note: Not all entity types are available in all areas.
+             *---------------------------------------------------
+             */
+
+        }, {
+            key: "setLocationBoundary",
+            value: function setLocationBoundary(searchs, zoom, type) {
+                var map = this.map;
+                var layer = []; //Load the Bing Spatial Data Services module
+
+                Microsoft.Maps.loadModule(['Microsoft.Maps.SpatialDataService', 'Microsoft.Maps.Search'], function () {
+                    var searchManager = new Microsoft.Maps.Search.SearchManager(map);
+
+                    for (var i = 0; i < searchs.length; i++) {
+                        searchManager.geocode(geo(i, zoom[i]));
+                    }
+
+                    function geo(i, zoom) {
+                        console.log(searchs[i]);
+                        return {
+                            where: searchs[i],
+                            callback: function callback(geocodeResult) {
+                                if (geocodeResult && geocodeResult.results && geocodeResult.results.length > 0) {
+                                    //.setView({bounds: geocodeResult.results[0].bestView});
+                                    var geoDataRequestOptions = {
+                                        entityType: type,
+                                        getAllPolygons: true
+                                    }; //Use the GeoData API manager to get the boundary of New York City
+
+                                    Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(geocodeResult.results[0].location, geoDataRequestOptions, map, function (data) {
+                                        if (data.results && data.results.length > 0) {
+                                            layer[i] = new Microsoft.Maps.Layer();
+                                            layer[i].metadata = {
+                                                zoomRange: {
+                                                    min: zoom[0],
+                                                    max: zoom[1]
+                                                }
+                                            };
+                                            layer[i].add(data.results[0].Polygons);
+                                            map.layers.insert(layer[i]); // map.entities.push(data.results[0].Polygons);
+                                        }
+                                    }, null, function errCallback(networkStatus, statusMessage) {
+                                        console.log(networkStatus);
+                                        console.log(statusMessage);
+                                    });
+                                }
+                            }
+                        };
+                    }
+                }); //Add a viewchangeend event to the map so that it updates the visibility of the layers.
+
+                Microsoft.Maps.Events.addHandler(map, 'viewchangeend', updateLayerVisibility); //Do an initial update of the visibility.
+
+                updateLayerVisibility();
+
+                function updateLayerVisibility() {
+                    //Get the current zoom level of the map.
+                    var zoom = map.getZoom();
+                    var layer; //Loop through the layers in the map and check to see if it has zoomRange metadata.
+
+                    for (var i = 0; i < map.layers.length; i++) {
+                        layer = map.layers[i];
+
+                        if (layer.metadata && layer.metadata.zoomRange) {
+                            if (zoom >= layer.metadata.zoomRange.min && zoom <= layer.metadata.zoomRange.max) {
+                                layer.setVisible(true);
+                            } else {
+                                layer.setVisible(false);
+                            }
+                        }
+                    }
+                }
             }
         }]);
 
