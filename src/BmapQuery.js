@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.7 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.8 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 //********************************************************************
 class Bmap {
@@ -891,6 +891,8 @@ class Bmap {
     setLocationBoundary(searchs,zoom,type){
         const map = this.map;
         let layer = [];
+        let getAllPolygonFlg = (typeof arguments[3]==="undefined" || arguments[3]!=true) ? false : true;
+        console.log(getAllPolygonFlg);
         //Load the Bing Spatial Data Services module
         Microsoft.Maps.loadModule(['Microsoft.Maps.SpatialDataService', 'Microsoft.Maps.Search'], function () {
             const searchManager = new Microsoft.Maps.Search.SearchManager(map);
@@ -898,7 +900,7 @@ class Bmap {
                 searchManager.geocode(geo(i,zoom[i]));
             }
             function geo(i,zoom) {
-                console.log( searchs[i]);
+                //console.log( searchs[i]);
                 return {
                     where: searchs[i],
                     callback: function (geocodeResult) {
@@ -906,18 +908,25 @@ class Bmap {
                             //.setView({bounds: geocodeResult.results[0].bestView});
                             const geoDataRequestOptions = {
                                 entityType: type,
-                                getAllPolygons: true
+                                getAllPolygons: getAllPolygonFlg
                             };
                             //Use the GeoData API manager to get the boundary of New York City
                             Microsoft.Maps.SpatialDataService.GeoDataAPIManager.getBoundary(geocodeResult.results[0].location, geoDataRequestOptions, map, function (data) {
                                 if (data.results && data.results.length > 0) {
                                     layer[i] = new Microsoft.Maps.Layer();
-                                    layer[i].metadata = {
-                                        zoomRange: { min: zoom[0], max: zoom[1] }
-                                    };
+                                    ///console.log(zoom);
+                                    if(typeof zoom=="undefined"){
+                                        layer[i].metadata = {
+                                            zoomRange: { min: 1, max: 20 }
+                                        };
+                                    }else{
+                                        layer[i].metadata = {
+                                            zoomRange: { min: zoom[0], max: zoom[1] }
+                                        };
+                                    }
+                                    //Layer Add
                                     layer[i].add(data.results[0].Polygons);
                                     map.layers.insert(layer[i]);
-
                                     // map.entities.push(data.results[0].Polygons);
                                 }
                             }, null, function errCallback(networkStatus, statusMessage) {

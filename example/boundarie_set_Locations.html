@@ -14,7 +14,7 @@
 <!-- MAP[END] -->
 
 
-<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]&setLang=en&setMkt=en-US' async defer></script>
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Arc_Eg0FtWdFw020d1oaxAVitIeWxE6FfDgtSjZ-nEHBuJKQJQlMCEvTzDMXiL_w&setLang=en&setMkt=en-US' async defer></script>
 <script src="../js/BmapQuery.js"></script>
 <script>
 //****************************************************************************************
@@ -30,19 +30,20 @@ function GetMap(){
     //------------------------------------------------------------------------
     //2. Display Map
     //------------------------------------------------------------------------
-    map.startMap(47.6149, -122.1941, "load", 1); //The place is Bellevue.
+    map.startMap(51.523125, -0.115712, "load", 1); //The place is London.
 
     //----------------------------------------------------
     //3.SetLocation multiple boundaries
-    //  map.setLocationBoundary(location[array], Zoom[array], 'CountryRegion');
     //----------------------------------------------------
-    const location = ['Russia', 'France', 'Italy'];
-    const zoom     = [
-        [1,5], //'Russia'
-        [1,5], //'France'
-        [1,5]  //'Italy'
+    const location = ['Tokyo', 'Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
+    const zoom   = [
+        [1,5], //'Victoria, Australia'
+        [1,5], //'Western Australia',
+        [1,5]  //'Northern Territory'
+        //...Not zoom, default:[1,20]
     ];
-    map.setLocationBoundary(location, zoom , 'CountryRegion');
+    //map.setLocationBoundary(location[array], Zoom[array], 'AdminDivision1', getAllPoligon[true,false]);
+    map.setLocationBoundary(location, zoom , 'AdminDivision1');
 
 }
 </script>

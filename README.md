@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8.7
+BmapQuery.js  v0.8.8
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -543,14 +543,15 @@ It's opinionated about how you organize your repositories.
     
     //----------------------------------------------------
     //  SetLocation multiple boundaries
-    //  map.setLocationBoundary(location[array], Zoom[array], 'CountryRegion');
+    //  map.setLocationBoundary(location[array], Zoom[array], 'CountryRegion', getAllPoligon[default:false]);
     //----------------------------------------------------
-    const location = ['Russia', 'France', 'Italy'];
+    const location = ['Tokyo', 'Victoria, Australia', 'Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Doha', 'Dubai', 'California', 'nevada', 'utah', 'arizona', 'colorado', 'dc', 'maryland', 'new york', 'British Columbia', 'Beijing', 'Montana', 'England', 'Scotland', 'Northern Ireland'];
     const zoom     = [
-        [1,5], //'Russia'
-        [1,5], //'France'
-        [1,5]  //'Italy'
-    ];
+        [1,5], //'Victoria, Australia'
+        [1,5], //'Western Australia',
+        [1,5]  //'Northern Territory'
+        //...Not zoom, default:[1,20]
+     ];
     map.setLocationBoundary(location, zoom , 'CountryRegion');
 
 
