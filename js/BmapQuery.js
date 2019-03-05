@@ -1,7 +1,7 @@
 "use strict";
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.8 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.8.9 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 //********************************************************************
 
@@ -1170,6 +1170,28 @@ var Bmap =
                         }
                     }
                 }
+            }
+            /**
+             * heatMap GeoJson
+             * @method heatMap
+             * @param  geojson  (string)  'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson'
+             */
+
+        }, {
+            key: "heatMap",
+            value: function heatMap(geojson) {
+                var map = this.map; //Load the GeoJSON and HeatMap modules
+
+                Microsoft.Maps.loadModule(['Microsoft.Maps.GeoJson', 'Microsoft.Maps.HeatMap'], function () {
+                    // earthquake data in the past 30 days from usgs.gov
+                    Microsoft.Maps.GeoJson.readFromUrl(geojson, function (shapes) {
+                        var heatMap = new Microsoft.Maps.HeatMapLayer(shapes, {
+                            radius: 5,
+                            propertyAsWeight: 'mag'
+                        });
+                        map.layers.insert(heatMap);
+                    });
+                });
             }
         }]);
 

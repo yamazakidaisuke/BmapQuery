@@ -1,4 +1,4 @@
-BmapQuery.js  v0.8.8
+BmapQuery.js  v0.8.9
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -482,6 +482,14 @@ It's opinionated about how you organize your repositories.
     // map.traffic();
     //----------------------------------------------------
     map.traffic();
+
+#### heatMap GeoJson
+
+    //----------------------------------------------------
+    // heatMap GeoJson
+    // map.heatMap("***URL***.geojson");
+    //----------------------------------------------------
+    map.heatMap('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
 
 #### get Boundary
 
