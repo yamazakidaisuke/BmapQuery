@@ -2,8 +2,9 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.9 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.0 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
+// MIT License.
 //********************************************************************
 class Bmap {
     //Init
@@ -14,6 +15,7 @@ class Bmap {
         this.loc; //Geocode:location
         this.layer = new Microsoft.Maps.Layer();
         this.watchId;
+        this.tracker = []; //tracking Array
     }
 
     /**
@@ -753,21 +755,23 @@ class Bmap {
     */
     startTracking(chkFlg) {
         const map = this.map;
+        const tracker = this.tracker;
         //Add a pushpin to show the user's location.
         const userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {visible: false });
         map.entities.push(userPin);
         //Watch the users location.
         this.watchId = navigator.geolocation.watchPosition(function(position) {
-                //location now
-                const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
-                if(chkFlg===true) {
-                   console.log(position.coords);
-                }
-                //Update the user pushpin.
-                userPin.setLocation(loc);
-                userPin.setOptions({ visible: true });
-                //Center the map on the user's location.
-                map.setView({ center: loc });
+            //location now
+            const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+            //Update the user pushpin.
+            userPin.setLocation(loc);
+            userPin.setOptions({ visible: true });
+            //Center the map on the user's location.
+            map.setView({ center: loc });
+            if(chkFlg===true) {
+                console.log(position.coords);
+            }
+            tracker.push(loc);
         });
     }
 
@@ -782,6 +786,16 @@ class Bmap {
         //Remove the user pushpin.
         this.map.entities.clear();
     }
+
+    /**
+     * get Tracking Value
+     * @method getTrackingVal
+     * @return this.tracker (array)
+     */
+    getTrackingVal() {
+        return this.tracker;
+    }
+
 
     /**
      * Circle: Meter

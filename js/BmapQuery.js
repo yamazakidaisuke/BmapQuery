@@ -1,8 +1,9 @@
 "use strict";
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.8.9 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.0 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
+// MIT License.
 //********************************************************************
 
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left); } else { return left instanceof right; } }
@@ -31,6 +32,7 @@ var Bmap =
 
             this.layer = new Microsoft.Maps.Layer();
             this.watchId;
+            this.tracker = []; //tracking Array
         }
         /**
          * MapView
@@ -590,12 +592,12 @@ var Bmap =
         }, {
             key: "getGeocode",
             value: async function getGeocode(query, callback) {
-                var data = await this._geocodeQuery(query);
-                callback(data);
-            }
-        }, {
+            var data = await this._geocodeQuery(query);
+        callback(data);
+    }
+    }, {
             key: "_geocodeQuery",
-            value: function _geocodeQuery(query) {
+                value: function _geocodeQuery(query) {
                 var map = this.map;
                 return new Promise(function (resolve) {
                     var searchManager;
@@ -634,13 +636,13 @@ var Bmap =
 
         }, {
             key: "reverseGeocode",
-            value: async function reverseGeocode(location, callback) {
+                value: async function reverseGeocode(location, callback) {
                 var data = await this._reverseGeocode(location);
                 callback(data);
             }
         }, {
             key: "_reverseGeocode",
-            value: function _reverseGeocode(location) {
+                value: function _reverseGeocode(location) {
                 var map = this.map;
                 return new Promise(function (resolve) {
                     var searchManager;
@@ -672,7 +674,7 @@ var Bmap =
 
         }, {
             key: "onGeocode",
-            value: function onGeocode(event, callback) {
+                value: function onGeocode(event, callback) {
                 if (event !== "" && typeof event === "string" || typeof callback !== "function") {
                     Microsoft.Maps.Events.addHandler(this.map, event, callback);
                 }
@@ -694,7 +696,7 @@ var Bmap =
 
         }, {
             key: "direction",
-            value: function direction(details, mode, from, to) {
+                value: function direction(details, mode, from, to) {
                 var map = this.map;
                 var directionsManager;
                 var waypoints = arguments[4]; //Load the directions module.
@@ -782,7 +784,7 @@ var Bmap =
 
         }, {
             key: "selectedSuggestion",
-            value: function selectedSuggestion(searchBox, searchBoxContainer) {
+                value: function selectedSuggestion(searchBox, searchBoxContainer) {
                 //AutoSuggest
                 var map = this.map;
                 Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
@@ -807,7 +809,7 @@ var Bmap =
 
         }, {
             key: "traffic",
-            value: function traffic() {
+                value: function traffic() {
                 var map = this.map;
                 Microsoft.Maps.loadModule('Microsoft.Maps.Traffic', function () {
                     var manager = new Microsoft.Maps.Traffic.TrafficManager(map);
@@ -834,7 +836,7 @@ var Bmap =
 
         }, {
             key: "getBoundary",
-            value: function getBoundary(type) {
+                value: function getBoundary(type) {
                 var map = this.map;
                 var geoDataRequestOptions = {
                     entityType: type
@@ -859,7 +861,7 @@ var Bmap =
 
         }, {
             key: "getMultiBoundary",
-            value: function getMultiBoundary(zipCodes) {
+                value: function getMultiBoundary(zipCodes) {
                 var map = this.map; //Create an array of locations to get the boundaries of
 
                 var geoDataRequestOptions = {
@@ -900,7 +902,7 @@ var Bmap =
 
         }, {
             key: "getSearchBoundary",
-            value: function getSearchBoundary(search, type) {
+                value: function getSearchBoundary(search, type) {
                 var map = this.map; //Load the Bing Spatial Data Services module
 
                 Microsoft.Maps.loadModule(['Microsoft.Maps.SpatialDataService', 'Microsoft.Maps.Search'], function () {
@@ -940,8 +942,9 @@ var Bmap =
 
         }, {
             key: "startTracking",
-            value: function startTracking(chkFlg) {
-                var map = this.map; //Add a pushpin to show the user's location.
+                value: function startTracking(chkFlg) {
+                var map = this.map;
+                var tracker = this.tracker; //Add a pushpin to show the user's location.
 
                 var userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {
                     visible: false
@@ -950,12 +953,7 @@ var Bmap =
 
                 this.watchId = navigator.geolocation.watchPosition(function (position) {
                     //location now
-                    var loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
-
-                    if (chkFlg === true) {
-                        console.log(position.coords);
-                    } //Update the user pushpin.
-
+                    var loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude); //Update the user pushpin.
 
                     userPin.setLocation(loc);
                     userPin.setOptions({
@@ -965,6 +963,12 @@ var Bmap =
                     map.setView({
                         center: loc
                     });
+
+                    if (chkFlg === true) {
+                        console.log(position.coords);
+                    }
+
+                    tracker.push(loc);
                 });
             }
             /**
@@ -975,11 +979,22 @@ var Bmap =
 
         }, {
             key: "stopTracking",
-            value: function stopTracking() {
+                value: function stopTracking() {
                 // Cancel the geolocation updates.
                 navigator.geolocation.clearWatch(this.watchId); //Remove the user pushpin.
 
                 this.map.entities.clear();
+            }
+            /**
+             * get Tracking Value
+             * @method getTrackingVal
+             * @return this.tracker (array)
+             */
+
+        }, {
+            key: "getTrackingVal",
+                value: function getTrackingVal() {
+                return this.tracker;
             }
             /**
              * Circle: Meter
@@ -993,7 +1008,7 @@ var Bmap =
 
         }, {
             key: "circle",
-            value: function circle(meter, style) {
+                value: function circle(meter, style) {
                 var map = this.map;
                 var event = arguments[2];
                 var callback = arguments[3]; //Load the spatial math module
@@ -1040,7 +1055,7 @@ var Bmap =
 
         }, {
             key: "circleSet",
-            value: function circleSet(lat, lon, meter, style) {
+                value: function circleSet(lat, lon, meter, style) {
                 var map = this.map;
                 var event = arguments[4];
                 var callback = arguments[5]; //Load the spatial math module
@@ -1090,7 +1105,7 @@ var Bmap =
 
         }, {
             key: "setLocationBoundary",
-            value: function setLocationBoundary(searchs, zoom, type) {
+                value: function setLocationBoundary(searchs, zoom, type) {
                 var map = this.map;
                 var layer = [];
                 var getAllPolygonFlg = typeof arguments[3] === "undefined" || arguments[3] != true ? false : true;
@@ -1179,7 +1194,7 @@ var Bmap =
 
         }, {
             key: "heatMap",
-            value: function heatMap(geojson) {
+                value: function heatMap(geojson) {
                 var map = this.map; //Load the GeoJSON and HeatMap modules
 
                 Microsoft.Maps.loadModule(['Microsoft.Maps.GeoJson', 'Microsoft.Maps.HeatMap'], function () {
