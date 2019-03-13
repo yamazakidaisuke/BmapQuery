@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.0 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.1 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -748,11 +748,11 @@ class Bmap {
 
 
     /**
-    * startTracking
-    * @method startTracking
-    * @param  chkflg (bool) [ true=console.log, false=not console.log ]
-    * @return void
-    */
+     * startTracking
+     * @method startTracking
+     * @param  chkflg (bool) [ true=console.log, false=not console.log ]
+     * @return void
+     */
     startTracking(chkFlg) {
         const map = this.map;
         const tracker = this.tracker;
@@ -769,17 +769,17 @@ class Bmap {
             //Center the map on the user's location.
             map.setView({ center: loc });
             if(chkFlg===true) {
-                console.log(position.coords);
+                console.log(loc);
             }
+            // Add values ​​to the propaty tracker.
             tracker.push(loc);
         });
     }
-
     /**
-    * stopTracking
-    * @method stopTracking
-    * @return void
-    */
+     * stopTracking
+     * @method stopTracking
+     * @return void
+     */
     stopTracking() {
         // Cancel the geolocation updates.
         navigator.geolocation.clearWatch(this.watchId);
@@ -788,14 +788,76 @@ class Bmap {
     }
 
     /**
-     * get Tracking Value
-     * @method getTrackingVal
+     * Start Tracking Draw
+     * @method startTrackingDraw
+     * @param  lineColor (string) [ "#ff0000" ]
+     * @param  lineWidth (int) [ 1,2,3...10... ]
+     * @param  seconds (int) [ 1,2,3...Seconds ]
+     * @augments[3] (bool) [true=console.log(); or false=Not log ]
+     * @return void
+     */
+    startTrackingDraw(lineColor, lineWidth, seconds) {
+        const map = this.map;
+        const tracker = this.tracker;
+        let log=false;
+        if(typeof arguments[3]!="undefined" && arguments[3]==true) log=true;
+        const userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {visible: true });
+        map.entities.push(userPin);
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+            userPin.setLocation(loc);
+            map.setView({center: loc});
+            tracker.push(loc);
+            if(log==true) console.log(tracker);
+        });
+        //Watch the users location.
+        this.watchId = setInterval(function() {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                userPin.setLocation(loc);
+                map.setView({center: loc});
+                tracker.push(loc);
+                const options = {
+                    strokeColor: lineColor,
+                    strokeThickness: lineWidth
+                };
+                map.entities.push(new Microsoft.Maps.Polyline(tracker, options));
+            });
+            if(log==true) console.log(tracker);
+        },seconds*1000);
+    }
+    /**
+     * Stop TrackingDraw
+     * @method stopTrackingDraw
+     * @return void
+     */
+    stopTrackingDraw() {
+        clearInterval(this.watchId);
+    }
+    /**
+     * Clear Map
+     * @method clearMap
+     * @return void
+     */
+    clearMap() {
+        this.map.entities.clear();
+    }
+    /**
+     * get Tracking Data
+     * @method getTrackingData
      * @return this.tracker (array)
      */
-    getTrackingVal() {
+    getTrackingData() {
         return this.tracker;
     }
-
+    /**
+     * Clear Tracking Data
+     * @method clearTrackingData
+     * @return void
+     */
+    clearTrackingData(){
+        this.tracker = [];
+    }
 
     /**
      * Circle: Meter

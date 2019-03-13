@@ -13,6 +13,7 @@
 <div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <button id="start_tracking">Start Tracking</button>
 <button id="stop_tracking">Stop Tracking</button>
+<button id="clear_map">Map Clear</button>
 <!-- MAP[END] -->
 
 
@@ -38,16 +39,22 @@ function GetMap(){
 
     //------------------------------------------------------------------------
     //3. Tracking Event & Draw
+    //   map.startTracking("color", lineWidth, seconds, console.log[true or false]);
     //------------------------------------------------------------------------
     //Start
     document.getElementById("start_tracking").onclick=function(){
-        map.startTracking(); //console.log => true or false
+        map.startTrackingDraw("#ff0000", 3, 5, true);
     };
-    //Tracking  Stop & Tracking polyline Draw.
+    //Stop
     document.getElementById("stop_tracking").onclick=function(){
-        map.stopTracking();                                // Tracking STOP.
-        map.polyline(map.getTrackingVal(), "#ff0000", 3);  // Tracking polyline Draw.
+        map.stopTrackingDraw();
+        console.log( map.getTrackingData() ); //option: Get tracking data[Array].
     };
+    //Clear Map.
+    document.getElementById("clear_map").onclick=function(){
+        map.clearMap();         //Clear Map.
+        map.clearTrackingData(); //Delete track data
+    }
 
 }
 

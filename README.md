@@ -1,4 +1,4 @@
-BmapQuery.js  v0.9.0
+BmapQuery.js  v0.9.1
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -564,7 +564,7 @@ It's opinionated about how you organize your repositories.
 
 
 
-#### Tracking Event[Start&Stop]
+#### Tracking Event[Start & Stop]
 
     //------------------------------------------------------------------------
     // Tracking Event
@@ -581,24 +581,32 @@ It's opinionated about how you organize your repositories.
     }
   
 
-#### Tracking polyline Draw
+#### Tracking Polyline Draw[Start & Stop & Clear]
 
     //------------------------------------------------------------------------
-    // Tracking polyline Draw
-    // 1. <button id="start_tracking"....
-    // 2. <button id="stop_tracking"....
-    // 3. map.getTrackingVal(); // Get Tracking data. 
+    //Tracking Event & Draw
+    //   map.startTracking("color", lineWidth, seconds, console.log[true or false]); 
     //------------------------------------------------------------------------
-    //Start
+    
+    //Start Button
+    //[HTML] <button id="start_tracking">Start Tracking</button>
     document.getElementById("start_tracking").onclick=function(){
-        map.startTracking(true); //console.log => true or false
-    }
-    //Stop
+        map.startTrackingDraw("#ff0000", 3, 5, true);
+    };
+    
+    //Stop Button
+    //[HTML] <button id="stop_tracking">Stop Tracking</button>
     document.getElementById("stop_tracking").onclick=function(){
-        map.stopTracking();                                // Tracking STOP.
-        map.polyline(map.getTrackingVal(), "#ff0000", 3);  // Tracking polyline Draw.
+        map.stopTrackingDraw();
+        console.log( map.getTrackingData() ); //option: Get tracking data[Array].
+    };
+    
+    //ClearMap Button
+    //[HTML] <button id="clear_map">Map Clear</button>
+    document.getElementById("clear_map").onclick=function(){
+        map.clearMap();         //Clear Map.
+        map.clearTrackingData(); //Delete track data
     }
-      
 
 
 
