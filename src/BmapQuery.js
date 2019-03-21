@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.2 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.3 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -284,48 +284,45 @@ class Bmap {
     /**
      * Switch infobox
      * @method infoboxLayers
-     * @param  option  (object)  [ lat, lon, min, max, height, width, title, description]
-     * @param  flg     (int)    [1=show, 2=hide, 3=switch]\
+     * @param  option  (object)  [ lat, lon, min, max, height, width, title, description, show]
+     * @param  flg     (bool)    [true=one/false=multiple]
      */
     infoboxLayers(option, flg) {
         const map = this.map;
         const layer = [];
         const pin   = [];
         const infobox = [];
-        let initShow=false;
         //Param Check
         if (map == "" || typeof option !== "object" || option.length===0) {
             return false;
         }
-        //StartView:show
-        if(flg===1){
-            initShow = true; //Show
-        }
         //Layers Create
         for(let i=0; i<option.length; i++){
+            const loc = new Microsoft.Maps.Location(option[i].lat, option[i].lon);
             //Layer Create
             layer[i] = new Microsoft.Maps.Layer();
             layer[i].metadata = {
                 zoomRange: {min: 1, max: 20}
             };
             //Pin Create
-            pin[i] = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(option[i].lat, option[i].lon), {
+            pin[i] = new Microsoft.Maps.Pushpin(loc, {
                 color: option[i].pinColor
             });
+            layer[i].add(pin[i]);
+
             //ClickEvent:InfoboxSwitch
-            infobox[i] = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(option[i].lat, option[i].lon), {
+            infobox[i] = new Microsoft.Maps.Infobox(loc, {
                 maxHeight: option[i].height,
                 maxWidth:  option[i].width,
                 title:     option[i].title,
                 description:  option[i].description,
-                visible: initShow
+                visible: option[i].show
             });
             infobox[i].setMap(map);
-
             //flg=3: Switch infobox
             Microsoft.Maps.Events.addHandler(pin[i], 'click', function () {
                 //infobox:All Hide
-                if(flg===3) {
+                if(flg===true) {
                     for (let x = 0; x < infobox.length; x++) {
                         infobox[x].setOptions({
                             visible: false
@@ -338,8 +335,7 @@ class Bmap {
                 });
                 infobox[i].setMap(map);
             });
-
-            layer[i].add(pin[i]);
+            //MapObject add.
             map.layers.insert(layer[i]);
         }
     }
