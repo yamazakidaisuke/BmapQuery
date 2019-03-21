@@ -1,4 +1,4 @@
-BmapQuery.js  v0.9.1
+BmapQuery.js  v0.9.2
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -366,7 +366,47 @@ It's opinionated about how you organize your repositories.
      map.onInfobox(47.6160,-122.1950, title, discript, actions);
      
      
-     
+ 
+#### Switch infobox. [type:1~3]
+    //----------------------------------------------------
+    // infoboxLayers
+    //  infoboxLayers(options, 1~3); //1=allShow, 2=allHide, 3=switch
+    //----------------------------------------------------
+    //options[index] = { lat, lon, width, height, title, pinColor, description };
+    const options = [];
+    options[0]={
+        "lat":34.889294,
+        "lon":135.807693,
+        "title":"KYOTO",
+        "pinColor":"#ff0000",
+        "height":500,
+        "width":500,
+        "description": 'Byoudouin<br><img src="../img/byoudouin.jpg" width="300">'
+    };
+    options[1]={
+        "lat":35.039500,
+        "lon":135.728500,
+        "title":"KYOTO",
+        "pinColor":"#ff0000",
+        "height":500,
+        "width":500,
+        "description": 'Kinkakuji<br><img src="../img/kinkakuji.jpg" width="300">'
+    };
+    options[2]={
+        "lat":35.026852,
+        "lon":135.798248,
+        "title":"KYOTO",
+        "pinColor":"#ff0000",
+        "height":500,
+        "width":500,
+        "description": 'Ginkakuji<br><img src="../img/ginkakuji.jpg" width="300">'
+    };
+    
+    //Switch infobox
+    map.infoboxLayers(options,3); //[1=allShow,2=allHide,3=switch]
+
+
+        
 #### polyline
 
     //----------------------------------------------------
