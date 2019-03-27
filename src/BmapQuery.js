@@ -128,6 +128,7 @@ class Bmap {
     }
 
     /**
+     * pin
      * Pushpin:Add
      * @method pin
      * @param lat    (float)    [47.6149]

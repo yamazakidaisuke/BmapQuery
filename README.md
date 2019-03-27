@@ -126,16 +126,6 @@ It's opinionated about how you organize your repositories.
     });
 
 
-#### Pushpin
-
-
-    //----------------------------------------------------
-    // Pushpin
-    // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
-    //----------------------------------------------------
-    let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
-
-
 #### Get Map infomation
 
 
@@ -153,7 +143,18 @@ It's opinionated about how you organize your repositories.
                 <p>Map type:   ${map.map.getMapTypeId()}</p>`;
     //id="controll"にstr変数（Map情報）を表示
     document.getElementById("controll").innerHTML = str;
-    
+ 
+ 
+#### Pushpin
+
+
+    //----------------------------------------------------
+    // Pushpin
+    // pin(lat, lon, "color", [drag:true|false], [click:true|false], [hover:true|false], [visible:true|false]);
+    //----------------------------------------------------
+    let pin1 = map.pin(47.6149, -122.1941, "#ff0000");
+
+
     
 #### PushpinText
 
