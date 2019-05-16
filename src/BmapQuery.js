@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.3 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.4 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -16,6 +16,7 @@ class Bmap {
         this.layer = new Microsoft.Maps.Layer();
         this.watchId;
         this.tracker = []; //tracking Array
+        this.speed = [];   //watchPosition speed.
     }
 
     /**
@@ -850,51 +851,61 @@ class Bmap {
     }
 
     /**
-     * Start Tracking Draw
+     * Start Tracking Draw(Beta)[2019-05-16:Update]
      * @method startTrackingDraw
      * @param  lineColor (string) [ "#ff0000" ]
      * @param  lineWidth (int) [ 1,2,3...10... ]
-     * @param  seconds (int) [ 1,2,3...Seconds ]
      * @augments[3] (bool) [true=console.log(); or false=Not log ]
      * @return void
      */
-    startTrackingDraw(lineColor, lineWidth, seconds) {
+    startTrackingDraw(lineColor, lineWidth) {
         const map = this.map;
         const tracker = this.tracker;
+        const speed = this.speed;
+        let userPin;
         let log=false;
+        let id="";
+        let iflg=0;
+        if(typeof arguments[2]!="undefined" && arguments[2]!="") id=arguments[2];
         if(typeof arguments[3]!="undefined" && arguments[3]==true) log=true;
-        const userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {visible: true });
-        map.entities.push(userPin);
-        navigator.geolocation.getCurrentPosition(function (position) {
+        //Init
+        if(iflg===0) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+                userPin = new Microsoft.Maps.Pushpin(loc, {visible: true});
+                map.entities.push(userPin);
+            });
+        }
+        //Watchposition
+        this.watchId = navigator.geolocation.watchPosition(function(position) {
             const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
             userPin.setLocation(loc);
             map.setView({center: loc});
             tracker.push(loc);
-            if(log==true) console.log(tracker);
+            speed.push(position.coords.speed);
+            const options = {
+                strokeColor: lineColor,
+                strokeThickness: lineWidth
+            };
+            map.entities.push(new Microsoft.Maps.Polyline(tracker, options));
+            if(log==true) {
+                console.log(tracker);
+                console.log(speed);
+            }
+            if(id!="" && position.coords.speed!=null){
+                document.querySelector(id).innerHTML=position.coords.speed;
+            }
+            iflg++;
         });
-        //Watch the users location.
-        this.watchId = setInterval(function() {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                const loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
-                userPin.setLocation(loc);
-                map.setView({center: loc});
-                tracker.push(loc);
-                const options = {
-                    strokeColor: lineColor,
-                    strokeThickness: lineWidth
-                };
-                map.entities.push(new Microsoft.Maps.Polyline(tracker, options));
-            });
-            if(log==true) console.log(tracker);
-        },seconds*1000);
-    }
+}
     /**
      * Stop TrackingDraw
      * @method stopTrackingDraw
      * @return void
      */
     stopTrackingDraw() {
-        clearInterval(this.watchId);
+        // Cancel the geolocation updates.
+        navigator.geolocation.clearWatch(this.watchId);
     }
     /**
      * Clear Map
@@ -913,12 +924,21 @@ class Bmap {
         return this.tracker;
     }
     /**
+     * get Tracking Speed Data
+     * @method getTrackingSpeed
+     * @return this.speed (array)
+     */
+    getTrackingSpeed() {
+        return this.speed;
+    }
+    /**
      * Clear Tracking Data
      * @method clearTrackingData
      * @return void
      */
     clearTrackingData(){
         this.tracker = [];
+        this.speed = [];
     }
 
     /**
