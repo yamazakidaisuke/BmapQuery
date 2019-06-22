@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boundaries Click</title>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}#geocode{font-size: 120%;}</style>
+</head>
+<body>
+
+
+<!-- MAP[START] -->
+<h1>Boundaries Click</h1>
+<div id="geocode">Geocode:data</div>
+<div id="myMap" style='width:100%;height:90%;'></div>
+<!-- MAP[END] -->
+
+
+<script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[ *** YOUR MY KEY *** ]' async defer></script>
+<script src="../js/BmapQuery.js"></script>
+<script>
+    //****************************************************************************************
+    // BingMaps&BmapQuery
+    //****************************************************************************************
+    //Init
+    function GetMap(){
+        //------------------------------------------------------------------------
+        //1. Instance
+        //------------------------------------------------------------------------
+        const map = new Bmap("#myMap");
+
+        //------------------------------------------------------------------------
+        //2. Display Map
+        //   startMap(lat, lon, "MapType", Zoom[1~20]);
+        //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+        //--------------------------------------------------
+        map.startMap(47.6149, -122.1941, "load", 4);
+
+        //----------------------------------------------------
+        //3. Get ReverseGeocode(2 patterns)
+        //   reverseGeocode(location,callback);
+        //----------------------------------------------------
+
+        //A. Set location data for BingMaps
+        const location   = map.setLocation(47.6149, -122.1941);
+        //const location = map.getCenter(); //MapCenter
+        map.reverseGeocode(location, function(data){
+            console.log(data);
+            document.querySelector("#geocode").innerHTML=data;
+        });
+
+        //B. Get ReverseGeocode of click location
+        map.onGeocode("click", function(clickPoint){
+            map.pinLayerClear();
+            map.reverseGeocode(clickPoint.location, function(data){
+                //console.log(data);
+                document.querySelector("#geocode").innerHTML=data;
+                //Locations
+                const location = [data];
+                //Zoom
+                const zoom   = [];
+                //map.setLocationBoundary(location[array], Zoom[array], [type], getAllPoligon[true,false]);
+                //----------------------------------------------------
+                // [ "type" ]
+                // *CountryRegion: Country or region.
+                // *AdminDivision1: First administrative level within the country/region level, such as a state or a province.
+                // *AdminDivision2: Second administrative level within the country/region level, such as a county.
+                // *PopulatedPlace: A concentrated area of human settlement, such as a city, town or village.
+                // *Neighborhood: A section of a populated place that is typically well-known, but often with indistinct boundaries.
+                // *Postcode1: The smallest post code category, such as a zip code.
+                // *Postcode2: The next largest post code category after Postcode1 that is created by aggregating Postcode1 areas.
+                // *Postcode3: The next largest post code category after Postcode2 that is created by aggregating Postcode2 areas.
+                // *Postcode4: The next largest post code category after Postcode3 that is created by aggregating Postcode3 areas.
+                // Note: Not all entity types are available in all areas.
+                //---------------------------------------------------
+                map.setLocationBoundary(location, zoom , 'AdminDivision1');
+
+            });
+        });
+
+    }
+
+</script>
+</body>
+</html>
