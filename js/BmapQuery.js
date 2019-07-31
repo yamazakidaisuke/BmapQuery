@@ -1,6 +1,6 @@
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.4 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.5 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************

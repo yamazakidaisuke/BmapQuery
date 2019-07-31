@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Heatmap From Geo JSON</title>
+<title>Heatmap From Geo JSON(EarthQuakes)</title>
 <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
 </head>
 <body>
 
 
 <!-- MAP[START] -->
-<h1>Heatmap From Geo JSON</h1>
+<h1>Heatmap From Geo JSON(EarthQuakes)</h1>
 <div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <!-- MAP[END] -->
 
@@ -37,8 +37,13 @@ function GetMap(){
     //------------------------------------------------------------------------
     //3.HeatMap
     //  heatMap( 'geodata URL');
+    //  [Example:EarthQuakes] URL:https://earthquake.usgs.gov
+    //  Hour: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson
+    //  Day:  https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson
+    //  Week: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson
+    //  Month:https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson
     //------------------------------------------------------------------------
-    map.heatMap('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson');
+    map.heatMap('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson'); //Day
 
 }
 </script>
