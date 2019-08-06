@@ -128,6 +128,18 @@ It's opinionated about how you organize your repositories.
     });
 
 
+#### ChangeView
+[URL] (https://mapapi.org/example.php?file=map_changeView)
+
+    //----------------------------------------------------
+    // MapChangeView(after 2 seconds.)
+    // changeMap(lat, lon, "MapType", Zoom[1~20]);
+    //----------------------------------------------------
+    setTimeout(function(){
+        map.changeMap(47.6150, -122.1950, "load", 17);
+    },2000);
+    
+
 #### Get Map infomation
 [URL] (https://mapapi.org/example.php?file=map_getInfo)
 
@@ -169,7 +181,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### PushpinIcon
-
+[URL] (https://mapapi.org/example.php?file=pushpin_icon&h=2)
 
     //----------------------------------------------------
     // Pushpin:Icon
@@ -179,7 +191,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### PushpinEvent
-
+[URL] (https://mapapi.org/example.php?file=pushpin_event&h=2)
 
     //----------------------------------------------------
     // pushpin:Events
@@ -192,7 +204,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### Layer->Pushpin
-
+[URL] (https://mapapi.org/example.php?file=pushpin_layer&h=7)
 
     //----------------------------------------------------
     // Layer: Add Pushpin
@@ -204,7 +216,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### Layer->One Pushpin Delete
-
+[URL] (https://mapapi.org/example.php?file=pushpin_layerOneDelete&h=7)
 
     //----------------------------------------------------
     // layer One delete
@@ -213,7 +225,7 @@ It's opinionated about how you organize your repositories.
      
      
 #### Layer->Allclear
-
+[URL] (https://mapapi.org/example.php?file=pushpin_layerAllDelete&h=7)
      
     //----------------------------------------------------
     // layer Allclear
@@ -222,7 +234,7 @@ It's opinionated about how you organize your repositories.
 
      
 #### Circle->Location Add
-
+[URL] (https://mapapi.org/example.php?file=circle&h=9)
 
     //------------------------------------------------------------------------
     // Circle&Location Add
@@ -240,7 +252,7 @@ It's opinionated about how you organize your repositories.
 
      
 #### Circle->Location Event
-
+[URL] (https://mapapi.org/example.php?file=circle_event&h=9)
 
     //------------------------------------------------------------------------
     // [Event] Circle&Location Add
@@ -261,7 +273,7 @@ It's opinionated about how you organize your repositories.
 
      
 #### Circle->Set Location
-
+[URL] (https://mapapi.org/example.php?file=circleSet&h=9)
 
     //------------------------------------------------------------------------
     // Circle&SetLocation Add
@@ -280,7 +292,7 @@ It's opinionated about how you organize your repositories.
     
        
 #### Circle->Set Location Event
-
+[URL] (https://mapapi.org/example.php?file=circleSet_event&h=9)
 
     //------------------------------------------------------------------------
     // [Event] Circle&SetLocation Add
@@ -310,7 +322,7 @@ It's opinionated about how you organize your repositories.
 
        
 #### infobox
-
+[URL] (https://mapapi.org/example.php?file=infobox&h=3)
 
     //----------------------------------------------------
     // Infobox
@@ -320,6 +332,7 @@ It's opinionated about how you organize your repositories.
 
        
 #### infoboxHtml
+[URL] (https://mapapi.org/example.php?file=infobox_html&h=3)
 
     //----------------------------------------------------
     // Infobox:html
@@ -329,6 +342,7 @@ It's opinionated about how you organize your repositories.
     
     
 #### infoboxIframe
+[URL] (https://mapapi.org/example.php?file=infobox_iframe&h=3)
 
     //----------------------------------------------------
     // Infobox:Iframe
@@ -340,6 +354,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### onInfobox
+[URL] (https://mapapi.org/example.php?file=infobox_event&h=3)
 
     //----------------------------------------------------
     // Infobox:Actions
@@ -371,6 +386,8 @@ It's opinionated about how you organize your repositories.
      
  
 #### Switch Infobox.
+[URL] (https://mapapi.org/example.php?file=infoboxs_showChange&h=3)
+
     //----------------------------------------------------
     // infoboxLayers
     //  infoboxLayers(options, true); //true=one,false=multiple
@@ -414,6 +431,7 @@ It's opinionated about how you organize your repositories.
 
         
 #### polyline
+[URL] (https://mapapi.org/example.php?file=polyline&h=8)
 
     //----------------------------------------------------
     // polyline
@@ -433,17 +451,8 @@ It's opinionated about how you organize your repositories.
     map.polyline(locations,"#ff0000",3,[2,2]);
 
 
-#### ChangeView
-
-    //----------------------------------------------------
-    // MapChangeView(after 2 seconds.)
-    // changeMap(lat, lon, "MapType", Zoom[1~20]);
-    //----------------------------------------------------
-    setTimeout(function(){
-        map.changeMap(47.6150, -122.1950, "load", 17);
-    },2000);
-
 #### Geocode
+[URL] (https://mapapi.org/example.php?file=geocode&h=4)
 
     //----------------------------------------------------
     // Geocode(2 patterns & after 4 seconds.)
@@ -463,7 +472,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### Reverse Geocode
-
+[URL] (https://mapapi.org/example.php?file=reverse_geocode&h=4)
 
     //------------------------------------------------------------------------
     //Get Reverse Geocode
@@ -490,7 +499,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### Directions Search
-
+[URL] (https://mapapi.org/example.php?file=directions_en&h=5)
 
     //----------------------------------------------------
     //Directions:Search.
@@ -508,6 +517,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### AutoSuggest
+[URL] (https://mapapi.org/example.php?file=autosuggest_en&h=5)
 
     //-----------------------------------------------------
     // AutoSuggest
@@ -521,15 +531,19 @@ It's opinionated about how you organize your repositories.
     //-----------------------------------------------------
     map.selectedSuggestion("#searchBox","#searchBoxContainer");
 
+
 #### Traffic
+[URL] (https://mapapi.org/example.php?file=traffic_en&h=5)
 
     //----------------------------------------------------
     // Traffic
     // map.traffic();
     //----------------------------------------------------
     map.traffic();
+    
 
 #### heatMap GeoJson
+[URL] (https://mapapi.org/example.php?file=heatmapfromgeojson&h=7)
 
     //----------------------------------------------------
     // heatMap GeoJson
@@ -542,7 +556,9 @@ It's opinionated about how you organize your repositories.
     //----------------------------------------------------
     map.heatMap('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson'); //Day
 
+
 #### get Boundary
+[URL] (https://mapapi.org/example.php?file=boundaries_en&h=6)
 
     //----------------------------------------------------
     // get Boundary
@@ -563,6 +579,7 @@ It's opinionated about how you organize your repositories.
     map.getBoundary("PopulatedPlace");
 
 #### Get multiple boundaries
+[URL] (https://mapapi.org/example.php?file=boundaryMultiple_en&h=6)
 
     //----------------------------------------------------
     // Get multiple boundaries
@@ -571,7 +588,38 @@ It's opinionated about how you organize your repositories.
     const zipCodes = ['98004', '98005', '98007', '98008', '98039'];
     map.getMultiBoundary(zipCodes);
 
+
 #### Get Search boundaries
+[URL] (https://mapapi.org/example.php?file=bounds_get_search&h=6)
+
+    //----------------------------------------------------
+    // Get Search Boundary
+    // @method getSearchBoundary
+    // @param  search  (string)  'New York City'
+    // @param  type    (string)
+    //----------------------------------------------------
+    // [ "type" ]
+    // *CountryRegion:Country or region.
+    // *AdminDivision1:First administrative level within the country/region level, such as a state or a province.
+    // *AdminDivision2:Second administrative level within the country/region level, such as a county.
+    // *PopulatedPlace:A concentrated area of human settlement, such as a city, town or village.
+    // *Neighborhood:A section of a populated place that is typically well-known, but often with indistinct boundaries.
+    // *Postcode1:The smallest post code category, such as a zip code.
+    // *Postcode2:The next largest post code category after Postcode1 that is created by aggregating Postcode1 areas.
+    // *Postcode3:The next largest post code category after Postcode2 that is created by aggregating Postcode2 areas.
+    // *Postcode4:The next largest post code category after Postcode3 that is created by aggregating Postcode3 areas.
+    // Note: Not all entity types are available in all areas.
+    //---------------------------------------------------
+    document.getElementById("search").onclick=function(){
+        //text value.
+        const searchBox = document.getElementById("searchBox").value;
+        //BingMaps Serch
+        map.getSearchBoundary(searchBox, 'PopulatedPlace');
+    }
+
+
+#### Get Search boundaries
+[URL] (https://mapapi.org/example.php?file=bounds_get_search&h=6)
 
     //----------------------------------------------------
     // Get Search Boundary
@@ -598,7 +646,10 @@ It's opinionated about how you organize your repositories.
         map.getSearchBoundary(searchBox, 'PopulatedPlace');
     }
     
+    
+    
 #### SetLocation multiple boundaries
+[URL] (https://mapapi.org/example.php?file=boundarie_set_Locations&h=6)
     
     //----------------------------------------------------
     //  SetLocation multiple boundaries
@@ -614,8 +665,8 @@ It's opinionated about how you organize your repositories.
     map.setLocationBoundary(location, zoom , 'CountryRegion');
 
 
-
 #### Tracking Event[Start / Stop / Map&Log Clear]
+[URL] (https://mapapi.org/example.php?file=tracking&h=8)
 
     //------------------------------------------------------------------------
     // Tracking Event
@@ -644,6 +695,7 @@ It's opinionated about how you organize your repositories.
     
     
 #### Tracking Event（Log Monitoring Sample）
+[URL] (https://mapapi.org/example.php?file=trackingLogMonitoring&h=8)
 
     //------------------------------------------------------------------------
     // Tracking Event（Log Monitoring）
@@ -686,6 +738,7 @@ It's opinionated about how you organize your repositories.
   
 
 #### Tracking Polyline Draw[Start & Stop & Clear]
+[URL] (https://mapapi.org/example.php?file=trackingGetValue&h=8)
 
     //------------------------------------------------------------------------
     //Tracking Event & Draw
