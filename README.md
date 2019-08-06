@@ -617,6 +617,34 @@ It's opinionated about how you organize your repositories.
 
     //------------------------------------------------------------------------
     // Tracking Event
+    //  map.startTracking(true); //console.log => true or false
+    //-----------------------------------------------------------------------
+    //[HTML:Button]
+    // 1. <button id="start_tracking"....
+    // 2. <button id="stop_tracking"....
+    // 3. <button id="clear_map"....
+    //------------------------------------------------------------------------
+    //1. Start
+    document.getElementById("start_tracking").onclick=function(){
+        map.startTracking(true); //console.log => true or false        
+    }
+    
+    //2. Stop
+    document.getElementById("stop_tracking").onclick=function(){
+        map.stopTracking();                 //Map: Tracking Log Stop.
+        console.log(map.getTrackingData()); //Log: Get Tracking Log All Data.
+    }
+    //3. Clear Map.
+    document.getElementById("clear_map").onclick=function(){
+        map.clearMap();          //Map: Clear Map.
+        map.clearTrackingData(); //Log: Clear Tracking Log All Data.
+    }
+    
+    
+#### Tracking Event（Log Monitoring Sample）
+
+    //------------------------------------------------------------------------
+    // Tracking Event（Log Monitoring）
     //  map.startTracking(false); //console.log => true or false
     //-----------------------------------------------------------------------
     //[HTML:Button]

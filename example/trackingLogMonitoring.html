@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Realtime Tracking</title>
+<title>Realtime Tracking（Log Monitoring）</title>
 <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
 </head>
 <body>
 
 
 <!-- MAP[START] -->
-<h1>Realtime Tracking</h1>
+<h1>Realtime Tracking（Log Monitoring）</h1>
 <div id="myMap" style='width:60%;height:70%;float:left;'></div>
 <button id="start_tracking">Start Tracking</button>
 <button id="stop_tracking">Stop Tracking</button>
@@ -38,17 +38,30 @@ function GetMap(){
     map.startMap(47.6149, -122.1941, "load", 17);
 
     //------------------------------------------------------------------------
-    //3. Tracking Event( WatchPosition Log)
+    //3. Tracking Event（log monitoring）
     //------------------------------------------------------------------------
     //Start
+    let timer_id; //Timer:SetInterval_id
     document.getElementById("start_tracking").onclick=function(){
-        map.startTracking(true); //console.log => true or false
+
+        //Tracking Start.
+        map.startTracking(false); //console.log => true or false
+
+        //:::Don't have to use (Check log):::
+        let timer = 5000; //Timer:5seconds
+        timer_id = setInterval(function(){
+            const len = map.getTrackingData().length-1;  //Length:Tracking Log Data.
+            const val = map.getTrackingData();           //Value: Tracking Log Data.
+            console.log("New TrackData:", val[len] );    //Get New tracking data[Array].
+        },timer);
+
     }
 
     //Stop
     document.getElementById("stop_tracking").onclick=function(){
         map.stopTracking();                 //Map: Tracking Log Stop.
         console.log(map.getTrackingData()); //Log: Get Tracking Log All Data.
+        clearInterval(timer_id);
     }
 
     //Clear Map.
