@@ -98,7 +98,7 @@ It's opinionated about how you organize your repositories.
 #### Examples
 **Sample files for each function are prepared in the "example" folder.**
 
-#### Map Start!!
+#### [[Map Start!!] (https://mapapi.org/example.php?file=map_start)]
 
     //*Sample
     //----------------------------------------------------
