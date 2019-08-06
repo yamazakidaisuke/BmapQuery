@@ -98,8 +98,9 @@ It's opinionated about how you organize your repositories.
 #### Examples
 **Sample files for each function are prepared in the "example" folder.**
 
-#### Map Start!!
-[Sample URL] (https://mapapi.org/example.php?file=map_start)
+
+#### Map Start
+[URL] (https://mapapi.org/example.php?file=map_start)
 
     //*Sample
     //----------------------------------------------------
@@ -115,7 +116,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### Map Event
-
+[URL] (https://mapapi.org/example.php?file=map_event)
 
     //----------------------------------------------------
     // Map:Events
@@ -128,7 +129,7 @@ It's opinionated about how you organize your repositories.
 
 
 #### Get Map infomation
-
+[URL] (https://mapapi.org/example.php?file=map_getInfo)
 
     //----------------------------------------------------
     // Get Map infomation
@@ -147,7 +148,7 @@ It's opinionated about how you organize your repositories.
  
  
 #### Pushpin
-
+[URL] (https://mapapi.org/example.php?file=pushpin&h=2)
 
     //----------------------------------------------------
     // Pushpin
@@ -158,7 +159,7 @@ It's opinionated about how you organize your repositories.
 
     
 #### PushpinText
-
+[URL] (https://mapapi.org/example.php?file=pushpin_text&h=2)
 
     //----------------------------------------------------
     // Pushpin:Text
