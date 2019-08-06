@@ -1,4 +1,4 @@
-BmapQuery.js  v0.9.5
+BmapQuery.js  v0.9.6
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -613,28 +613,53 @@ It's opinionated about how you organize your repositories.
 
 
 
-#### Tracking Event[Start & Stop]
+#### Tracking Event[Start / Stop / Map&Log Clear]
 
     //------------------------------------------------------------------------
     // Tracking Event
+    //  map.startTracking(false); //console.log => true or false
+    //-----------------------------------------------------------------------
+    //[HTML:Button]
     // 1. <button id="start_tracking"....
     // 2. <button id="stop_tracking"....
+    // 3. <button id="clear_map"....
     //------------------------------------------------------------------------
-    //Start
+    //1. Start
+    let timer_id; //Timer:SetInterval_id
     document.getElementById("start_tracking").onclick=function(){
-        map.startTracking(true); //console.log => true or false
+        
+        //Tracking Start.
+        map.startTracking(false); //console.log => true or false
+        
+        //Timer(display log)
+        let timer = 10000; //Timer:10seconds
+        timer_id = setInterval(function(){
+            const len = map.getTrackingData().length-1;  //Length:Tracking Log Data.
+            const val = map.getTrackingData();           //Value: Tracking Log Data.
+            console.log("New TrackData:", val[len] );    //Get New tracking data[Array].
+        },timer);
+        
     }
-    //Stop
+    
+    //2. Stop
     document.getElementById("stop_tracking").onclick=function(){
-        map.stopTracking();
+        map.stopTracking();                 //Map: Tracking Log Stop.
+        console.log(map.getTrackingData()); //Log: Get Tracking Log All Data.
+        clearInterval(timer_id);
+    }
+    
+    //3. Clear Map.
+    document.getElementById("clear_map").onclick=function(){
+        map.clearMap();          //Map: Clear Map.
+        map.clearTrackingData(); //Log: Clear Tracking Log All Data.
     }
   
 
-#### Tracking Polyline Draw(Beta)[Start & Stop & Clear]
+#### Tracking Polyline Draw[Start & Stop & Clear]
 
     //------------------------------------------------------------------------
     //Tracking Event & Draw
-    //   map.startTracking("color", lineWidth, "#id(speed view)", console.log[true or false]); 
+    //   map.startTrackingDraw("color", lineWidth, "#id(speed view)", console.log[true or false]); 
     //------------------------------------------------------------------------
     
     //Start Button
