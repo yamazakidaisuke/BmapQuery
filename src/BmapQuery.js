@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.5 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.7 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -819,6 +819,7 @@ class Bmap {
     startTracking(chkFlg) {
         const map = this.map;
         const tracker = this.tracker;
+        const speed = this.speed;
         //Add a pushpin to show the user's location.
         const userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {visible: false });
         map.entities.push(userPin);
@@ -836,6 +837,7 @@ class Bmap {
             }
             // Add values ​​to the propaty tracker.
             tracker.push(loc);
+            speed.push(position.coords.speed);
         });
     }
     /**
