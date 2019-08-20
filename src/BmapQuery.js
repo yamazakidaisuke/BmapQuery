@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.8 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.9 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -11,6 +11,8 @@ class Bmap {
     constructor(target) {
         this.target = target; //#id
         this.map = null;      //mapObject
+        this.size = 10;      //Zoom value
+        this.typeid ="load"; //TypeID
         this.directionsManager = null;
         this.loc; //Geocode:location
         this.layer = new Microsoft.Maps.Layer();
@@ -34,6 +36,8 @@ class Bmap {
             return false;
         }
         //MapObject
+        this.size   = size;
+        this.typeid = typeid;
         this.map = new Microsoft.Maps.Map(this.target, {
             center: new Microsoft.Maps.Location(lat,lon), //Location center position
             mapTypeId: eval("Microsoft.Maps.MapTypeId."+typeid), //Type: [load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
@@ -85,22 +89,35 @@ class Bmap {
      * @param lat    (float)   [47.6149]
      * @param lon    (float)   [-122.1941]
      * @param id     (string)  ["load","aerial","canvasDark","canvasLight","birdseye","grayscale","streetside"]
-     * @param num    (int)     [1...20]
+     * @augments num    (int)     [1...20]
      * @returns {boolean=false OR void }
      */
-    changeMap(lat, lon, id, num){
+    changeMap(lat, lon, id){
+        //let size = this.size;
         //Param Check
-        if(this.map=="" || lat=="" || lon=="" || id=="" || num==""){
+        if(this.map=="" || lat=="" || lon=="" || id==""){
             return false;
         }
-        //MapObject
+        //location set
         const loc = new Microsoft.Maps.Location(lat,lon);
-        this.map.setView({
-            mapTypeId: eval("Microsoft.Maps.MapTypeId."+id),
-            center: loc,
-            zoom: num,
-            bounds:loc.bestView
-        });
+        //augments[3]=Zoom Value.
+        if(typeof arguments[3]!="undefined" && arguments[3]!=""){
+            //zoomValue Change
+            this.size = arguments[3];
+            this.map.setView({
+                mapTypeId: eval("Microsoft.Maps.MapTypeId."+id),
+                center: loc,
+                zoom: this.size,
+                bounds:loc.bestView
+            });
+        }else{
+            //zoomValue Not Change
+            this.map.setView({
+                mapTypeId: eval("Microsoft.Maps.MapTypeId."+id),
+                center: loc,
+                bounds:loc.bestView
+            });
+        }
     }
 
     /**

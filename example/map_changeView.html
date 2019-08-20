@@ -36,16 +36,18 @@ function GetMap(){
 
     //----------------------------------------------------
     //3. MapChangeView
-    //   changeMap(lat, lon, "MapType", Zoom[1~20]);
+    //   ex1)changeMap(lat, lon, "MapType");
+    //   ex2)changeMap(lat, lon, "MapType", Zoom[1~20]);
     //   "MapType":[load,aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
     //----------------------------------------------------
-    // after 3 seconds.
+    // ex1) after 3 seconds.
     setTimeout(function(){
-        map.changeMap(47.6150, -122.1950, "aerial", 17);
+        map.changeMap(47.6150, -122.1950, "aerial");
     },3000);
-    // after 6 seconds.
+
+    // ex2) after 6 seconds.
     setTimeout(function(){
-        map.changeMap(47.6153, -122.1951, "canvasDark", 15);
+        map.changeMap(47.6153, -122.1951, "canvasDark", 17);
     },6000);
 
 }

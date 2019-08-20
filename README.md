@@ -1,4 +1,4 @@
-BmapQuery.js  v0.9.8
+BmapQuery.js  v0.9.9
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -133,11 +133,18 @@ It's opinionated about how you organize your repositories.
 
     //----------------------------------------------------
     // MapChangeView(after 2 seconds.)
-    // changeMap(lat, lon, "MapType", Zoom[1~20]);
+    //   ex1)changeMap(lat, lon, "MapType");
+    //   ex2)changeMap(lat, lon, "MapType", Zoom[1~20]);
     //----------------------------------------------------
+    // ex1) after 3 seconds.
     setTimeout(function(){
-        map.changeMap(47.6150, -122.1950, "load", 17);
-    },2000);
+        map.changeMap(47.6150, -122.1950, "aerial");
+    },3000);
+
+    // ex2) after 6 seconds.
+    setTimeout(function(){
+        map.changeMap(47.6153, -122.1951, "canvasDark", 17);
+    },6000);
     
 
 #### Get Map infomation
