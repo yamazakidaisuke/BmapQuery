@@ -52,23 +52,27 @@ function GetMap(){
         timer_id = setInterval(function(){
             const len = map.getTrackingData().length-1;  //Length:Tracking Log Data.
             const val = map.getTrackingData();           //Value: Tracking Log Data.
-            console.log("New TrackData:", val[len] );    //Get New tracking data[Array].
+            const s = map.getTrackingTime().length-1;   //Length:Tracking Log Data.
+            const sp = map.getTrackingTime();           //Value: TrackingTime Log Data.
+            console.log("New TrackData:", val[len] );   //Get New TrackingTime data[Array].
+            console.log("New TrackingTime:"+sp[s] );    //Get New tracking data[String].
         },timer);
 
-    }
+    };
 
     //Stop
     document.getElementById("stop_tracking").onclick=function(){
         map.stopTracking();                 //Map: Tracking Log Stop.
         console.log(map.getTrackingData()); //Log: Get Tracking Log All Data.
+        console.log(map.getTrackingTime()); //Log: Get TrackingTime Log All Data.
         clearInterval(timer_id);
-    }
+    };
 
     //Clear Map.
     document.getElementById("clear_map").onclick=function(){
         map.clearMap();          //Map: Clear Map.
         map.clearTrackingData(); //Log: Clear Tracking Log All Data.
-    }
+    };
 
 }
 

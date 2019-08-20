@@ -1,4 +1,4 @@
-BmapQuery.js  v0.9.7
+BmapQuery.js  v0.9.8
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -742,13 +742,13 @@ It's opinionated about how you organize your repositories.
 
     //------------------------------------------------------------------------
     //Tracking Event & Draw
-    //   map.startTrackingDraw("color", lineWidth, "#id(speed view)", console.log[true or false]); 
+    //   map.startTrackingDraw("color", lineWidth, "#id(time view)", console.log[true or false]); 
     //------------------------------------------------------------------------
     
     //Start Button
     //[HTML] <button id="start_tracking">Start Tracking</button>
     document.getElementById("start_tracking").onclick=function(){
-        map.startTrackingDraw("#ff0000", 3, "#speed", true);
+        map.startTrackingDraw("#ff0000", 3, "#time", true);
     };
     
     //Stop Button
@@ -756,14 +756,14 @@ It's opinionated about how you organize your repositories.
     document.getElementById("stop_tracking").onclick=function(){
         map.stopTrackingDraw();
         console.log("TrackData:", map.getTrackingData() );   //option: Get tracking data[Array].
-        console.log("TrackSpeed:", map.getTrackingSpeed() ); //option: Get tracking Speed data[Array].
+        console.log("TrackTime:", map.getTrackingTime() ); //option: Get tracking Time data[Array].
     };
     
     //ClearMap Button
     //[HTML] <button id="clear_map">Map Clear</button>
     document.getElementById("clear_map").onclick=function(){
-        map.clearMap();         //Clear Map.
-        map.clearTrackingData(); //Delete track&Speed data
+        map.clearMap();          //Clear Map.
+        map.clearTrackingData(); //Delete track&Time data
     }
 
 

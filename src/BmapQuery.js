@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.7 ( https://mapapi.org/indexb.php )
+// BmapQuery: v0.9.8 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -16,7 +16,7 @@ class Bmap {
         this.layer = new Microsoft.Maps.Layer();
         this.watchId;
         this.tracker = []; //tracking Array
-        this.speed = [];   //watchPosition speed.
+        this.time = [];   //watchPosition speed.
     }
 
     /**
@@ -819,7 +819,7 @@ class Bmap {
     startTracking(chkFlg) {
         const map = this.map;
         const tracker = this.tracker;
-        const speed = this.speed;
+        const time = this.time;
         //Add a pushpin to show the user's location.
         const userPin = new Microsoft.Maps.Pushpin(map.getCenter(), {visible: false });
         map.entities.push(userPin);
@@ -837,7 +837,7 @@ class Bmap {
             }
             // Add values ​​to the propaty tracker.
             tracker.push(loc);
-            speed.push(position.coords.speed);
+            time.push(new Date(position.timestamp).toLocaleString());
         });
     }
     /**
@@ -863,7 +863,7 @@ class Bmap {
     startTrackingDraw(lineColor, lineWidth) {
         const map = this.map;
         const tracker = this.tracker;
-        const speed = this.speed;
+        const time = this.time;
         let userPin;
         let log=false;
         let id="";
@@ -884,7 +884,8 @@ class Bmap {
             userPin.setLocation(loc);
             map.setView({center: loc});
             tracker.push(loc);
-            speed.push(position.coords.speed);
+            const nowTime = new Date(position.timestamp).toLocaleString();
+            time.push(nowTime);
             const options = {
                 strokeColor: lineColor,
                 strokeThickness: lineWidth
@@ -892,10 +893,10 @@ class Bmap {
             map.entities.push(new Microsoft.Maps.Polyline(tracker, options));
             if(log==true) {
                 console.log(tracker);
-                console.log(speed);
+                console.log(time);
             }
-            if(id!="" && position.coords.speed!=null){
-                document.querySelector(id).innerHTML=position.coords.speed;
+            if(id!="" && nowTime!=null){
+                document.querySelector(id).innerHTML=nowTime;
             }
             iflg++;
         });
@@ -926,13 +927,24 @@ class Bmap {
         return this.tracker;
     }
     /**
+     * + deprecated +
      * get Tracking Speed Data
      * @method getTrackingSpeed
      * @return this.speed (array)
      */
     getTrackingSpeed() {
-        return this.speed;
+        return this.time;
     }
+
+    /**
+     * get Tracking Time Data
+     * @method getTrackingTime
+     * @return this.time(array)
+     */
+    getTrackingTime() {
+        return this.time;
+    }
+
     /**
      * Clear Tracking Data
      * @method clearTrackingData
@@ -940,7 +952,7 @@ class Bmap {
      */
     clearTrackingData(){
         this.tracker = [];
-        this.speed = [];
+        this.time = [];
     }
 
     /**

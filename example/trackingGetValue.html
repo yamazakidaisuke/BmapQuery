@@ -49,7 +49,7 @@ function GetMap(){
     document.getElementById("stop_tracking").onclick=function(){
         map.stopTrackingDraw();
         console.log("TrackData:", map.getTrackingData() );   //option: Get tracking data[Array].
-        console.log("TrackSpeed:", map.getTrackingSpeed() ); //option: Get tracking Speed data[Array].
+        console.log("TrackTime:", map.getTrackingTime() ); //option: Get tracking Time data[Array].
     };
     //Clear Map.
     document.getElementById("clear_map").onclick=function(){
