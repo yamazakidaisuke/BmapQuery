@@ -1,4 +1,4 @@
-BmapQuery.js  v0.9.9
+BmapQuery.js  v1.0.0
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -239,7 +239,25 @@ It's opinionated about how you organize your repositories.
     //----------------------------------------------------
      map.pinLayerClear();
 
+
+#### Geolocation->Map
+[URL] (https://mapapi.org/example.php?file=geolocation&h=9)
+
+    //------------------------------------------------------------------------
+    // Geolocation
+    // map.geolocation(function(data){...});
+    //------------------------------------------------------------------------
+    map.geolocation(function(data) {
+        //location
+        const lat = data.coords.latitude;
+        const lon = data.coords.longitude;
+        //Map
+        map.startMap(lat, lon, "load", 10);
+        //pin
+        map.pin(lat,lon,"#ff0000");
+    });
      
+          
 #### Circle->Location Add
 [URL] (https://mapapi.org/example.php?file=circle&h=9)
 

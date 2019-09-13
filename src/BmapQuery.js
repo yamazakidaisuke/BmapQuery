@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v0.9.9 ( https://mapapi.org/indexb.php )
+// BmapQuery: v1.0.0 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -1169,6 +1169,23 @@ class Bmap {
         });
     }
 
+    /**
+     * geolocation
+     * @method geolocation
+     * @param callback  (function) [function{...}]
+     */
+    async geolocation(callback){
+       const data = await this._getGeolocation();
+       callback(data);
+    };
+    _getGeolocation(){
+        return new Promise((resolve) => {
+            navigator.geolocation.getCurrentPosition( (position) => {
+                console.log(position);
+                return resolve(position);
+            });
+        });
+    };
 
 
 }
