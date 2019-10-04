@@ -523,13 +523,15 @@ class Bmap {
      * @method getGeocode
      * @param query     (string)   [Search string]
      * @param callback  (function) [function{...}]
+     * @parm setView (bool) [true = map.setView()]
+     * @parm pushPin (bool) [true = map.entities.push()]
      * @returns { callback:function }
      */
-    async getGeocode(query,callback){
-        const data = await this._geocodeQuery(query);
+    async getGeocode(query,callback, setView = true, pushPin = true){
+        const data = await this._geocodeQuery(query,setView,pushPin);
         callback(data);
     }
-    _geocodeQuery(query) {
+    _geocodeQuery(query,setView,pushPin) {
         const map = this.map;
         return new Promise(resolve => {
             let searchManager;
@@ -539,12 +541,9 @@ class Bmap {
                if(searchManager) {
                     searchManager.geocode({
                         where: query,
-                        callback: function (r) {
+                        callback: function (r,setView,pushPin) {
                             if (r && r.results && r.results.length > 0) {
-                                const pin = new Microsoft.Maps.Pushpin(r.results[0].location);
-                                map.entities.push(pin);
-                                map.setView({ bounds: r.results[0].bestView});
-                                return resolve(r.results[0].location);
+                                return resolve(r.results[0]);
                             }
                         },
                         errorCallback: function (e) {
@@ -553,7 +552,17 @@ class Bmap {
                     });
                 }
             });
-        });
+        })
+        .then((data)=>{
+            if(pushPin === true) {
+                const pin = new Microsoft.Maps.Pushpin(data.location);
+                map.entities.push(pin);
+            }
+            if(setView === true){
+                map.setView({ bounds: data.bestView});
+            }
+            return data.location
+        })
 
     }
 
