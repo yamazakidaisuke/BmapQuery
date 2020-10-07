@@ -9,7 +9,7 @@ component to be used as part of web applications and websites.
 
 To test your installation, just call the following page at your website:
 
-[[BmapQuery.js] (https://mapapi.org/indexb.php)]
+[[BmapQuery.js] (https://bingmapsgo.azurewebsites.net)]
 
 ![default](https://user-images.githubusercontent.com/1481062/52621258-2b963500-2eea-11e9-8c55-43c97d2da0ac.png)
 
@@ -21,7 +21,7 @@ Installing BmapQuery is an easy task. Just follow these simple steps:
 
  1. **Download** the latest version from the Github website:
     https://github.com/yamazakidaisuke/BmapQuery.
-    ( Example Site: https://mapapi.org/indexb.php )
+    ( Example Site: https://bingmapsgo.azurewebsites.net )
     You should have already completed this step, but be sure you have the very latest version.
 
 2. BmapQuery is by default installed in the `js` folder. You can
