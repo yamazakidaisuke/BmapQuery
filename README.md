@@ -1,4 +1,4 @@
-BmapQuery.js  v1.0.0
+BmapQuery.js  v1.0.1
 ==========
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
@@ -454,7 +454,14 @@ It's opinionated about how you organize your repositories.
     map.infoboxLayers(options,true); //true=one,false=multiple
 
 
-        
+#### crearInfobox
+    //----------------------------------------------------
+    // crearInfobox
+    // Delete all infobox 
+    //----------------------------------------------------
+    map.crearInfobox();
+
+
 #### polyline
 [URL] (https://mapapi.org/example.php?file=polyline&h=8)
 
