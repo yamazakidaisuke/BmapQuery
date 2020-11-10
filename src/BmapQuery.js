@@ -2,7 +2,7 @@
 
 //********************************************************************
 // BingMaps v8
-// BmapQuery: v1.0.0 ( https://mapapi.org/indexb.php )
+// BmapQuery: v1.0.1 ( https://mapapi.org/indexb.php )
 // Auther:Daisuke.Yamazaki
 // MIT License.
 //********************************************************************
@@ -19,6 +19,7 @@ class Bmap {
         this.watchId;
         this.tracker = []; //tracking Array
         this.time = [];   //watchPosition speed.
+        this.infoboxs = [];
     }
 
     /**
@@ -449,14 +450,27 @@ class Bmap {
             return false;
         }
         //Infobox
+        const n = this.infoboxs.length;
         const location = new Microsoft.Maps.Location(lat,lon);
-        const infobox  = new Microsoft.Maps.Infobox(location,{
+        this.infoboxs[n]  = new Microsoft.Maps.Infobox(location,{
             title: t,
             description: d
         });
-        infobox.setMap(this.map); //Add infobox to Map
+        this.infoboxs[n].setMap(this.map); //Add infobox to Map
     }
-
+    
+    /**
+     * crearInfobox:Clear
+     * @method crearInfobox
+     */
+    crearInfobox(){
+        const n = this.infoboxs.length;
+        for(let i=0; i<n; i++){
+            this.infoboxs[i].setOptions({visible:false});
+            this.infoboxs[i].setMap(null); //Add infobox to Map
+        }
+    }
+    
     /**
      * Infobox:HTML
      * @method infoboxHtml
@@ -470,11 +484,12 @@ class Bmap {
             return false;
         }
         //Infobox
+        const n = this.infoboxs.length; 
         const location = new Microsoft.Maps.Location(lat,lon);
-        const infobox  = new Microsoft.Maps.Infobox(location,{
+        this.infoboxs[n]  = new Microsoft.Maps.Infobox(location,{
             htmlContent: html
         });
-        infobox.setMap(this.map); //Add infobox to Map
+        this.infoboxs[n].setMap(this.map); //Add infobox to Map
     }
 
     /**
@@ -488,10 +503,11 @@ class Bmap {
      * @param iframe  (string)   ['<iframe src="https://channel9.msdn.com/..."></iframe>]
      */
     infoboxIframe(lat,lon,width,height,title,iframe){
-        const infobox = new Microsoft.Maps.Infobox(this.setLocation(lat, lon),{
+        const n = this.infoboxs.length;      
+        this.infoboxs[n] = new Microsoft.Maps.Infobox(this.setLocation(lat, lon),{
             maxHeight: width, maxWidth: height, title: title, description: iframe
         });
-        infobox.setMap(this.map);
+        this.infoboxs[n].setMap(this.map);
     }
 
 
@@ -505,15 +521,17 @@ class Bmap {
      * @param actions  (object)   [actions object]
      */
     onInfobox(lat,lon,t,d,actions) {
+        const n = this.infoboxs.length;
         const loc = this.setLocation(lat,lon);
-        const infobox = new Microsoft.Maps.Infobox(loc, {
+        this.infoboxs[n] = new Microsoft.Maps.Infobox(loc, {
             maxHeight:this.map.getHeight()-50,
             maxWidth:this.map.getWidth()-50,
             title: t,
             description: d,
-            actions: actions
+            actions: actions,
+            visible: true
         });
-        infobox.setMap(this.map); //Add infobox to Map
+        this.infoboxs[n].setMap(this.map); //Add infobox to Map
     }
 
 

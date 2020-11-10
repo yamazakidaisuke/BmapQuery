@@ -45,7 +45,9 @@ function GetMap(){
             {
                 label: 'Click1',
                 eventHandler: function () { //function
-                    alert('Click1');
+                    //remove infobox
+                    map.crearInfobox();
+                    alert('Click1: crearInfobox');
                 }
             },
             //2.action
