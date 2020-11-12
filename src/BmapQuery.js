@@ -13,7 +13,6 @@ class Bmap {
         this.map = null;      //mapObject
         this.size = 10;      //Zoom value
         this.typeid ="load"; //TypeID
-        this.directionsManager = null;
         this.loc; //Geocode:location
         this.layer = new Microsoft.Maps.Layer();
         this.watchId;
@@ -542,14 +541,13 @@ class Bmap {
      * @param query     (string)   [Search string]
      * @param callback  (function) [function{...}]
      * @parm setView (bool) [true = map.setView()]
-     * @parm pushPin (bool) [true = map.entities.push()]
      * @returns { callback:function }
      */
-    async getGeocode(query,callback, setView = true, pushPin = true){
-        const data = await this._geocodeQuery(query,setView,pushPin);
+    async getGeocode(query,callback, setView = true){
+        const data = await this._geocodeQuery(query,setView);
         callback(data);
     }
-    _geocodeQuery(query,setView,pushPin) {
+    _geocodeQuery(query,setView) {
         const map = this.map;
         return new Promise(resolve => {
             let searchManager;
@@ -559,7 +557,7 @@ class Bmap {
                if(searchManager) {
                     searchManager.geocode({
                         where: query,
-                        callback: function (r,setView,pushPin) {
+                        callback: function (r,setView) {
                             if (r && r.results && r.results.length > 0) {
                                 return resolve(r.results[0]);
                             }
@@ -572,10 +570,6 @@ class Bmap {
             });
         })
         .then((data)=>{
-            if(pushPin === true) {
-                const pin = new Microsoft.Maps.Pushpin(data.location);
-                map.entities.push(pin);
-            }
             if(setView === true){
                 map.setView({ bounds: data.bestView});
             }
@@ -944,7 +938,7 @@ class Bmap {
             }
             iflg++;
         });
-}
+    }
     /**
      * Stop TrackingDraw
      * @method stopTrackingDraw
@@ -1108,7 +1102,7 @@ class Bmap {
         const map = this.map;
         let layer = [];
         let getAllPolygonFlg = (typeof arguments[3]==="undefined" || arguments[3]!=true) ? false : true;
-        console.log(getAllPolygonFlg);
+        //console.log(getAllPolygonFlg);
         //Load the Bing Spatial Data Services module
         Microsoft.Maps.loadModule(['Microsoft.Maps.SpatialDataService', 'Microsoft.Maps.Search'], function () {
             const searchManager = new Microsoft.Maps.Search.SearchManager(map);
