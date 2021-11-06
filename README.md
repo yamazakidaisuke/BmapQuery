@@ -806,4 +806,7 @@ It's opinionated about how you organize your repositories.
 Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
 https://mapapi.org - See LICENSE.md for license information.
 
+     
+## CONTRIBUTOR CODE OF CONDUCT
+https://github.com/yamazakidaisuke/BmapQuery/wiki/CONTRIBUTOR-CODE-OF-CONDUCT
 
