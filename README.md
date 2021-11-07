@@ -3,6 +3,9 @@ BmapQuery.js  v1.0.1
 
 BmapQuery is a Microsoft BingMaps V8 functions. to be used inside web pages.
 component to be used as part of web applications and websites.
+     
+## CONTRIBUTOR CODE OF CONDUCT
+https://github.com/yamazakidaisuke/BmapQuery/wiki/CONTRIBUTOR-CODE-OF-CONDUCT
 
 
 ## Checking Your Installation
@@ -806,7 +809,4 @@ It's opinionated about how you organize your repositories.
 Copyright (c) 2018-2019, BingMapsGO! - DaisukeYamazaki. All rights reserved.
 https://mapapi.org - See LICENSE.md for license information.
 
-     
-## CONTRIBUTOR CODE OF CONDUCT
-https://github.com/yamazakidaisuke/BmapQuery/wiki/CONTRIBUTOR-CODE-OF-CONDUCT
 
