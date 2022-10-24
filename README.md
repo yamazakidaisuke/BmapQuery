@@ -24,7 +24,7 @@ Installing BmapQuery is an easy task. Just follow these simple steps:
 
  1. **Download** the latest version from the Github website:
     https://github.com/yamazakidaisuke/BmapQuery.
-    ( Example Site: https://bingmapsgo.azurewebsites.net )
+    ( Example Site: https://mapapi.org/indexb.php )
     You should have already completed this step, but be sure you have the very latest version.
 
 2. BmapQuery is by default installed in the `js` folder. You can
