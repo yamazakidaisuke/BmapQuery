@@ -12,7 +12,10 @@ https://github.com/yamazakidaisuke/BmapQuery/wiki/CODE-OF-CONDUCT
 
 To test your installation, just call the following page at your website:
 
-[[BmapQuery.js] (https://bingmapsgo.azurewebsites.net)]
+[[BmapQuery.js] (https://mapapi.org)]
+
+[[CDN] (https://cdn.jsdelivr.net/gh/yamazakidaisuke/BmapQuery/js/BmapQuery.js)]
+
 
 ![default](https://user-images.githubusercontent.com/1481062/52621258-2b963500-2eea-11e9-8c55-43c97d2da0ac.png)
 
