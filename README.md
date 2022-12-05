@@ -12,7 +12,7 @@ https://github.com/yamazakidaisuke/BmapQuery/wiki/CODE-OF-CONDUCT
 
 To test your installation, just call the following page at your website:
 
-#### BmapQuery.js
+#### BmapQuery.js( Demo site )
  https://mapapi.org/indexb.php
 
 #### CDN
