@@ -76,6 +76,7 @@ It's opinionated about how you organize your repositories.
     <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[***Your My Key***]' async defer></script>
 
     <!-- 2.Load BmapQuery -->
+    <!-- CDN ( https://cdn.jsdelivr.net/gh/yamazakidaisuke/BmapQuery/js/BmapQuery.js ) -->
     <script src="js/BmapQuery.js"></script>
 
     <!-- 3.BmapQuery Start -->
