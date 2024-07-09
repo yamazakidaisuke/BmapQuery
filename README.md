@@ -15,6 +15,9 @@ To test your installation, just call the following page at your website:
 #### BmapQuery.js( Demo site )
  https://mapapi.org/indexb.php
 
+#### BingMaps Team : Announcements:
+Bing Maps for Enterprise is deprecated and will be retired.Free (Basic) account customers can continue to use Bing Maps for Enterprise services until June 30, 2025.
+
 #### CDN
  https://cdn.jsdelivr.net/gh/yamazakidaisuke/BmapQuery/js/BmapQuery.js
 
