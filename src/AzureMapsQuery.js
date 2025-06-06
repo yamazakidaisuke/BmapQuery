@@ -5,6 +5,10 @@
 // AzureMapQuery: v1.0.0 ( Converted from BingMaps v8 )
 // Author: Converted Library
 // MIT License.
+//
+// [import files. ]
+// <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css">
+// <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
 //********************************************************************
 
 class AzureMap {
